@@ -1,0 +1,119 @@
+{getpost assign=post postid=$postid}{getcomments assign=comments}
+{assign var=title value="`$post.title` - $blogname"}
+{include file="header.html"}
+	<style type="text/css" media="screen">
+		@import url( {$bblogurl}templates/kubrick/screenwide.css );
+	</style>
+<div id="content" class="widecolumn">
+
+		<div class="navigation">
+			<div class="alignleft"></div>
+			<div class="alignright"></div>
+		</div>
+
+<div class="post">
+    <h2 class="storytitle" id="post-{$post.id}"><a href="{$post.permalink}" rel="bookmark" title="Permanent Link: {$post.title}">{$post.title}</a></h2>
+    <small>{$post.posttime|date_format:s2}</small>
+    <p/>
+    <div class="entry">
+    {$post.body}
+    </div>
+    
+    <p class="postmetadata graybox">
+        <small>
+        This post was posted on {$post.posttime|date_format:s2} in the following sections: {sectionlinks sep=", " sections=$post.sections}.
+        {if $post.commentcount==1}
+        There is currently 1 comment.
+        {else}
+        There are currently {$post.commentcount} comments.
+        {/if}
+        </small>
+    </p>
+
+<!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+    rdf:about="{$post.permalink}"
+    dc:identifer="{$post.permalink}"
+    dc:title="{$post.title}"
+    trackback:ping="{$post.trackbackurl}" />
+</rdf:RDF>
+-->
+</div>
+
+<h2 id="comments">Comments</h2>
+
+<p><a href="{$post.commentrssurl}"><abbr title="Really Simple Syndication">RSS</abbr> feed for comments on this post.</a></p>
+
+<p>The <acronym title="Uniform Resource Identifier">URI</acronym> to TrackBack this entry is: <em>{$post.trackbackurl}</em></p>
+
+<ol class="commentlist">
+{foreach from=$comments item=comment}
+	<li id="comment-{$comment.commentid}" class="{cycle values="graybox,"}">
+    {if $comment.type eq 'comment'}
+	    <p><cite><a href="{if $comment.website}{$comment.website}{elseif $comment.email}mailto:{$comment.email}{/if}" rel="external">{$comment.author}</a> says:<br/><small>{$comment.posted|date_format:s2} @ {$comment.posted|date_format:time} &#8212;  {$comment.replylink}</small></cite></p>
+    {else}
+        <p><cite>Trackback from <a href="{$comment.websiteurl}" rel="external">{$comment.author}</a><br/><small>{$comment.posted|date_format:s2} @ {$comment.posted|date_format:time} &#8212; {$comment.replylink} &#8212; Comment Trackback URL: {$comment.trackbackurl}</small></cite></p>
+    {/if}
+    {if $comment.onhold}
+	<p>Comment pending moderation</p>
+	{elseif $comment.deleted}
+	<p>Comment deleted</p>
+	{else}
+	<p>{$comment.body|nl2br|kses}</p>
+	{/if}
+	</li>
+{/foreach}
+</ol>
+
+<h2>Leave a Comment</h2>
+{if $post.allowcomments}
+<p>Line and paragraph breaks automatic, <acronym title="Hypertext Markup Language">HTML</acronym> allowed: <code>&lt;a href=&quot;&quot; title=&quot;&quot; rel=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;code&gt; &lt;em&gt; &lt;i&gt; &lt;strike&gt; &lt;strong&gt; </code></p>
+
+<form action="{$commentformaction}" method="post" id="commentform">
+    <div id="authorinfo">
+    <p>
+	  <input type="text" name="title" id="title" class="textarea" value="{$commentreplytitle}" size="28" tabindex="0" />
+	   <label for="title">Title</label>
+	</p>
+	<p>
+	  <input type="text" name="name" id="author" class="textarea" value="" size="28" tabindex="1" />
+	   <label for="author">Name</label>
+        {$commentformhiddenfields}
+	</p>
+
+	<p>
+
+	  <input type="text" name="email" id="email" value="" size="28" tabindex="2" />
+	   <label for="email">Email (not published)</label><input name="public_email" type="hidden" id="public_email" value="0" />
+	</p>
+
+	<p>
+	  <input type="text" name="website" id="url" value="http://" size="28" tabindex="3" />
+	   <label for="url">Website</label>  <input name="public_website" type="hidden" id="public_website" value="1"  />
+	</p>
+
+	<p>
+	  <label for="comment">Your Comment</label>
+	<br />
+	  <textarea name="comment" id="comment" cols="70" rows="4" tabindex="4"></textarea>
+	</p>
+
+{if $smarty.const.C_IMAGE_VERIFICATION eq "true"}
+<img style="border-style: solid; border-width: 1px; padding: 5px;"
+src="{$bblogurl}authimage.php?rid={$rid}" /><br />
+	<input type="text" id="spamcode" name="spamcode" tabindex="5" size="28"/>
+</p>
+{/if}
+	<p>
+	  <input name="submit" type="submit" tabindex="5" value="Say it!" />
+	</p>
+    </div>
+</form>
+{else}
+<p>Sorry, Comments have been disabled for this post</p>
+{/if}
+</div>
+{include file="footer.html}

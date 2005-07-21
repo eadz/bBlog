@@ -1,0 +1,93 @@
+{include file=header.html}
+
+{getpost assign=post postid=$postid}
+<h3>{$post.posttime|date_format:s2}</h3>
+<h2>{$post.title}</h2>
+<span class="date">{$post.posttime|date_format:jim} by {$post.author.nickname}</span>
+{$post.body}
+<br />
+<span class="tburl">The trackback url for this post is {$post.trackbackurl}</span>
+
+<!--	
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+    rdf:about="{$post.permalink}"
+    dc:identifer="{$post.permalink}"
+    dc:title="{$post.title}"
+    trackback:ping="{$post.trackbackurl}" />
+</rdf:RDF>
+-->
+<hr noshade="noshade" />
+{getcomments assign=comments}
+{foreach from=$comments item=comment}
+    {if $comment.deleted eq "true"}
+    <!-- deleted comment - you could put something in here like LJ does -->
+    {else}
+    <div class="comment" style="margin-left: {$comment.level25}px;">
+
+    
+    <h4 class="comment tbh">{$comment.title|nohtml}</h4>
+    {if $comment.type eq 'trackback'}
+    <strong>Trackback from <a href="{$comment.websiteurl}">{$comment.author}</a> {$comment.posted|date_format:since} &#8226;   {$comment.replylink}
+    {else}
+    <strong>{$comment.posted|date_format:since} by {$comment.author} &#8226; {$comment.emaillink} &#8226;  {$comment.websitelink} &#8226; {$comment.replylink}
+    {/if}
+     
+    </strong><p>
+    {$comment.body|nohtml}</p>
+	<span class="tburl">Trackback URL : {$comment.trackbackurl}</span>
+    </div>
+    {/if}
+{foreachelse}
+<p>No comments, be the first!</p>
+{/foreach}  
+
+
+<hr noshade="noshade" />
+
+<form method="post" action="{$commentformaction}">
+{$commentformhiddenfields}
+<h3>Add Comment</h3>
+<p><em>( to reply to a comment, click the reply link next to the comment )</em></p>
+<div class="form">
+<div class="clear">&nbsp;</div>
+<div class="formleft">Comment Title</div>
+<div class="formright"><input name="title" type="text" id="title" value="{$commentreplytitle}" tabindex="1"/></div>
+<div class="clear">&nbsp;</div>
+<div class="formleft">Your Name: </div>
+<div class="formright"><input name="name" type="text" id="name" value="{$cdata.name}" tabindex="2"/> Remember Me! <input class="checkbox" name="set_cookie" type="checkbox" id="set_cookie" value="1" checked="checked"/></div>
+<div class="clear">&nbsp;</div>
+<div class="formleft">Email Address: </div>
+<div class="formright"><input name="email" type="text" id="email" value="{$cdata.mail}" tabindex="3"/> Make Public? <input class="checkbox" name="public_email" type="checkbox" id="public_email" value="1" checked="checked"/></div>
+<div class="clear">&nbsp;</div>
+<div class="formleft">Website: </div>
+<div class="formright"><input name="website" type="text" id="website" value="{$cdata.web}" tabindex="4"/> Make Public? <input class="checkbox" name="public_website" type="checkbox" id="public_website" value="1" checked="checked" /></div>
+<div class="clear">&nbsp;</div>
+<div class="formleft">Comment: </div> 
+<div class="formright"><textarea name="comment" cols="30" rows="6" wrap="VIRTUAL" id="comment" style="width: 280px;" tabindex="5"></textarea></div>
+{if $smarty.const.C_IMAGE_VERIFICATION == "true"}
+<div class="clear">&nbsp;</div>
+<div class="formleft">&nbsp;</div>
+<div class="formright">
+  <img style="border-style: solid; border-width: 1px; padding: 5px;"
+    src="{$bblogurl}authimage.php?rid={$rid}" /><br />
+</div>
+<div class="clear">&nbsp;</div>
+<div class="formleft">Access Code: </div>
+<div class="formright"><input type="text" id="spamcode" name="spamcode" tabindex="6" size="28"/></div>
+<div class="clear">&nbsp;</div>
+{/if}
+<div class="formleft">&nbsp;</div> 
+<div class="formright"><input name="submit" type="submit" id="submit" value="Submit Comment" tabindex="7"/><input type="hidden" name="do" value="submitcomment" /></div>
+<div class="clear">&nbsp;</div>
+</div> 
+</form>
+
+</td>
+<td width="25%" valign="top" class="sidebartd" id="sidebartd">
+
+<h4>Recently</h4>
+{recentposts}
+{include file=footer.html}

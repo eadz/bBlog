@@ -1,0 +1,34 @@
+{include file="header.html"}
+<div id="Main">
+  <div id="Content">
+<!-- loop start -->
+{getpost assign=post postid=$postid}
+<h3>&para; {$post.title}</h3>
+<span class="date">{$post.posttime|date_format:jim} by {$post.author.nickname}</span>
+{$post.body}
+<br>
+The trackback url for this post is {$post.trackbackurl}
+</br>
+<!--	
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+    rdf:about="{$post.permalink}"
+    dc:identifer="{$post.permalink}"
+    dc:title="{$post.title}"
+    trackback:ping="{$post.trackbackurl}" />
+</rdf:RDF>
+-->
+{include file="comments.html"}
+
+  </div>
+  <div id="Sidebar">
+    <div class="Sidetitle"><h4>Refered</h4></div>
+    {referers}
+    <div class="Sidetitle"><h4>Recently</h4></div> 
+    {recentposts}
+  </div>
+</div>
+
+{include file="footer.html"}

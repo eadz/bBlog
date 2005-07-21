@@ -1,0 +1,28 @@
+    <div id="sidebar">
+
+
+      	<h4>Sections</h4>
+	{sectionlinks mode=list}
+        <h4>Recently</h4>
+        {recentposts skip=5}
+
+	<h4>Links</h4>
+	<ul>
+	   <li><a href="{$bblogroot}archives.php">Archives</a></li>
+	   <li><a href="{$blogroot}rss.php">RSS 0.92</a></li>
+	   <li><a href="{$blogroot}rss.php?ver=2">RSS 2.0</a></li>
+
+    	   {links presep="<li>" sep="</li>"}
+	</ul>
+
+
+	<h4>Archives</h4>
+	{getarchives show=months count=true assign=archives}
+	<ul>
+	{foreach from=$archives item=ar}
+	  <li><a href="#">{$ar.ts|date_format:monthyear}</a> ( {$ar.count} )</li>
+	{/foreach}
+	</ul>
+
+
+    </div>

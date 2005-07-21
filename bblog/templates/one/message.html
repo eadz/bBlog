@@ -1,0 +1,35 @@
+{assign var=title value="Error - $blogname"}
+{include file="header.html"}
+
+<div id="content">
+<h2>Error</h2>
+<div class="post">
+<div class="storycontent">
+{$message}
+<p>
+<a href="javascript:history.go(-1)">Return to the previous screen</a>
+</p>
+</div>
+</div>
+</div>
+
+<div id="menu">
+<ul>
+	<li id="nav">Navigation
+	{links cat='Navigation' mode='list'}
+	</li>
+	
+	<li id="sections">Sections
+	{sectionlinks mode="list"}
+	</li>
+	
+	<li id="recentposts">Recent Posts
+	{recentposts mode="list"}
+	</li>
+	<li>Calendar
+	<ul><li>{calendar}</li></ul>
+	</li>
+</ul>
+</div>
+
+{include file="footer.html"}

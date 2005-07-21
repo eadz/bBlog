@@ -1,0 +1,17 @@
+{include file="header.html"}
+<table border="0" cellpadding="20" cellspacing="0" width="100%">
+<tr><td width="65%" valign="top" bgcolor="#FFFFFF">
+                            
+<h2>Archives</h2>
+{getrecentposts assign=posts}
+{foreach from=$posts item=post}
+ {$post.posttime|date_format:"d/m/Y"}
+<a href="{$post.permalink}">{$post.title|upper}</a><br />
+{/foreach}
+
+</td>
+<td width="35%" valign="top">
+{calendar}
+</td></tr>
+</table>
+{include file="footer.html"}

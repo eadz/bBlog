@@ -1,0 +1,17 @@
+{assign var=title value=$blogname}
+{include file="header.html"}
+	<style type="text/css" media="screen">
+		@import url( {$bblogurl}templates/kubrick/screenwide.css );
+	</style>
+	
+<div id="content" class="widecolumn">
+    
+    <h2>Error</h2>
+    {$message}
+    
+    <p>
+    <a href="javascript:history.go(-1)">Return to the previous screen</a>
+    </p>
+    
+</div>
+{include file="footer.html"}

@@ -1,0 +1,20 @@
+<form action="" method="POST" enctype="multipart/form-data">
+<h4>Upload File</h4>
+<div class="frame">
+<input type="file" name="userfile" />
+</div>
+
+<h4>Action</h4>
+<div class="frame">
+<input type="submit" value="Upload" />
+</div>
+
+<h4>Uploaded files ({$path})</h4>
+<div class="frame">
+<ul style='margin-left: 20px; list-style: square;'>
+{foreach from=$files item=file}
+	<li><a href="{$path}{$file}">{$file}</a></li>
+{/foreach}
+<ul>
+</div>
+</form>

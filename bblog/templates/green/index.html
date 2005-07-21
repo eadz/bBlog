@@ -1,0 +1,28 @@
+{include file="header.html"}
+<table border="0" cellpadding="20" cellspacing="0" width="100%">
+<tr><td width="65%" valign="top" bgcolor="#FFFFFF">
+
+{getrecentposts sectionid=$sectionid num=4 assign=posts}
+{foreach from=$posts item=post}
+<h2>{$post.title}</h2>
+<p><span class="date">
+{$post.posttime|date_format:jim} by {$post.author.nickname}
+</span> <span class="permalink"><a href="{$post.permalink}">#</a> {sectionlinks sep=", " sections=$post.sections}</span></p>
+{$post.body|readmore:$post.permalink}
+<p align="right"><i>---<a href="{$post.permalink}">{$post.commenttext}</a></i></p>
+{/foreach}
+</td>
+<td width="35%" valign="top">
+<h3>Refered</h3>
+<!-- {referers} -->
+<h3>Sections</h3>
+{sectionlinks}
+<h3>Older Stuff</h3>
+{recentposts}
+{include file="buttons.html}
+
+
+</td></tr>
+</table>
+
+{include file="footer.html"}

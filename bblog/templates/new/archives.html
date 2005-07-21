@@ -1,0 +1,28 @@
+{assign var=title value="$blogname archives"}
+{include file=header.html}
+{include file=sidebar.html}
+
+
+<div id="content">
+
+	{getarchives show=years assign=years}
+	{foreach from=$years item=year}
+	<h3>{$year.year}</h3>
+		{getarchives show=months assign=months year=$year.year count=true}
+		{foreach from=$months item=month}
+			<h4>{$month.ts|date_format:month} ( {$month.count} )</h4>
+			{getarchiveposts month=$month.month year=$year.year assign=posts}
+			<ul>
+			{foreach from=$posts item=post}
+				<li><a href="{$post.permalink}">{$post.title}</a> - {$post.posttime|date_format:s2}</li>
+			{/foreach}
+			</ul>
+		{/foreach}
+
+	{/foreach}
+
+
+
+</div>
+
+{include file=footer.html}

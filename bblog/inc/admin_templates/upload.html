@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <link rel="stylesheet" type="text/css" title="Main" href="style/admin.css" media="screen" />
+  <title>Image upload</title>
+<script language="javascript">
+{literal}
+	function updateParent(image) {
+		opener.document.getElementById('t1').value = opener.document.getElementById('t1').value + "\n" + image + "\n";
+		self.close();
+	return false;
+	}
+{/literal}
+</script>
+</head>
+<body {if isset($uploaded)}onload='updateParent("{$uploaded}");'{/if}>
+<div id="dialog">
+<form enctype="multipart/form-data" action="" method="post">
+<label for="userfile">Image file</label><br />
+<input name="userfile" type="file" id="src" value="" style="width: 200px" /><br />
+<input type="submit" value="upload" class='submit' />
+</form>
+</div>
+</body>
+</html>

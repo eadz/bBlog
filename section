@@ -1,0 +1,14 @@
+<?php
+include "bblog/config.php";
+$uriparams = explode("/",$_SERVER['PATH_INFO']);
+$sectionname = $uriparams[1];
+$sectionid = $bBlog->sect_by_name[$sectionname];
+if(is_numeric($sectionid)) {
+  $bBlog->smartyObj->assign('sectionname',$sectionname);
+  $bBlog->smartyObj->assign('sectionid',$sectionid);
+  $bBlog->smartyObj->assign('sectionnicename', $bBlog->sect_nicename[$sectionid]); 
+  $bBlog->show_section = $sectionid;
+  $bBlog->display('index.html');
+} else {
+  echo '<p>Error, not a section</p>';
+} ?>

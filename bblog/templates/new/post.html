@@ -1,0 +1,96 @@
+{getpost assign=post postid=$postid}
+{assign var=title value=$post.title}
+{include file=header.html}
+{include file=sidebar.html}
+
+<div id="content">
+<div class="post">
+
+<h3><a href="{$post.permalink}" title="{$post.title}">{$post.title}</a></h3>
+<h4>by {$post.author.nickname}, {$post.posttime|date_format:s2} </h4>
+<p>{$post.body}</p>
+<br />
+<p class="tburl">Trackback URL:  {$post.trackbackurl}</p>
+</div>
+<!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+    rdf:about="{$post.permalink}"
+    dc:identifer="{$post.permalink}"
+    dc:title="{$post.title}"
+    trackback:ping="{$post.trackbackurl}" />
+</rdf:RDF>
+-->
+
+<hr noshade="noshade" />
+{getcomments assign=comments}
+{foreach from=$comments item=comment}
+    {if $comment.deleted eq "true"}
+    <!-- deleted comment - you could put something in here like LJ does -->
+    {else}
+    <div class="comment" style="margin-left: {$comment.level25}px;">
+
+    
+    <h5 class="comment">{$comment.title|nohtml} <sub>[{$comment.replylink}]</sub></h5>
+    <h4>
+    {if $comment.type eq 'trackback'}
+    Trackback from <a href="{$comment.websiteurl}">{$comment.author}</a> {$comment.posted|date_format:s1}
+    {else}
+    On {$comment.posted|date_format:s1}, {if $comment.website}<a href="{$comment.website}">{$comment.author}</a>{else}{$comment.author}{/if} wrote ...
+    {/if}
+
+    </h4>
+    <p>
+    {$comment.body|nohtml}</p>
+    <p class="tburl">Trackback URL : {$comment.trackbackurl}</p>
+    </div>
+    {/if}
+{foreachelse}
+<p>No comments, be the first!</p>
+{/foreach}  
+
+
+<hr noshade="noshade" />
+
+<form method="post" action="{$commentformaction}">
+{$commentformhiddenfields}
+<h3>Add Comment</h3>
+<p><em>( to reply to a comment, click the reply link next to the comment )</em></p>
+<div class="form">
+<div class="clear">&nbsp;</div>
+<div class="formleft">Comment Title</div>
+<div class="formright"><input name="title" type="text" id="title" value="{$commentreplytitle}"/></div>
+<div class="clear">&nbsp;</div>
+<div class="formleft">Your Name: </div>
+<div class="formright"><input name="name" type="text" id="name" value="{$cdata.name}"/> Remember Me! <input class="checkbox" name="set_cookie" type="checkbox" id="set_cookie" value="1" checked="checked"/></div>
+<div class="clear">&nbsp;</div>
+<div class="formleft">Email Address: </div>
+<div class="formright"><input name="email" type="text" id="email" value="{$cdata.mail}"/> Make Public? <input class="checkbox" name="public_email" type="checkbox" id="public_email" value="1" checked="checked"/></div>
+<div class="clear">&nbsp;</div>
+<div class="formleft">Website: </div>
+<div class="formright"><input name="website" type="text" id="website" value="{$cdata.web}"/> Make Public? <input class="checkbox" name="public_website" type="checkbox" id="public_website" value="1" checked="checked" /></div>
+<div class="clear">&nbsp;</div>
+<div class="formleft">Comment: </div> 
+<div class="formright"><textarea name="comment" cols="30" rows="6" wrap="VIRTUAL" id="comment" style="width: 280px;"></textarea></div>
+<div class="clear">&nbsp;</div>
+{if $smarty.const.C_IMAGE_VERIFICATION == "true"}
+<div class="formleft">&nbsp;</div>
+<div class="formright">
+  <img style="border-style: solid; border-width: 1px; padding: 5px;"
+    src="{$bblogurl}authimage.php?rid={$rid}" /><br />
+</div>
+<div class="clear">&nbsp;</div>
+<div class="formleft">Access Code: </div>
+<div class="formright"><input name="spamcode" type="text" id="spamcode" /></div>
+<div class="clear">&nbsp;</div>
+{/if}
+<div class="formleft">&nbsp;</div> 
+<div class="formright"><input name="submit" type="submit" id="submit" value="Submit Comment" /><input type="hidden" name="do" value="submitcomment" /></div>
+<div class="clear">&nbsp;</div>
+</div> 
+</form>
+
+</div>
+{include file=footer.html}

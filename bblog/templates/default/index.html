@@ -1,0 +1,40 @@
+{include file=header.html}
+
+{getcontent}
+
+{if $content}
+
+<h2>{$contentname}</h2><br /><br />
+
+{php}
+include(BBLOGROOT . "../" . $this->get_template_vars("content"));
+{/php}
+
+{else}
+
+{getrecentposts num=10 assign=posts}
+
+{foreach from=$posts item=post}
+  {if $post.newday}
+        <h3>{$post.posttime|date_format:s2}</h3>
+  {/if}
+        <h2>{$post.title}</h2>
+        <span class="date">{$post.posttime|date_format:jim} by {$post.author.nickname}</span>
+        {$post.body|readmore:$post.postid}
+        <div class="footer">
+	  {sectionlinks sep=" &middot; " sections=$post.sections} &#8226; 
+	  <a href="{$post.permalink}">{$post.commentcount} Comments/Trackbacks</a>
+	</div>
+
+{/foreach}
+
+{/if}
+      </td>
+      <td width="25%" valign="top" class="sidebartd" id="sidebartd">
+        <h4>content Sections</h4>
+	{getsections separator="<br>" limit="content"}
+        <h4>Earlier...</h4>
+        {recentposts skip=5}
+
+
+{include file=footer.html}

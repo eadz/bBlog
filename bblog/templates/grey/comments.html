@@ -1,0 +1,60 @@
+<br /><hr /><br />
+{getcomments assign=comments}
+{foreach from=$comments item=comment}
+    {if $comment.deleted eq "true"}
+    <!-- deleted comment - you could put something in here like LJ does -->
+    {else}
+    <div class="comment" style="margin-left: {$comment.level25}px;">
+    
+    {if $comment.type eq 'trackback'}
+    <h4 class="comment tbh">{$comment.title|nohtml}</h4>
+    
+    <b>
+         Trackback from <a href="{$comment.url}">{$comment.author}</a> {$comment.posted|date_format:since} &#8226;  &#8226; {$comment.replylink} 
+    {else}
+    <h4 class="comment">{$comment.title|nohtml}</h4>
+    <b>
+         {$comment.posted|date_format:since} by {$comment.author} &#8226; {$comment.emaillink} {$comment.websitelink} &#8226; {$comment.replylink}
+    {/if}
+     (<a href="javascript:alert('The trackback URL for this Comment is {$comment.trackbackurl}');">TB</a>)
+    </b><br />
+    {$comment.body|nohtml}
+    </div>
+    {/if}
+{foreachelse}
+<p>No comments, be the first!</p>
+{/foreach}    <!-- loop end -->
+
+
+<br /><hr /><br />	
+
+<form method="post" action="{$commentformaction}"> 
+{$commentformhiddenfields} 
+<h3>Add Comment</h3> 
+<p><em>( to reply to a comment, click the reply link next to the comment )</em></p> 
+<div class="form"> 
+<div class="clear">&nbsp;</div> 
+<div class="formleft">Comment Title</div>
+<div class="formright"><input name="title" type="text" id="title" value="{$commentreplytitle}"/></div>
+<div class="clear">&nbsp;</div> 
+<div class="formleft">Your Name: </div> 
+<div class="formright"><input name="name" type="text" id="name" value="{$cdata.name}"/> Remember Me! <input class="checkbox" name="set_cookie" type="checkbox" id="set_cookie" value="1" checked="checked"/></div> 
+<div class="clear">&nbsp;</div> 
+<div class="formleft">Email Address: </div> 
+<div class="formright"><input name="email" type="text" id="email" value="{$cdata.mail}"/> Make Public? <input class="checkbox" name="public_email" type="checkbox" id="public_email" value="1" checked="checked"/></div> 
+<div class="clear">&nbsp;</div> 
+<div class="formleft">Website: </div> 
+<div class="formright"><input name="website" type="text" id="website" value="{$cdata.web}"/> Make Public? <input class="checkbox" name="public_website" type="checkbox" id="public_website" value="1" checked="checked" /></div> 
+<div class="clear">&nbsp;</div> 
+<div class="formleft">Comment: </div> 
+<div class="formright"><textarea name="comment" cols="30" rows="6" wrap="VIRTUAL" id="comment" style="width: 280px;"></textarea></div> 
+<div class="clear">&nbsp;</div> 
+<div class="formleft">&nbsp;</div> 
+<div class="formright"><input name="submit" type="submit" id="submit" value="Submit Comment" /><input type="hidden" name="do" value="submitcomment" /></div>  
+<div class="clear">&nbsp;</div> 
+</div> 
+</form>
+
+
+
+

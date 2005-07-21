@@ -1,0 +1,25 @@
+{assign var=title value=$blogname}
+{include file=header.html}
+{include file=sidebar.html}
+
+{getrecentposts num=10 assign=posts}
+
+<div id="content">
+
+{foreach from=$posts item=post}
+<div class="post">
+  {if $post.newday}
+        <h4 class='day'>{$post.posttime|date_format:s2}</h2>
+  {/if}
+        <h3><a href="{$post.permalink}" title="{$post.title}">{$post.title}</a></h3>
+	<h4>{$post.posttime|date_format:jim} by {$post.author.nickname}</h4>
+
+       <p> {$post.body|readmore:$post.postid}</p>
+        <p class="postinfo">{sectionlinks sep=" &middot; " sections=$post.sections} &#8226; <a href="{$post.permalink}">{$post.commentcount} Comments/Trackbacks</a></p>
+
+</div>
+{/foreach}
+
+</div>
+
+{include file=footer.html}

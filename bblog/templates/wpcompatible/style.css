@@ -1,0 +1,423 @@
+/* @charset "euc-jp"; */
+
+a img {
+    border: none; 
+}
+
+a:link {
+	color:rgb(10,10,10);
+	text-decoration: none; 
+}
+
+a:visited {
+	color: rgb(30,30,30); 
+	text-decoration: none; 
+}
+
+a:hover {
+	color:rgb(255,127,20);
+	text-decoration: none; 
+}
+
+a:active {
+	color:rgb(255,127,20);
+	text-decoration: none;
+}
+
+code {
+	font-size: 1em; 
+}
+
+acronym, abbr {
+	border-bottom: 1px dashed rgb(80,80,80);
+}
+
+acronym, abbr, span.caps {
+	cursor: help;
+	font-size: 90%;
+	letter-spacing: .07em;
+}
+
+blockquote {
+	border: 1px dashed rgb(255,147,40);
+	margin: 0.5em 1.5em; 
+	padding: 5px 1.5em 5px 1.5em; 
+	background-color: rgb(235,235,235);
+}
+
+body {
+	margin: 0px; 
+	padding: 0px; 
+	background-color: rgb(210,210,210); 
+	background-image: url(images/img.png);
+	background-repeat: repeat;
+	background-attachment: scroll;
+	color: rgb(80,80,80);
+	font-size: small;
+}
+
+cite {
+	font-size: 90%;
+	font-style: normal;
+}
+
+h2 {
+	font-size: 1.2em; 
+	letter-spacing: 0em; 
+	border-bottom: 1px dotted rgb(250,250,250);
+	margin: 15px 0 12px 0; 
+	padding-bottom: 2px; 
+	color: rgb(255,255,255);
+}
+
+h3 {
+	margin-top: 0; 
+	font-size: 1.1em; 
+	letter-spacing: 0em; 
+	word-spacing: 0em; 
+	border-bottom: dotted 1px rgb(200,200,200); 
+}
+
+#comments {
+	color:rgb(100,100,100);
+}
+
+p, li, .feedback {
+	font-family: sans-serif; 
+	font-size: 1em; 
+	letter-spacing: 1px; 
+	word-spacing: 1px; 
+	line-height: 150%; 
+}
+
+.credit {
+	text-align: center;
+	background-color: rgb(225,225,225);
+	border:none;
+	border-top: 1px solid rgb(139,162,177); 
+	font-size: 11px; 
+	padding: 5px; 
+	color: rgb(100,100,100); 
+	margin: 30px 0 0 0; 
+	z-index: 1;
+}
+
+.credit a {
+	color: rgb(10,10,10); 
+}
+
+.credit a:hover {
+	color:rgb(255,127,20);
+}
+
+.feedback {
+	text-align: right; 
+	color: #ccc; 
+	margin: 20px 1em 0px 0px;
+	font-size: small;
+	
+}
+
+.meta, .meta a {
+	color: rgb(10,10,10); 
+	font-size: small; 
+	font-weight: normal; 
+	letter-spacing: 0; 
+}
+
+.meta ul {
+	display: inline;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.meta li {
+	display: inline;
+}
+
+.storytitle {
+	margin: 0px 0px 10px 0px ;
+}
+
+.storytitle a {
+	text-decoration: none;
+}
+
+#commentform input, #commentform textarea {
+	background: rgb(237,237,237); 
+	border: 1px solid rgb(159,182,197); 
+}
+
+
+#commentform textarea {
+	width: 95%; 
+}
+
+#comment {
+	width: 390px; 
+}
+
+
+#commentlist>li>p{
+	color: rgb(80,80,80); 
+}
+
+
+#commentlist>li>p>a {
+	color: rgb(10,10,10);
+	border-bottom: 1px dotted rgb(255,147,40);
+}
+
+#commentlist>li>p>a:hover {
+	color:rgb(255,127,20);
+	border-bottom: 1px dotted rgb(130,130,130);
+}
+
+#content {
+	margin: 20px 187px 2px 16px; 
+	padding: 20px; 
+	background:transparent;
+	border: none;
+}
+
+#content .storycontent {
+	font-family: sans-serif; 
+	line-height: 125%; 
+	letter-spacing: 1px; 
+	word-spacing:1px; 
+	font-size: small; 
+	color: rgb(80,80,80); 
+}
+
+#content .storycontent a {
+	color: rgb(10,10,10);
+	border-bottom: 1px dotted rgb(255,127,20);
+}
+
+#content .storycontent a:hover {
+	color:rgb(255,127,20);
+	border-bottom: 1px dotted rgb(30,30,30);
+}
+
+#content .storycontent a:active {
+	color:rgb(255,127,20);
+	border-bottom: 1px dotted rgb(30,30,30);
+}
+
+#content .storycontent img {
+	margin:0px; 
+}
+
+.post {
+	background-color: rgb(230,230,230);
+	border: 1px solid rgb(139,162,177); 
+	margin: 15px 20px 20px 20px;
+	padding: 1em; 
+}
+
+.post-categories a:hover{
+	color:rgb(255,127,20);
+	border:none;
+}
+
+
+#header {
+	text-align: center;
+	font-weight: normal; 
+	font-size: 1.5em; 
+	letter-spacing: 0.2em; 
+	background: transparent; 
+	letter-spacing: 0px; 
+	word-spacing: 0px; 
+	color: rgb(255,255,255);
+	position:absolute;
+	top: 2px;
+	right: 10px;
+	width: 10em;
+	z-index: 5;
+	border-bottom: 1px dotted rgb(250,250,250);
+	margin:0px; 
+	padding: 0px 0px -10px 0px
+}
+
+#header a {
+	color: rgb(255,255,255);
+	text-decoration: none; 
+}
+
+#header a:hover {
+	color: rgb(255,255,255);
+	text-decoration: none;
+}
+
+#menu {
+	background: transparent;
+	border: none;
+	padding: 35px 0px 0px 10px; 
+	margin-bottom: 20px; 
+	position: absolute; 
+	right: 30px; 
+	top: 2px; 
+	width: 140px; 
+	color: rgb(80,80,80); 
+	z-index: 3;
+}
+
+#menu form {
+	margin: 0 0 0 13px;
+}
+
+#menu input {
+	background-color: rgb(237,237,237); 
+	border: 1px solid rgb(159,182,197); 
+	width: 80px; 
+	letter-spacing: -0em; 
+}
+
+#menu ul {
+	color: rgb(255,255,255);
+	text-transform: lowercase; 
+	font-weight: bold; 
+	list-style-type: none; 
+	margin: 0; 
+	padding-left: 3px; 
+	border:none;
+
+}
+
+#menu ul li {
+	font-family: sans-serif; 
+	font-weight: bold; 
+	font-size: 1.1em; 
+	letter-spacing: 0em; 
+	margin:15px 0px 0px 0px;
+	padding: 0.5em 0.5em 0.5em 0.5em;
+	border:none;
+}
+
+#menu ul li ul{
+	margin:-2px 0px 0px 0px;
+	padding: 2px 0px 0px 0px;
+	border-top: 1px dotted rgb(250,250,250);
+	}
+
+#menu ul ul {
+	list-style-type: none;
+	font-variant: normal;
+	font-weight: normal;
+	line-height: 100%;
+	margin: 0;
+	padding: 0;
+	text-align: left;
+	border:none;
+}
+
+#menu ul ul li {
+	color: rgb(255,255,255);
+	font-family: sans-serif; 
+	font-size: small; 
+	font-weight: normal; 
+	font-style: normal; 
+	line-height: 115%; 
+	padding-left: 12px; 
+	letter-spacing: 0.09em; 
+	margin-top: 0; 
+	padding: 0; 
+	border: 0; 
+}
+
+#menu ul ul li a {
+	color:rgb(10,10,10);
+	height: 13px; 
+	text-decoration: none; 
+	border: none;
+}
+
+#menu ul ul li a:hover {
+	border-bottom: 1px dotted rgb(30,30,30);
+	color: rgb(255,127,20);
+}
+
+#wp-calendar {
+	border:none;
+	empty-cells: show;
+	font-size: small;
+	margin: 0;
+	width: 90%;
+	background:transparent;
+}
+
+#wp-calendar #next a {
+	padding-right: 10px;
+	text-align: right;
+	color: rgb(10,10,10);
+	background:transparent;
+	border:none;
+}
+
+#wp-calendar #prev a {
+	padding-left: 10px;
+	text-align: left;
+	color: rgb(10,10,10);
+	background-color: transparent; 
+	border:none;
+}
+
+#wp-calendar #next a:hover  {
+	color: rgb(255,127,20);
+}
+
+#wp-calendar #prev a:hover {
+	color: rgb(255,127,20);
+}
+
+#wp-calendar a {
+	display: block;
+	text-decoration: none;
+	background: rgb(225,225,225);
+	border: 1px solid rgb(165,165,165);
+	color:rgb(10,10,10);
+}
+
+#wp-calendar a:hover {
+	background-color: rgb(235,235,235);
+	color:rgb(255,107,0);
+	border: 1px dotted rgb(255,107,0);
+	
+}
+
+#wp-calendar caption {
+	color: rgb(120,120,120);
+	font-size: 1em;
+	text-align: left;
+}
+
+#wp-calendar td {
+	font: normal small sans-serif;
+	letter-spacing: normal;
+	padding: 1px;
+	text-align: center;
+	color:rgb(100,100,100); 
+}
+
+#wp-calendar, #wp-calendar #today {
+	color: rgb(100,100,100); 
+}
+
+#wp-calendar th {
+	font-style: normal;
+	background-color: transparent;
+}
+
+.trackbackuri {
+	font-family: sans-serif; 
+	color: #333333; 
+	margin: 0px 6px 0px 8px; 
+	letter-spacing: 0px; 
+}
+
+.parmlink {
+		margin-right: 4px; 
+		letter-spacing: 0px; 
+}

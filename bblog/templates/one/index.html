@@ -1,0 +1,71 @@
+
+{assign var=title value=$blogname}    {* this sets the title to the blog name, 
+                                        as specified in the options page *}
+
+
+{include file="header.html"}    {* now we include the header file *}
+
+{getposts num=10 assign=posts}    {* getposts is a function. 
+					You can find out more about the options for it
+					in the bBlog help page in the admin panel, by clicking on [info/help] next to 'getposts' *}
+					
+
+
+<div id="content">
+{foreach from=$posts item=post} {* start the loop over posts - 
+				which was assigned by getposts *}
+
+<h2>{$post.posttime|date_format:s2}</h2>	
+<div class="post">
+	 <h3 class="storytitle" id="post-{$post.postid}"><a href="{$post.permalink}" rel="bookmark" title="Permanent Link: {$post.title|htmlspecialchars}">{$post.title}</a></h3>
+{if $post.sections}
+	<div class="meta">Filed under: 
+		<ul class="post-categories">
+			{sectionlinks mode="list" noul=true sections=$post.sections}
+		</ul>
+		&#8212; by {$post.author.fullname} @ {$post.posttime|date_format:time}
+	</div>
+{/if}
+	<div class="storycontent">
+	
+	{photobblog postid=$post.postid}
+	{$post.body|readmore:$post.postid}
+
+	</div>
+	
+	<div class="feedback">
+		<a href="{$post.permalink}">Comments ({$post.commentcount})</a> 
+	</div>
+	
+
+
+</div> <!-- end of div#post -->
+
+{/foreach}    {* end the loop *}
+
+</div> <!-- end of div#content -->
+
+
+<div id="menu">
+<ul>
+	
+	<li id="nav">Navigation
+	{links cat='Navigation' mode='list'}
+	</li>
+	
+	<li id="sections">Sections
+	{sectionlinks mode="list"}
+	</li>
+	<li id="asearch">Search<ul><li>
+	<form action="{$blogroot}search.php" method="get"><input size="10" type="text" name="string" /> <input type="submit" name="submit" value="Go"/></form>
+	</li></ul>
+	</li>	
+	<li id="blogroll">Syndicate
+	{links cat='Syndicate' mode='list'}
+	</li>
+	
+</ul>
+</div>
+
+{* now we include the footer file *}
+{include file="footer.html"}

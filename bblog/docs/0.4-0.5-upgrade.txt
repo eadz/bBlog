@@ -1,0 +1,66 @@
+How to upgrade from 0.4 to 0.5
+
+( quick instructions until when/if a script is made )
+
+
+Move your 0.4 folder out of the way. Keep the config.php and copy it to the new bblog folder. 
+
+then add to config.php:
+
+define('BLOGURL','http://www.example.com/blog/');
+define('BBLOGURL',BLOGURL.'bblog/');
+
+// uncommnt if using clean urls
+// define('CLEANURLS',TRUE);
+// define('URL_POST',BLOGURL.'article/%postid%/');
+// define('URL_SECTION',BLOGURL.'section/%sectionname%/');
+
+Chmod compiled_templates and favorites.xml
+
+run SQL:
+
+ALTER TABLE `bB_comments` ADD `title` VARCHAR( 255 ) NOT NULL ,
+ ADD `type` ENUM( 'comment', 'trackback' ) NOT NULL;
+
+CREATE TABLE `bB_plugins` (
+  `id` int(11) NOT NULL auto_increment,
+  `type` varchar(50) NOT NULL default 'admin',
+  `name` varchar(60) NOT NULL default '',
+  `ordervalue` decimal(3,2) NOT NULL default '50.00',
+  `nicename` varchar(127) NOT NULL default '',
+  `description` text NOT NULL,
+  `template` varchar(100) NOT NULL default '',
+  `help` mediumtext NOT NULL,
+  `authors` varchar(255) NOT NULL default '',
+  `licence` varchar(50) NOT NULL default '',
+  PRIMARY KEY  (`id`)
+);
+
+INSERT INTO `bB_config` VALUES ('', 'PING', 'false');
+
+ALTER TABLE `bB_comments` ADD `deleted` ENUM( 'false', 'true' ) DEFAULT 'false' NOT NULL ;
+
+Once you have logged in to bBlog, go to the plugins menu and click 'scan for new plugins'
+
+
+Edit your posts in phpmyadmin, and make sure the section field has :
+:5:2: instead of 5:2
+
+While you're there, look in the bB_config table, and look at the TEMPLATE row. You should have a folder with that name in your templates folder, either grey or green. 
+
+look at the included templates, one major thing has changed:
+
+{posts}
+ ....
+{/posts}
+
+becomes
+
+{getrecentposts assign=posts}
+{foreach from=$posts item=post}
+...
+{/foreach}
+
+
+Same sort of changes for comments, and single post, look at the included templates for examples. 
+

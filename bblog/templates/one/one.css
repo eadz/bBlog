@@ -1,0 +1,217 @@
+/* 
+   Modifications by Eaden M (http://www.eadz.co.nz/blog/) for bBlog.
+
+   Modifications by Chris M (http://aphotolog.com) for WordPress. 
+   Pardon my sloppiness..
+
+	Licensed under GPL :)
+*/
+
+body { 
+	margin:0px; 
+	background-color: #efefef; 
+	background-repeat: repeat-x; 
+	font-family: Verdana, Arial, sans-serif; 
+	font-size: 11px; 
+	line-height: 17px; 
+	text-align: left;
+	color: #111;
+	}
+
+a:link { 
+	color: #0000cc; 
+	text-decoration:none;
+	}
+
+a:visited {
+	color: #0000cc; 
+	text-decoration:none;
+	}
+
+a:hover { 
+	color: #000; 
+	text-decoration:none; 
+	background-color: #aaccff;
+	}
+
+h2 { 
+	float: left;
+	font-family: Georgia, "Times New Roman", Times, serif; 
+	font-weight: normal;
+	font-size: 18px;
+	color: #999;
+	margin: 0 10px 10px 0;
+	padding: 5px;
+	border-right: solid 1px rgb(192,211,226);
+	}
+	
+h3 { 
+	font-family: Georgia, "Times New Roman", Times, serif; 
+	font-weight: normal;
+	margin: 10px 0px 0px 0px;
+	padding-bottom: 2px;
+	}
+h3 a {
+	color: #000;
+}	
+h3 a:visited {
+	color: #000;
+}
+form {
+	margin: 0;
+	padding: 0;
+	}
+	
+input, textarea {
+	background-color: rgb(192,211,226);
+	border: 1px solid rgb(112,147,184);
+	font-size:11px; 
+	}
+
+li {
+	margin: 0;
+	padding: 0;
+	}
+
+#rap {
+	padding: 0;
+	}
+
+#header { 
+	margin: 0px;
+	padding: 20px;
+	background-color: rgb(112,147,184); 
+	font-size: 22px;  
+	font-family: Georgia, "Times New Roman", Times, serif; 
+	}
+
+#header a {
+	color: #fff;
+	text-decoration:none;
+	}
+	
+#content {
+	float: left;
+	width: 70%;
+	margin: 0;
+	padding: 20px;
+	background-color: #FFFFFF;
+	}
+	
+.storytitle {
+	margin: 0;
+	padding: 0;
+	font-size: 16px;
+	font-family: Georgia, "Times New Roman", Times, serif; 
+	font-weight: normal;
+	}
+
+.meta ul {
+	display: inline;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	}
+
+.meta li {
+	display: inline;
+	}
+
+.feedback { 
+	text-align: right;
+	margin-bottom: 30px;
+	padding: 0;
+	border-bottom: solid 1px rgb(192,211,226);
+	}
+ol#commentlist {
+	margin: 0px;
+	list-style-type: none;
+	margin-bottom: 3px;
+	border-bottom: 1px solid rgb(192,211,226);
+	padding-bottom: 10px;
+}
+	
+ol#commentlist li {
+	border: 1px solid #ddddff;
+	border-left: 5px solid #ccc;
+	background-color: #eeeeff;
+	padding-left: 5px;
+	margin: 0px;
+}
+
+p.comment-title {
+	font-weight: bold;
+	display: block;
+	/*background-color: #d9d9ff;*/
+	border-bottom: 1px solid #ccc;
+}
+
+#menu {
+	width: 27%;
+	margin: 0 auto 0 73%;
+	padding: 10px;
+	text-align: left;
+	background-color: rgb(192,211,226);
+	/*background: url(blue_stripes_tile.gif);*/
+
+	}
+	
+#menu ul {
+	margin: 0;
+	padding: 0 10px;
+	list-style-type: none;
+	}
+	
+#menu ul ul {
+	margin: 0;
+	padding: 0 0 20px 0;
+	list-style-type: none;
+	border-top: 1px solid #efefef;
+	}
+	
+#menu li {
+	margin: 0;
+	padding: 0;
+	}
+	
+#search, #calendar, #other {
+	display: none;
+	}
+	
+.credit {
+	clear: both;
+	}
+	
+p.credit {
+	margin: 0;
+	padding: 10px 0 0 0;
+	text-align: center;
+	display: block;
+	background-color: #ddd;
+	}
+ul.post-categories li {
+	padding-left: 5px;
+}
+ul.post-categories li:after {
+	content: ", ";
+}
+p.comment-trackback {
+
+	font-size: 10px;
+	margin: 0px;
+}
+a.calDayLink {
+	font-weight: bold;
+	background: #fff;
+}
+a.calDayLink:hover { color: #00aacc; }
+.calendarHeader a { font-weight: bold; }
+pre {
+	margin: 5px;
+	padding: 5px;
+	border: 1px solid #aaccff;
+	background: #f0f0ff;
+	color: #000;
+	font: mono;
+	font-size: 12px;
+}

@@ -1,0 +1,55 @@
+<table cellpadding="0" cellspacing="0" class="list">
+<tr>
+<th>Enabled</th>
+<th>Provider Name</th>
+<th>Content URL</th>
+<th>&#160;</th>
+</tr>
+{section name=s loop=$eproviders}
+<form action="index.php" method="post">
+  <input type="hidden" name="b" value="plugins">
+  <input type="hidden" name="p" value="externalcontent">
+  <input type="hidden" name="providerid" value="{$eproviders[s]->id}">
+
+  <tr class="{cycle values="high,low"}">
+    <td>
+      <input type="checkbox" name="enabled" class="text" {if $eproviders[s]->enabled == 'true'}checked{/if} />
+    </td>
+    <td>
+      <input type="text" name="nicename" value="{$eproviders[s]->nicename}" class="text"/>
+    </td>
+    <td>
+      <input type="text" name="url" value="{$eproviders[s]->url}" class="text"/>
+    </td>
+    <td class="action">
+      <input type="submit" name="action" value="Save" class="submit"/>
+      <input type="submit" name="action" value="Delete" onclick="return confirm('Do you really want to delete this content provider?');" class="submit">
+    </td>
+  </tr>
+</form>
+{/section}
+</table>
+
+
+<form action="index.php" method="post" style="margin-top:20px">
+<input type="hidden" name="b" value="plugins">
+<input type="hidden" name="p" value="externalcontent">
+<input type="hidden" name="action" value="New">
+
+<h3>New Content Provider</h3>
+<h4>Provider Name</h4>
+<div class="frame" title="a unique name for the provider">
+  <input type="text" name="nicename" class="text"/>
+</div>
+
+<h4>Content URL</h4>
+<div class="frame" title="fully qualified url including http://">
+  <input type="text" name="url" value="http://" class="text"/>
+</div>
+
+<div class="button">
+  <input type="submit" name="submit" value="Create new provider" class="submit"/>
+</div>
+</form>
+<br />
+</form>

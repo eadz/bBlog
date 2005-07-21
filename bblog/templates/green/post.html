@@ -1,0 +1,34 @@
+{include file="header.html"}
+<table border="0" cellpadding="20" cellspacing="0" width="100%">
+<tr><td width="65%" valign="top" bgcolor="#FFFFFF">
+                            
+{getpost postid=$postid assign=post}
+<h2>{$post.title}</h2>
+<p><span class="date">
+{$post.posttime|date_format:jim} by {$post.author.nickname}
+</span> <span class="permlink"><a href="{$post.permallink}">#</a> {sectionlinks sep=", " sections=$post.sections}</span></p>
+{$post.body}
+<br />
+<br />
+<i>The trackback URL for this post is {$post.trackbackurl}</i>
+<!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+    rdf:about="{$post.permalink}"
+    dc:identifer="{$post.permalink}"
+    dc:title="{$post.title}"
+    trackback:ping="{$post.trackbackurl}" />
+</rdf:RDF>
+-->
+<br><br>
+<h2>Comments</h2>
+{include file="comments.html}
+
+</td>
+<td width="35%" valign="top">
+<h3>Referers</h3>
+{referers}
+</td></tr></table>
+{include file="footer.html"}

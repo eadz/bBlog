@@ -1,0 +1,71 @@
+{getcomments assign=comments}
+{getpost assign=post postid=$postid}
+{assign var=title value="`$post.title` - $blogname"}
+{include file="header.html"}
+<div id="content">
+
+<h2>{$post.posttime|date_format:s2}</h2>	
+<div class="post">
+	 <h3 class="storytitle" id="post-{$post.postid}"><a href="{$post.permalink}" rel="bookmark" title="Permanent Link: {$post.title|htmlspecialchars}">{$post.title}</a></h3>
+{if $post.sections}
+	<div class="meta">Filed under: 
+		<ul class="post-categories">
+			{sectionlinks mode="list" noul=true sections=$post.sections}
+		</ul>
+		&#8212; by {$post.author.fullname} @ {$post.posttime|date_format:time}
+	</div>
+{/if}
+	<div class="storycontent">
+{photobblog postid=$postid mode=full}
+	{$post.body}
+
+	</div>
+	
+	<div class="feedback">
+		<a href="{$post.permalink}">Comments ({$post.commentcount})</a> 
+	</div>
+	
+
+
+</div> <!-- end of div#post -->
+
+{include file="comments.html} {* shows all the comments, and the comment form *}
+
+</div> <!-- end of div#content -->
+
+
+<div id="menu">
+<ul>
+	<li id="nav">Navigation
+	{links cat='Navigation' mode='list'}
+	</li>
+	
+	<li id="sections">Sections
+	{sectionlinks mode="list"}
+	</li>
+	
+	<li id="recentposts">Recent Posts
+	{recentposts mode="list"}
+	</li>
+	<li>Calendar
+	<ul><li>{calendar}</li></ul>
+	</li>
+</ul>
+</div>
+
+
+<!--	
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+    rdf:about="{$post.permalink}"
+    dc:identifer="{$post.permalink}"
+    dc:title="{$post.title}"
+    trackback:ping="{$post.trackbackurl}" />
+</rdf:RDF>
+-->
+
+
+{* now we include the footer file *}
+{include file="footer.html"}

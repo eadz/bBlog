@@ -1,0 +1,15 @@
+{include file="header.html"}
+
+{getarchiveposts archive=TRUE assign=posts}
+{foreach from=$posts item=post}
+<p>{$post.posttime|date_format:"l \T\h\e j<\s\u\p>S</\s\u\p>"}
+ <a href="{$post.permalink}">{$post.title}</a> <br />
+{/foreach}
+</td>
+<td width="25%" valign="top" class="sidebartd" id="sidebartd">
+<h4>Calendar</h4>
+<div align="right">{calendar}</div>
+<h4>Recently</h4>
+{recentposts}
+
+{include file="footer.html"}

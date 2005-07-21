@@ -1,0 +1,22 @@
+{include file="header.html"}
+<div id="Main">
+  <div id="Content">
+<!-- loop start -->
+                                 
+{getrecentposts num=999 archive=TRUE assign=posts}
+{foreach from=$posts item=post}
+<p>{$post.posttime|date_format:"l \T\h\e j<\s\u\p>S</\s\u\p>"} 
+ <a href="{$post.permalink}">{$post.title}</a> <br />
+{/foreach}
+
+  </div>
+  <div id="Sidebar">
+    <div class="Sidetitle"><h4>Calendar</h4></div>
+    {calendar}
+    <div class="Sidetitle"><h4>Recently</h4></div> 
+    {recentposts}
+  </div>
+</div>
+
+{include file="footer.html"}
+	

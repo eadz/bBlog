@@ -1,0 +1,101 @@
+<div>
+{if $showeditform}
+<hr/>
+{if $user.id == -1}
+<h3>Add user</h3>
+{else}
+<h3>Edit user</h3>
+{/if}
+<form action="index.php" method="post">
+<input type="hidden" name="b" value="plugins" />
+<input type="hidden" name="p" value="usermanager" />
+<input type="hidden" name="userid" value="{$user.id}" />
+{if $user.id == -1}
+<input type="hidden" name="userdo" value="addsave" />
+{else}
+<input type="hidden" name="userdo" value="editsave" />
+{/if}
+<h4>Nickname</h4>
+<div class="frame">
+  <input class="text" size="40" type="text" name="nickname" value="{$user.nickname|htmlspecialchars}" />
+</div>
+<h4>Email</h4>
+<div class="frame">
+  <input class="text" size="40" type="text" name="email" value="{$user.email|htmlspecialchars}" />
+</div>
+<h4>full name</h4>
+<div class="frame">
+  <input class="text" size="40" type="text" name="fullname" value="{$user.fullname|htmlspecialchars}" />
+</div>
+<h4>Password</h4>
+<div class="frame">
+  <input class="text" size="40" type="password" name="password" value="***OLDPASSWORD***" />
+</div>
+<h4>Ip/Domain</h4>
+<div class="frame">
+  <input class="text" size="40" type="text" name="ip_domain" value="{$user.ip_domain|htmlspecialchars}" />
+</div>
+<h4>Location</h4>
+<div class="frame">
+  <input class="text" size="40" type="text" name="location" value="{$user.location|htmlspecialchars}" />
+</div>
+<h4>Website</h4>
+<div class="frame">
+  <input class="text" size="40" type="text" name="url" value="{$user.url|htmlspecialchars}" />
+</div>
+<h4>ICQ</h4>
+<div class="frame">
+  <input class="text" size="15" type="text" name="icq" value="{$user.icq|htmlspecialchars}" />
+</div>
+<h4>Save User</h4>
+<div class="button">
+  <input type="submit" class="submit" name="s" value="Save User" />
+</div>
+
+</form>
+{else}
+<div class='frame'>
+{$message}
+
+
+
+<form action="index.php" method="post">
+<input type="hidden" name="b" value="plugins" />
+<input type="hidden" name="p" value="usermanager" />
+<br />
+</div>
+<table cellpadding="0" cellspacing="0" class="list">
+<tr>
+  <th>Nickname</th>
+  <th>email</td>
+  <th>fullname</th>
+  <th>&#160;</th>
+</tr>
+{section name=c loop=$users}
+  <form action="index.php" method="post">
+    <input type="hidden" name="b" value="plugins" />
+    <input type="hidden" name="p" value="usermanager" />
+    <input type="hidden" name="userid" value="{$users[c]->id}" />
+    <tr class="{cycle values="high,low"}" style="vertical-align:top;">
+      <td>{$users[c]->nickname}</td>
+      <td>{$users[c]->email}</td>
+      <td>{$users[c]->fullname}</td>
+      <td>
+        <input type="submit" name="userdo" value="Edit" class="submit" />
+        <input type="submit" name="userdo" value="Delete" onclick="return confirm('Do you really want to delete this user?');" class="submit" />
+      </td>
+    </tr>
+  </form>
+{/section}
+  <form action="index.php" method="post">
+    <input type="hidden" name="b" value="plugins" />
+    <input type="hidden" name="p" value="usermanager" />
+    <tr class="{cycle values="high,low"}" style="vertical-align:top;">
+      <td align=center>
+        <input type="submit" name="userdo" value="Add" class="submit" />
+      </td>
+    </tr>
+  </form>
+</table>
+{/if}
+</div>

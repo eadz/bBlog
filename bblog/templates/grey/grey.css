@@ -1,0 +1,211 @@
+body {
+	margin:10px 0px; 
+	padding:0px;
+	text-align:center;
+	font:11px verdana, arial, helvetica, sans-serif;
+	color:#333;
+	background:#fff url("bg.gif") fixed;
+	}
+
+h1 {
+	font:bold italic 24px georgia, times new roman, times, serif;
+	margin-top:20px;
+	background: transparent;
+	}
+
+h2 {
+	color:#333;
+	font:bold 15px georgia, times new roman, times, serif;
+	margin-top: 15px;
+	margin-bottom: 2px;
+	background: transparent;
+	}
+h3 {
+	color:#666;
+	font: bold 13px/18px georgia, times new roman, times, serif;
+	margin-top: 15px;
+	margin-bottom: 2px;
+	background: transparent;
+	}
+
+h4 {
+	font: 10px verdana, arial, helvetica, sans-serif;
+	text-transform: uppercase;
+	margin: 0px;
+	padding: 0px;
+	}
+
+.date {
+	font: 10px verdana, arial, helvetica, sans-serif;
+	letter-spacing: 0.09em;
+    display: block;
+	}
+
+.footer {
+	font:10px verdana, arial, helvetica, sans-serif;
+	color: #666;
+	background: transparent;
+	text-align: right;
+	}
+
+	
+p {
+	line-height:1.8;
+	margin:10px 0px;
+	}
+
+ol, ul {
+	margin-top:0;
+	margin-bottom:10px;
+	line-height:1.8;
+	}
+
+#Container {
+	width:750px;
+	margin:0px auto; 
+	text-align:left; 
+	padding:0px;
+	border: 1px solid #ccc;
+	background-color:#eee;
+	color: #333;
+	}
+
+#Main {
+	width:708px;
+	float: left;
+	margin-right: 10px;
+	margin-left: 10px;
+	text-align:center; 
+	padding:0px;
+	border: 1px solid #ccc;
+	background-color:#fff;
+	color: #333;
+	}
+
+#Container>#Main {margin-left: 20px;}
+
+#Top {
+	text-align:center;
+	padding:10px;
+	border-bottom: 0px;
+	color: #333;
+	background:#ddd url("stripes.gif") fixed;
+	}
+
+#Topmenu {
+	text-align:right;
+	padding:5px 10px;
+	border-top:1px dashed #ccc;
+	border-bottom: 0px;
+	background-color:#eee;
+	font:10px verdana, arial, helvetica, sans-serif;
+	color:#333;
+	text-transform: uppercase;
+    padding-right: 21px;
+	}
+#Topmenu a {
+ background: #eee;
+ padding: 2px;
+ border: #ccc 1px solid;
+ margin-left: 1px;
+ text-decoration: none;
+}
+#Topmenu a:hover {
+ background: #BDAF83;
+ padding: 2px;
+ border: #BDAF83 1px solid;
+ color: #fff;
+
+}
+#Content {
+	width: 459px;
+	float: left;
+	text-align:left; 
+	margin:0px;
+	padding:10px;
+	border-right: 1px solid #ccc;
+	color: #333;
+	background-color:#fff;
+	}
+#Content h3 {
+     color: #A79355;
+     border-bottom: #66472E 1px solid;
+}
+#Sidebar {
+	width: 200px;
+	float: left;
+	font:12px/1.5 trebuchet ms, verdana, arial, helvetica, sans-serif;
+	color:#666;
+	text-align:left; 
+	padding:10px;
+	background-color:#fff;
+    text-align: center;
+	}
+#Sidebar h4 {  letter-spacing: 0.09em; }
+.Sidetitle {
+	text-align: center;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	color: #66472E;
+	background: #EBE8D0;
+	}
+
+#Bottommenu {
+	text-align:center; 
+	padding:10px 5px;
+	border-top:0px;
+	border-bottom:1px dashed #ccc;
+	background-color:#eee;
+	font:10px verdana, arial, helvetica, sans-serif;
+	color:#999;
+	text-transform: uppercase;
+	}
+
+#Bottom {
+	text-align:center; 
+	padding:10px;
+	border-top: 0px;
+	background-color:#ddd;
+	font:10px verdana, arial, helvetica, sans-serif;
+	color:#333;
+	text-transform: uppercase;
+	}
+
+a {
+	color:#66472E;
+	text-decoration:none;
+	background: transparent;
+	}
+
+a:link {color: #66472E; border-bottom: 1px dashed #999; background: transparent;}
+a:visited {color: #66472E; border-bottom: 1px dashed #BDAF83; background: transparent;}
+a:hover {color: #f60; border-bottom: 1px solid #f60; background: transparent;}
+div.comment { margin: 5px; padding: 2px; border-left: #666 1px solid; border-bottom: #666 1px solid; }
+h4.comment {
+	text-align: left;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	color: #66472E;
+	background: #EBE8D0;
+ 	text-transform: none;
+}
+a.reply { font-weight: bolder; }
+img {border: none; }
+
+input,textarea {
+	background-color: #F7F7F7;
+	border: 1px solid #804000;
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000000;
+}
+div.form { width:400px } 
+div.clear { clear: both; line-height:5px } 
+div.formleft { width: 90px; float: left; text-align: right; padding-top:2px } 
+div.formright { float: left; text-align: left } 
+input.checkbox { background: #fff; border: none; padding: 0px; margin: 0px }
+h4.tbh { background: #ccc; }
+
+hr {
+	clear: both
+	}

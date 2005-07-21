@@ -1,0 +1,52 @@
+
+{assign var=title value="`$blogname` Archives"}    {* this sets the title to the blog name, 
+                                        as specified in the options page *}
+
+
+{include file="header.html"}    {* now we include the header file *}
+
+{getposts num=-1 assign=posts}    {* getposts is a function. 
+					You can find out more about the options for it
+					in the bBlog help page in the admin panel, by clicking on [info/help] next to 'getposts' *}
+					
+
+
+<div id="content">
+
+{foreach from=$posts item=post} {* start the loop over posts - 
+				which was assigned by getposts *}
+
+<div class="post">
+	 <h3 class="storytitle" id="post-{$post.postid}">{$post.posttime|date_format:s2} - <a href="{$post.permalink}" rel="bookmark" title="Permanent Link: {$post.title|htmlspecialchars}">{$post.title} ({$post.commentcount})</a></h3>
+	
+</div> <!-- end of div#post -->
+
+{/foreach}    {* end the loop *}
+
+</div> <!-- end of div#content -->
+
+
+<div id="menu">
+<ul>
+	
+	<li id="nav">Navigation
+	{links cat='Navigation' mode='list'}
+	</li>
+       <li id="asearch">Search<ul><li>
+        <form action="{$blogroot}search.php" method="get"><input size="10" type="text" name="string" /> <input type="submit" name="submit" value="Go"/></form>
+        </li></ul>
+        </li>
+	
+	<li id="sections">Sections
+	{sectionlinks mode="list"}
+	</li>
+	
+	<li id="blogroll">Reccomended
+	{links cat='Reccomended' mode='list'}
+	</li>
+	
+</ul>
+</div>
+
+{* now we include the footer file *}
+{include file="footer.html"}

@@ -1,0 +1,96 @@
+<div>
+{if $showeditform}
+<hr/>
+<h3>Edit Comment</h3>
+
+<form action="index.php" method="post">
+<input type="hidden" name="b" value="plugins" />
+<input type="hidden" name="p" value="comments" />
+<input type="hidden" name="commentid" value="{$comment.commentid}" />
+<input type="hidden" name="commentdo" value="editsave" />
+<h4>Title</h4>
+<div class="frame">
+  <input class="text" size="40" type="text" name="title" value="{$comment.title|htmlspecialchars}" />
+</div>
+<h4>Author</h4>
+<div class="frame">
+  <input class="text" size="40" type="text" name="author" value="{$comment.author|htmlspecialchars}" />
+</div>
+<h4>Email</h4>
+<div class="frame">
+  <input class="text" size="40" type="text" name="email" value="{$comment.email|htmlspecialchars}" />
+</div>
+<h4>Website</h4>
+<div class="frame">
+  <input class="text" size="40" type="text" name="websiteurl" value="{$comment.websiteurl|htmlspecialchars}" />
+</div>
+<h4>Comment Body</h4>
+<div class="frame">
+  <textarea class="text" name="body" cols="60" rows="10" >{$comment.body|htmlspecialchars}</textarea>
+</div>
+<h4>Save Comment</h4>
+<div class="button">
+  <input type="submit" class="submit" name="s" value="Save Comment" />
+</div>
+
+</form>
+{else}
+<div class='frame'>
+{$message}
+
+
+
+<form action="index.php" method="post">
+<input type="hidden" name="b" value="plugins" />
+<input type="hidden" name="p" value="comments" />
+Show comments for post <select name="post_comments">
+<option value=''>Choose ...</option>
+{foreach from=$postselect item=postitem}
+<option value="{$postitem.postid}" {if $smarty.post.post_comments eq $postitem.postid}selected{/if}>{$postitem.title} ({$postitem.c})</option>
+{/foreach}
+</select>
+ <input type="submit" value="Go" name="go" />
+</form>
+<br />
+</div>
+<table cellpadding="0" cellspacing="0" class="list">
+<tr>
+  <th>Author</th>
+  <th>IP</td>
+  <th style='width:50%;'>Comment</th>
+  <th>Post</th>
+  <th>&#160;</th>
+</tr>
+{section name=c loop=$comments}
+  <form action="index.php" method="post">
+    <input type="hidden" name="b" value="plugins" />
+    <input type="hidden" name="p" value="comments" />
+    <input type="hidden" name="commentid" value="{$comments[c]->commentid}" />
+    <input type="hidden" name="postid" value="{$comments[c]->postid}">
+    <!-- for title we need a real hover lib to break text nicely -->
+    <tr class="{cycle values="high,low"}" style="vertical-align:top; {if $comments[c]->onhold eq 1} color: #999;{/if}" title="Mail: '{$comments[c]->posteremail}'; WWW: '{$comments[c]->posterwebsite}'; IP Address: {$comments[c]->ip};  Text: '{$comments[c]->commenttext|nohtml|truncate}'; ">
+      <td>
+      {if $comments[c]->posteremail}
+          <a href='mailto:{$comments[c]->posteremail}'>{$comments[c]->postername}</a>
+      {else}
+		{$comments[c]->postername}
+      {/if}
+      </td>
+      
+      <td>{$comments[c]->ip}</td>
+      <td>{$comments[c]->commenttext|nohtml|truncate:200}</td>
+      <td>{$comments[c]->title}</td>
+      <td>
+        {if $comments[c]->onhold eq 1}
+		<input type="submit" name="commentdo" value="Approve" class="submit" />
+	{/if}
+        <input type="submit" name="commentdo" value="Edit" class="submit" />
+        <input type="submit" name="commentdo" value="Delete" onclick="return confirm('Do you really want to delete this comment?');" class="submit" />
+
+      </td>
+    </tr>
+  </form>
+{/section}
+</table>
+{/if}
+</div>

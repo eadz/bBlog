@@ -1,0 +1,83 @@
+<h2 id="comments">Comments</h2>
+
+{* bblog todo: rss feed for comments 
+<!--<p><a href=""><abbr title="Really Simple Syndication">RSS</abbr> feed for comments on this post.</a></p>-->
+*}
+<p>The <acronym title="Uniform Resource Identifier">URI</acronym> to TrackBack this entry is: <em>{$post.trackbackurl}</em></p>
+<br clear="all"/>
+<ol id="commentlist">
+{foreach from=$comments item=comment}
+
+  {if $comment.deleted eq "true"}
+    <!-- deleted comment - you could put something in here like LJ does -->
+  {elseif $comment.onhold}
+    	<li id="comment{$comment.commentid}" style="margin-left: {$comment.level15}px;">
+    	<p>Comment pending moderation</p></li>
+  {else}
+    <li id="comment{$comment.commentid}" style="margin-left: {$comment.level15}px; border-left: 3px solid  rgb(50%, 50%, {$comment.levelhalfpercent}%);">
+    {if $comment.type eq 'trackback'}
+        <p class="comment-title">{$comment.title|nohtml} via trackback from <a href="{$comment.websiteurl}" rel="external">{$comment.author}</a> &#8212; {$comment.posted|date_format:since} {$comment.replylink} {$comment.permalink}</p>
+	<p class="comments-body">{$comment.body|nl2br|kses}</p>
+       
+    {else}
+     <p class="comment-title">{$comment.title|nohtml} by {$comment.posterlink}  &#8212; {$comment.posted|date_format:since} {$comment.replylink} {$comment.permalink}</p>
+	<p class="comments-body">{$comment.body|nl2br|kses}</p>
+  
+    {/if}
+  <p><cite>Comment Trackback URL : {$comment.trackbackurl}</cite></p>
+</li>
+  {/if}
+
+{/foreach}
+</ol>
+
+{if $post.allowcomments}
+<h2>Leave a Comment</h2>
+
+<form method="post" action="{$commentformaction}" id="commentform">
+{$commentformhiddenfields}
+<input type="hidden" name="do" value="submitcomment" />
+<p><em>( to reply to a comment, click the reply link next to the comment )</em></p>
+<p>&nbsp;</p>
+<p>
+	  <input type="text" name="name" id="author" class="textarea" value="" size="28" tabindex="1" />
+	   <label for="name">Name</label>
+	<input type="hidden" name="comment_post_ID" value="29" />
+	<input type="hidden" name="redirect_to" value="#" />
+	</p>
+
+	<p>
+
+	  <input type="text" name="email" id="email" value="" size="28" tabindex="2" />
+	   <label for="email">Email</label>
+	</p>
+
+	<p>
+	  <input type="text" name="website" id="url" value="" size="28" tabindex="3" />
+	   <label for="website"><acronym title="Uniform Resource Identifier">URI</acronym></label>
+	</p>
+	<p>
+	  <input type="text" name="title" id="title" value="{$commentreplytitle}" size="28" tabindex="3" />
+	   <label for="title">Comment Title</label>
+	</p>
+	<p>
+	  <label for="comment">Your Comment</label>
+	<br />
+	  <textarea name="comment" id="comment" cols="70" rows="4" tabindex="4"></textarea>
+	</p>
+{if $smarty.const.C_IMAGE_VERIFICATION eq "true"}
+<p>As a spam prevention measure, please type the following text into the text box<br /><img src="{$bblogurl}authimage.php?rid={$rid}" /><br />
+<input type="text" id="spamcode" name="spamcode" tabindex="5" size="28"/>
+</p>
+{/if}
+	<p>
+	  <input name="submit" type="submit" tabindex="6" value="Say it!" />
+
+	</p>
+
+</form>
+{else}
+<h2>Comments have now been turned off for this post</h2>
+{/if}
+
+

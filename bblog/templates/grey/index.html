@@ -1,0 +1,27 @@
+{include file="header.html"}
+<div id="Main">
+  <div id="Content">
+
+{getrecentposts num=5 assign=posts}
+
+
+{foreach from=$posts item=post}
+<!-- loop start -->
+{if $post.newday}<h3>{$post.posttime|date_format:s2}</h3>{/if}<!-- show the date if it's a new day -->
+<h2>&para; {$post.title}</h2>
+<span class="date">{$post.posttime|date_format:jim} by {$post.author.nickname}</span>
+{$post.body}
+<div class="footer">{sectionlinks sep=", " sections=$post.sections} &#8226; <a href="{$post.permalink}">{$post.commenttext}</a></div>
+<!-- loop end -->
+{/foreach}
+
+  </div>
+  <div id="Sidebar">
+    <div class="Sidetitle"><h4>Recently</h4></div> 
+    {recentposts}
+    {include file="buttons.html"}
+  </div>
+</div>
+
+{include file="footer.html"}
+	

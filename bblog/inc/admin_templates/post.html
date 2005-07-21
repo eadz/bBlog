@@ -1,0 +1,25 @@
+{include file="common/html_start.html"}
+{include file="common/layout_start.html"}
+
+{literal}
+<script language="javascript" type="text/javascript">
+function doPreview() {
+	document.post.dopreview.value = 'true';
+}
+</script>
+{/literal}
+
+{if $showmessage}
+     {include file="common/message.html"}
+{/if}
+
+<form action='index.php' method='post' name='post' enctype='multipart/form-data' >
+<input type='hidden' name='b' value='post'>
+<input type='hidden' name='newpost' value='true'>
+<input type="hidden" name="dopreview" value="false">
+{assign var="enable_preview" value="true"}
+{include file="common/post_edit.html"}
+</form>
+
+{include file="common/layout_stop.html"}
+{include file="common/html_stop.html"}

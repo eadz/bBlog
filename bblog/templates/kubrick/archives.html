@@ -1,0 +1,34 @@
+{assign var=title value="Archives - $blogname"}
+{include file="header.html"}
+	<style type="text/css" media="screen">
+		@import url( {$bblogurl}templates/kubrick/screen.css );
+	</style>
+{getarchiveposts all="1" day="$day" month="$month" year="$year" assign=posts}
+
+<div id="content" class="narrowcolumn">
+
+    {foreach from=$posts item=post}
+    <div class="post">
+        {if $post.newmonth}
+		<h2 class="date"><a href="{$blogurl}archives.php?{$post.posttime|date_format:'\y\e\a\r\=Y\&\m\o\n\t\h\=m'}">Archive for {$post.posttime|date_format:'F, Y'}</a></h2>
+		<p/>
+        {/if}
+		{if $post.newday}
+			<small><a href="{$blogurl}archives.php?{$post.posttime|date_format:'\y\e\a\r\=Y\&\m\o\n\t\h\=m\&\d\a\y\=d'}"><b>{$post.posttime|date_format:"F j<\s\u\p>S</\s\u\p>"}</b></a></small>
+		{/if}	
+            <h3 id="post-{$post.id}"><a href="{$post.permalink}" rel="bookmark" title="Permanent Link: {$post.title}">{$post.title}</a></h3>
+            <div class="entry">
+                <small>
+                {$post.body|strip_tags|truncate:200:"..."}
+                </small>
+            </div>
+    </div>
+    {/foreach}
+
+    <div class="navigation">
+        <div class="alignleft"></div>
+        <div class="alignright"></div>
+    </div>
+</div>
+{include file="index-sidebar.html"}
+{include file="footer.html"}

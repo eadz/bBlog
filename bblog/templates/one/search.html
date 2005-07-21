@@ -1,0 +1,52 @@
+{assign var=title value="Search"}
+{include file="header.html"}
+<div id="content">
+{if $string}
+ {assign var="first" value="true"}
+ {getsearchresults assign=posts num=999 string=$string}
+ <h1>Search Results for {$string}</h1>
+ {foreach from=$posts item=post}
+ 
+<p>
+ <b><a href="{$post.permalink}" rel="bookmark" title="Permanent Link: {$post.title|htmlspecialchars}">{$post.title}</a></b><br />
+ <em>by {$post.author.fullname} on {$post.posttime|date_format:s2}</em>
+<br />
+	{$post.preview}
+   <br /><br /></p>
+ {foreachelse}
+  <p>Sorry but there were no search results matching the specified criteria.</p>
+ {/foreach}
+{/if}
+
+<h3>Search Archives</h3>
+ <form method="get" action="search.php">
+ <h2>Keywords</h2>
+ <input type="text" name="string" value="{$smarty.get.string}" />
+ <input name="submit" type="submit" id="submit" value="Search" />
+</form>
+
+</div> <!-- end of div#content -->
+
+<div id="menu">
+<ul>
+	
+	<li id="nav">Navigation
+	{links cat='Navigation' mode='list'}
+	</li>
+	
+	<li id="sections">Sections
+	{sectionlinks mode="list"}
+	</li>
+	
+	<li id="blogroll">Blogroll
+	{links cat='Blogs I read' mode='list'}
+	</li>
+	
+	<li id="blogroll">Reccomended
+	{links cat='Reccomended' mode='list'}
+	</li>
+	
+</ul>
+</div>
+
+{include file="footer.html"}

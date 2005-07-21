@@ -1,0 +1,146 @@
+<style type="text/css">
+{literal}
+<!--
+.authortd {
+	background-color: #f0f0f0;
+	font-weight: bold;
+}
+.commenttd {
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: none;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #666;
+	border-right-color: #666;
+	border-bottom-color: #666;
+	border-left-color: #666;
+}
+.formtd {
+	font-weight: bold;
+
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+
+	border-top-color: #666;
+	border-right-color: #666;
+	border-bottom-color: #666;
+	border-left-color: #666;
+}
+.indenttd {
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: none;
+	border-top-color: #666;
+	border-right-color: #666;
+	border-bottom-color: #666;
+	border-left-color: #666;
+	border-right-style: none;
+	border-bottom-style: solid;
+	border-left-style: none;
+}
+
+-->
+{/literal}
+</style>
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="2">
+    <!-- loop start -->
+    <!-- note : level25 is the comment level time 25.
+     This is a hack until smarty supports recurstion without having to recursivly include the template
+     -->
+     
+    {getcomments assign=comments}
+    {foreach from=$comments item=comment} 
+    <tr>
+        <td><table width="100%" border="0" cellspacing="0" cellpadding="2">
+                <tr>
+                    <td width="{$comment.level25}" class="indenttd">&nbsp;</td>
+                    {if $comment.type eq 'trackback'} 
+		    <td class="authortd"><p>{$comment.title} via trackback from <a href="{$comment.website}">{$comment.author}</a> {$comment.posted|date_format:since} &#8226;  &#8226; {$comment.replylink} 
+		    <a style="text-size:10px;" href="javascript:alert('The trackback URL for this trackback is {$comment.trackbackurl}');">trackback url</a>
+		    </p></td>
+		    
+		    {else}
+		    <td class="authortd"><p>{$comment.title} by {$comment.author}
+                          {$comment.emaillink} {$comment.websitelink} {$comment.replylink} 
+			   <a style="font-size:10px;" href="Javascript:alert('The trackback URL for this comment is {$comment.trackbackurl}');">trackback url</a><br />
+                          {$comment.posted|date_format:since}
+                             </p></td>
+	            {/if}		
+                </tr>
+                <tr>
+                    <td width="{$comment.level25}">&nbsp;</td>
+                    <td class="commenttd">{$comment.body|nohtml}</td>
+                </tr>
+            </table></td>
+    </tr>
+
+    {foreachelse}
+	<tr><td>No comments, be the first!</td></tr>
+    {/foreach}
+
+    <tr>
+        <td class="formtd">
+  <form method="POST" action="{$commentformaction}">
+{$commentformhiddenfields}
+                <table width="100%" border="0" cellspacing="0" cellpadding="2">
+                    <tr>
+                        <td><strong>Add Comment</strong></td>
+                        <td colspan="2"><em>( to reply to a comment, click the
+                            reply link next to the comment )</em></td>
+                    </tr>
+                    <tr>
+                        <td>Your Name</td>
+                        <td><input name="name" type="text" id="name" value="{$cdata.name}"></td>
+                        <td><input class="checkbox" name="set_cookie" type="checkbox" id="set_cookie" value="1" checked="checked"/> Remember Me! </td>
+                    </tr>
+                    <tr>
+                        <td>Email Address</td>
+                        <td><input name="email" type="text" id="email" value="{$cdata.mail}"></td>
+                        <td><input name="public_email" type="checkbox" id="public_email" value="1" checked="checked">
+                            Make public </td>
+                    </tr>
+                    <tr>
+                        <td>Website</td>
+                        <td><input name="website" type="text" id="website" value="{$cdata.web}"></td>
+                        <td><input name="public_website" type="checkbox" id="public_website" value="1" checked="checked">
+                            Make public</td>
+                    </tr>
+                    
+		    <tr><td>Comment Title</td>
+		    <td colspan="2">
+
+		    <input name="title" type="text" id="title" value="{$commentreplytitle}" style="width:100%;"/>
+		    </td>
+		    
+		    </tr>
+		    <tr>
+                        <td valign="top">Comment</td>
+                        <td colspan="2" valign="top"><textarea name="comment" cols="40" rows="6" wrap="VIRTUAL" id="comment" style="width: 100%;"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>Submit Comment</td>
+                        <td></td>
+                        <td><input name="submit" type="submit" id="submit" value="Submit Comment"></td>
+                    </tr>
+                </table>
+            <input type="hidden" name="do" value="submitcomment">
+            </form>
+
+
+		</td>
+    </tr>
+</table>
+

@@ -1,0 +1,69 @@
+{include file="common/html_start.html"}
+{include file="common/layout_start.html"}
+
+<form action="" method="post">
+<h4>Security</h4>
+<div class="frame">
+State:
+{if $security}
+<span style="color: darkgreen; font-weight: bold;">OK (secured)</span>
+{else}
+<span style="color: darkred; font-weight: bold;">FAILED (insecure)</span>
+<p><strong>What to do?</strong></p>
+<p>Please remove these files:</p>
+<pre>
+bblog/install.php
+bblog/install
+</pre>
+{/if}
+</div>
+
+<h4>Nice URL support</h4>
+<div class="frame">
+State:
+{if $state_404}
+<span style="color: darkgreen; font-weight: bold;">OK (work properly)</span>
+{else}
+<span style="color: darkred; font-weight: bold;">FAILED (work inproperly)</span>
+<p><strong>How to setup?</strong></p>
+<p>If you use your own Apache web server you only need to rename htaccess-404 to .htaccess file and activate support for .htaccess files in Apache webserver (please read the documentation of Apache web server).</p>
+<p>If you use commercial hosting you should be able to set up error (404) page to file <pre>error.php</pre> in bblog root directory. If your hosting control panel doesn't provide this feature please contact technical support of your hosting provider.</p>
+{/if}
+</div>
+
+<h4>Image resize support</h4>
+<div class="frame">
+State:
+{if $state_gd}
+<span style="color: darkgreen; font-weight: bold;">OK (work properly)</span>
+{else}
+<span style="color: darkred; font-weight: bold;">FAILED (work inproperly)</span>
+<p><strong>How to setup?</strong></p>
+<p>Download and install <a href="http://www.boutell.com/gd/">GD Library</a> or ask your service provider</p>
+{/if}
+</div>
+
+<h4>Inteligent search status</h4>
+<div class="frame">
+State: 
+{if $records_count > 0}
+<span style="color: darkgreen; font-weight: bold;">OK (indexed {$records_count} words)</span>
+{else}
+<span style="color: darkred; font-weight: bold;">NOT INDEXED</span>
+{/if}
+<br />
+<input type="submit" name="reindex" value="Reindex" />
+</div>
+
+<h4>Loaded PHP extensions</h4>
+<div class="frame">
+<ul style='margin-left: 20px; list-style: square;'>
+{foreach from=$extensions item=extension}
+	<li>{$extension}</li>
+{/foreach}
+</ul>
+</div>
+</form>
+
+{include file="common/layout_stop.html"}
+{include file="common/html_stop.html"}

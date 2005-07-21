@@ -1,0 +1,8 @@
+Install instructions
+--------------------
+
+1 ) The documentation for bBlog is at www.bblog.com/docs/
+
+2 ) you should read that.. 
+
+3 ) the install information is at www.bblog.com/docs/Installing-bBlog

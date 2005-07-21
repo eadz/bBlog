@@ -1,0 +1,33 @@
+{* 
+ * This is a Smarty comment. 
+ * It will not show up in HTML source code. 
+ * When you see this, it's to document the template but won't clutter your HTML
+ *}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head profile="http://gmpg.org/xfn/1">
+	<title>{$title|htmlspecialchars}</title>
+	{* $title shows the page title, and the modifier htmlspecialchars makes sure the title doesn't contain any invalid characters *}
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="generator" content="bBlog {$bBlog_version}" />
+	<meta name="description" content="{$metadescription}" />
+	<meta name="keywords" content="{$metakeywords}" />
+	<style type="text/css" media="screen">
+		@import url( {$bblogurl}templates/one/one.css );
+	</style>
+	
+	<link rel="stylesheet" type="text/css" media="print" href="{$bblogurl}templates/one/print.css" />
+
+	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{$blogurl}rss.php?ver=2&amp;num=10" />
+	<link rel="alternate" type="text/xml" title="RSS .92" href="{$blogurl}rss.php?ver=0.92&amp;num=10" />
+	<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="{$blogurl}rss.php?ver=atom03&amp;num=10" />
+	{* uncomment these if you want them 
+	<meta name='ICBM' content="0, 0" />
+	<meta name='DC.title' content="my weblog" />
+	<meta name='geo.position' content="0;0" />
+	*}
+</head>
+<body>
+<div id="rap">
+<h1 id="header"><a href="{$blogurl}" title="{$blogname}">{$blogname}</a></h1>

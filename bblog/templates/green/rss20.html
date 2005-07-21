@@ -1,0 +1,26 @@
+{getrecentposts num=20 assign=posts}<rss version="2.0/XSS-extensible">
+  <channel>
+    <title>{$smarty.const.C_BLOGNAME|htmlspecialchars}</title>
+    <link>{$smarty.const.C_BLOGURL}</link>
+    <description>{$smarty.const.C_BLOG_DESCRIPTION}</description>
+    <dc:language>en</dc:language>
+    {*
+    <image>
+        <url></url>
+        <title>RSS: {$smarty.const.C_BLOG_DESCRIPTION|htmlspecialchars}</title>
+        <link>{$smarty.const.C_BLOGURL}</link>
+        <width></width>
+        <height></height>        
+    </image>
+    *}
+    {foreach from=$posts item=post}
+    <item>
+      <title>{$post.title|htmlspecialchars}</title>
+      <content:encoded>{$post.body|htmlspecialchars}</content:encoded>
+      <author>{$post.author.nickname|htmlspecialchars}</author>
+      <link>{$smarty.const.C_BLOGURL}{$post.permalink}</link>
+      <category>{$post.sections.0.name|htmlentities}</category>
+    </item>    
+    {/foreach}
+  </channel>
+</rss>

@@ -72,13 +72,15 @@ session_start();
 		$db = new db($config['mysql_username'], $config['mysql_password'], $config['mysql_database'], $config['mysql_host']);
 
 	}
-
+	
+	// i think we need to turn off the session before opening
+	// the new upgrade script.
 	if(isset($config['upgrade_from'])) {
-		if(file_exists('./install/upgrade.'.$config['upgrade_from'].'.php')) {
-			include './install/upgrade.'.$config['upgrade_from'].'.php';
+		if(file_exists('./install/standalone.upgrade.php')) {
+			include './install/standalone.upgrade.php';
 		} else {
 			echo "<h3>Error</h3>";
-			echo "<p>You have chosen an upgrade option, but the upgrade file (  install/upgrade.".$config['upgrade_from'].".php ) is missing";
+			echo "<p>You have chosen an upgrade option, but the upgrade file (  install/standalone.upgrade.php ) is missing";
 			include 'install/footer.php';
 			exit;
 		}
@@ -101,14 +103,7 @@ session_start();
 				<li><input type="radio" class="radio" name="install_type" value="fresh" checked="checked" onClick=" document.forms.install.elements['upgrade_from'].disabled = true;" /> Fresh Install</li>
 				<li><input type="radio" class="radio" name="install_type" value="upgrade" onClick=" document.forms.install.elements['upgrade_from'].disabled = false;" /> Upgrade from
 				<select name="upgrade_from" id="upgrade_from" disabled="">
-					<option value="bblog07">bBlog 0.7.4</option>
-					<!--
-					<option value="textpattern">Textpattern 0.6</option>
-					<option value="b2_061">b2 0.61</option>
-					<option value="mt">Movable Type (using mysql)</option>
-					<option value="wordpress">Wordpress 0.71</option>
-					<option value="nucleus">Nucleus</option>
-					-->
+					<option value="bblog07">bBlog 0.7</option>
 				</select>
 			</ul>
 

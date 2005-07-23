@@ -1,7 +1,0 @@
-Known Bugs :
-the admin interface has been tested on
-Mozilla 1.2, Phoenix 0.5, Internet Explorer 6.0 and Konqueror 3.1
-
-It will most likely break in earlier IE versions, and self-combust with NS 4.7
-
-There is no admin interface for sections

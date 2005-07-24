@@ -30,7 +30,7 @@
  * to me while merging 0.6, because half of the db was missing, and 0.7.2 corrected
  * it by doing the exact method just explained. The same could be expanded to the
  * whole upgrade proccess.
-**/
+*/
 
 	
 	// the pot of gold...
@@ -163,7 +163,19 @@
 	if(preg_match('/^varchar\((\d+)\)$/',$password_type,$matches)) {
 		if($matches[1]==20) {
 	    	echo "varchar(20). Patching...<br /><br />";
-            $qq[] = "ALTER TABLE `".T_AUTHORS."` MODIFY `password` varchar(40) NOT NULL";
+            // stick this into 1 line later on...
+            $editPass = "ALTER TABLE `".T_AUTHORS."` MODIFY `password` varchar(40) NOT NULL";
+            $db->query($editPass);
+            
+            
+            // This bit will read in all the passwords in the author table 
+			// and re-insert them with the sha1 function
+			echo "*** Encrypting password...<br />";
+			$pass = $db->get_results("SELECT id,password FROM `".T_AUTHORS."` ");
+			foreach($pass as $pw) {
+				$replacePass = "UPDATE `".T_AUTHORS."`  SET password=sha1('{$pw->password}') where id={$pw->id};";
+				$db->query($replacePass);
+			}
         }
         else if($matches[1]==40) echo 'No need for changes <br /><br />';
 	}
@@ -311,19 +323,7 @@
 
 	
 	
-	// This bit will read in all the passwords in the author table 
-	// and re-insert them with the sha1 function
 	
-	/**bug: if user hits refresh button, it reads the already encrypted
-	 * password and re-encrypts it.. bad.. put a check to see if password
-	 * is already encrypted or not (test var length?).
-	*/
-	echo "*** Encrypting password...<br />";
-	$pass = $db->get_results("SELECT id,password FROM `".T_AUTHORS."` ");
-	foreach($pass as $pw) {
-		$replacePass = "UPDATE `".T_AUTHORS."`  SET password=sha1('{$pw->password}') where id={$pw->id};";
-		$db->query($replacePass);
-	}
 	
 	// update version when done from everything else
 	$newVer = 0.8;

@@ -62,7 +62,11 @@
 	
 	global $db;
 	
-	
+	// First of all, make sure the compiled_templates dir is writable
+	if (!is_writable("../compiled_templates")) {
+		die("Error: Unable to write to $dir. Please make sure its writable.");
+	}
+
 
 
 	// -----------------0.7.5 patches-----------------------

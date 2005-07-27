@@ -4,11 +4,11 @@
  * 
  * remove the bottom comments and stick in a phpDoc or somewhere..
  * its too much bulk here..
- * 
+ * <p>
  * This file will be stuck in the install/ folder
  * from now on. Let everything to do with installation
  * and upgrading be packed in one area/folder.
- * 
+ * <p>
  * im thinking of reducing the GUI installation steps
  * from 6 pages/steps, down to 3.
  * 1) The 'file permissions' can be binded to the 'agree'
@@ -17,17 +17,26 @@
  * fill his details for the installation
  * 3) All the other installation info can be grouped to a
  * third single page.
- * 
+ * <p>
  * i like how in 0.8, by default, a new install is determined by 
  * weather you have a config.php or not.
- * 
+ * <p>
+ * have a look down here at how i think the phpdoc would work..
+ * and don't let LEGAL confuse you with GPL. Please correct me
+ * if i did anything wrong..
  */
 
 
 /**
  * install.php - bBlog installer
- * install.php - author: Eaden McKee <email@eadz.co.nz>
- *
+ * {@link AUTHORS}
+ * <p>
+ * {@link COPYWRITE}
+ * <p>
+ * {@link LEGAL}
+ */
+ 
+/**
  * bBlog Weblog http://www.bblog.com/
  * Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
  *
@@ -44,7 +53,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-**/
+ */
 
 // using sessions becasue it makes things easy.
 session_start();

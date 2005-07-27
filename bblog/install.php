@@ -1,5 +1,30 @@
 <?php
 /**
+ * xushi: notes
+ * 
+ * remove the bottom comments and stick in a phpDoc or somewhere..
+ * its too much bulk here..
+ * 
+ * This file will be stuck in the install/ folder
+ * from now on. Let everything to do with installation
+ * and upgrading be packed in one area/folder.
+ * 
+ * im thinking of reducing the GUI installation steps
+ * from 6 pages/steps, down to 3.
+ * 1) The 'file permissions' can be binded to the 'agree'
+ * button on the first page (with the licence)
+ * 2) The second page will be the one asking the user to
+ * fill his details for the installation
+ * 3) All the other installation info can be grouped to a
+ * third single page.
+ * 
+ * i like how in 0.8, by default, a new install is determined by 
+ * weather you have a config.php or not.
+ * 
+ */
+
+
+/**
  * install.php - bBlog installer
  * install.php - author: Eaden McKee <email@eadz.co.nz>
  *
@@ -93,7 +118,8 @@ session_start();
 			<br />
 			<?php if(isset($message)) echo $message; ?>
 			<h4>Introduction</h4>
-			<p>Welcome to the bBlog installer. If you get stuck, please see www.bblog.com.<br />One thing to note: this installer uses sessions, so if you have disabled cookies, please re-enable them.</p>
+			<p>Welcome to the bBlog installer. If you get stuck, please read the documentation at http://www.bblog.com/wiki and visit the forum at http://www.bblog.com/forum.php<br />
+			One thing to note: this installer uses sessions, so if you have disabled cookies, please re-enable them.</p>
 			<h4>Licence Agreement</h4>
 				<p>First things first, the licence agreement:</p>
 				<textarea rows="8" cols="80" style="border: 2px dotted #333; background: #f0f0f0; font-size:10px;" readonly><?php include 'docs/LICENCE.txt'; ?></textarea>
@@ -113,19 +139,22 @@ session_start();
 		break;
 		
 			
-		// Case 1: Find out if the user is installing a new version,
-		// or upgrading from another one.
-	
+		/**
+		 * Case 1: Find out if the user is installing a new version,
+		 * or upgrading from another one.
+		 */ 
+		
 		case 1:
 			if ((isset($config['install_type'])) && ($config['install_type'] == 'upgrade')) {
 				echo "<h3>Upgrading</h3>";
 				// Since 0.7.4 had a default of 'bB_' as the table prefix, we'll try and maintain that.
+				//xushi: i dont think this is a good idea.. better to stick to {pfx}
 				$config['table_prefix'] = 'bB_';
 				$intro_func = 'upgrade_from_'.$config['upgrade_from'].'_intro';
 				if(function_exists($intro_func)) $intro_func();
 			}
 			?>
-			<h3>File Permissions</h3>
+			<h3>File and Folder Permissions</h3>
 				<p>bBlog needs to be able to write to disk to store its cache of templates.  This is also required if you want to use the blo.gs favorites functionality.</p>
 				<p>We will now check the permissions of the 'cache' folder, the 'compiled_templates' folder, the 'pbimages' folder, and the 'cache/favorites.xml' file and create them if they do not exist.</p>
 				<p>If this process does not succeed.  You will need to change the permissions manually.  This will involve chmodding the folders and files with your ftp client (if you're not using ftp you probally know what do do here). Permissions should either be 775 or 777.</p>
@@ -138,8 +167,10 @@ session_start();
 		break;
 		
 	
-		//Case 2, If user is installing from scratch, 
-		// provide the DB & Blog settings page
+		/**
+		 * Case 2, If user is installing from scratch, 
+		 * provide the DB & Blog settings page
+		 */
 		
 		case 2:
 			?>
@@ -238,9 +269,11 @@ session_start();
 			<?php
 		break;
 
-
-		// Case 3: However, if user is upgrading from a 
-		// previous install, then run the upgrade script.
+		/**
+		 * Case 3: However, if user is upgrading from a
+		 * previous install, then run the upgrade script.
+		 */
+		
 		case 3:
 			
 			$func = 'upgrade_from_'.$config['upgrade_from'].'_pre';
@@ -257,12 +290,28 @@ session_start();
 		break;
 
 		
-	
-		// Case 4: create the new tables, based on a fresh
-		// install of bblog.
+		/**
+		 * Case 4: create the new tables, based on a fresh
+		 * install of bblog.
+		 */
+		 
 		case 4: // fresh install of bBlog
 			// do sql.
-	
+			/**
+			 * xushi: this will be rewritten.. Im thinking of a more
+			 * functional approach to create the databases, in order
+			 * to reduce code. Why?
+			 * 
+			 * The code here is 90% identical to the stuff found in the
+			 * upgrader. The difference being that the upgrader has
+			 * checks for every query its doing.
+			 * So, Why write and debug 2 copies of code ?
+			 * Stick the code in 1 place (functions?), and put a function to check
+			 * if we are upgrading or installing... still thinking about it...
+			 * 
+			 * Oh.. by the way.. change `{pfx}xxx` to `".T_xxx."` when i can...
+			 * 
+			 */
 			$q = array();
 			/* Creating Tables */
 			$pfx = $config['table_prefix'];
@@ -508,11 +557,20 @@ session_start();
 		break;
 
 
-		// Case 5: Scan and update all the plugins 
-		
+		/**
+		 *  Case 5: Scan and update all the plugins 
+		 */
 		case 5:
 			/* update plugins */
-
+			/**
+			 * xushi: This code is horrible.. i just dont like it at all.
+			 * This code needs to be independant.. in its own function
+			 * somewhere else to be shared by the upgrader too.
+			 * 
+			 * So far, there are 3 copies of it to debug. Here, the upgrader,
+			 * and in bBlog_plugins.
+			 * 
+			 */
 			/* Scan for plugins */
 			echo "<h3>Loading Plugins</h3>";
 			$newplugincount = 0;
@@ -560,8 +618,14 @@ session_start();
 		break;
 		
 		
-		// Case 6: post-install upgrade stuff, 
-		// such as getting config to write, or giving hints.
+		/**
+		 * Case 6: post-install upgrade stuff,
+		 * such as getting config to write, or giving hints.
+		 */ 
+		 
+		/**
+		 * xushi: This case is pointless and should be deleted.
+		 */ 
 		case 6:
 			// post-install upgrade stuff, such as getting config to write, or giving hints.
 			$func = 'upgrade_from_'.$config['upgrade_from'].'_post';
@@ -569,8 +633,9 @@ session_start();
 		break;
 		
 		
-		// Case 7 : Finally, create and write the config.php file.
-		
+		/**
+		 * Case 7 : Finally, create and write the config.php file.
+		 */ 
 		case 7:
 			// Write config!
 			echo "<h3>Writing config.php file</h3>";

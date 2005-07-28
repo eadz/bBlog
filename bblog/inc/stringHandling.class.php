@@ -1,5 +1,16 @@
 <?php
 
+/**
+* Class for handling string related functions
+*
+* A pseudo static class, it never needs instantiated. This class
+* serves to centralize various string handling functions, such as
+* transforming typed hyperlinks into clickable links.
+*
+* @author Kenneth Power <kenneth.power@gmail.com>
+* $LastModified$
+* $Revision$
+*/
 class StringHandling{
     /**
     * Converts typed links into clickable links
@@ -72,22 +83,22 @@ class StringHandling{
             $needsModerated = true;
         }*/
     }
+    
+    /**
+    * Replace various characters with their HTML entities equivalent
+    *
+    * @param string $str The string to parse
+    * @return string
+    */
     function encodeHTML($str){
         $result = $str;
         $result = str_replace("&", "&amp;", $result);
         $result = str_replace("<", "&lt;", $result);
         $result = str_replace(">", "&gt;", $result);
-        
-        return $result;
-    }
-    function encodeUTFSafeHTML($str){
-        $result = $str;
         $result = str_replace("\"", "&quot;", $result);
-        $result = str_replace("<", "&lt;", $result);
-        $result = str_replace(">", "&gt;", $result);
-        
         return $result;
     }
+    
     /* Google link redirector
     function googlify_href($input_text) {
 	$input_text = preg_replace("/href=\"/","href=\"http://www.google.com/url?sa=D&q=", $input_text);

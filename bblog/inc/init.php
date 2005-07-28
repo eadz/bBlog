@@ -78,6 +78,7 @@ include BBLOGROOT.'libs/php5_emulator.php';
 include BBLOGROOT.'inc/bBlog.class.php';
 include BBLOGROOT.'inc/functions.php';
 include BBLOGROOT.'inc/templates.php';
+include BBLOGROOT.'inc/stringHandling.class.php';
 
 // start your engines
 $smartyObj = new Smarty();

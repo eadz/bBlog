@@ -84,6 +84,25 @@ if(isset($_POST['url']) && is_numeric($tbpost)) {
 	
 	$now = time();
 	$remaddr = $_SERVER['REMOTE_ADDR'];
+	
+	/*
+    * Added check for moderation.
+    * Follow the same rules as for comments
+    */
+    $needsModerated = false;
+    if(C_COMMENT_MODERATION == 'all') {
+        $needsModerated = TRUE;
+    } elseif (C_COMMENT_MODERATION == 'urlonly') {
+        if(StringHandling::containsLinks($excerpt) === true){
+            $needsModerated = true;
+            $lines = explode(" ", $excerpt);
+            $result ='';
+            foreach($lines as $k=>$line)
+                $lines[$k] = StringHandling::transformLinks($line);
+            $excerpt = implode(" ", $lines);
+        }
+    }
+    $onhold = ($needsModerated === true) ? 1 : 0;
 
 	$q = "insert into ".T_COMMENTS."
 			set 
@@ -99,6 +118,7 @@ if(isset($_POST['url']) && is_numeric($tbpost)) {
 			ip='$remaddr',
 			title='$title',
 			commenttext='$excerpt',
+			onhold=".$onhold.",
 			type='trackback'";
 	$bBlog->query($q);
 	$insid = $bBlog->insert_id;
@@ -108,19 +128,16 @@ if(isset($_POST['url']) && is_numeric($tbpost)) {
 	} else {
 		// notify owner
 		include_once(BBLOGROOT.'inc/mail.php');
-		notify_owner("New trackback on your blog","$blog_name ( $tb_url ) has sent a trackback to your post at ".$bBlog->_get_entry_permalink($tbpost)."
-");
+		notify_owner("New trackback on your blog",$blog_name,' ( '.$tb_url.' ) has sent a trackback to your post at '.$bBlog->_get_entry_permalink($tbpost));
 		// update the commentcount. 
 		// now I thought about having a seperate count for trackbacks and comments ( like b2 )
 		// , but trackbacks are really comments, so I decided against this. 
 		
 	        $newnumcomments = $bBlog->get_var("SELECT count(*) as c FROM ".T_COMMENTS." WHERE postid='$tbpost' and deleted='false' group by postid");
 		$bBlog->query("update ".T_POSTS." set commentcount='$newnumcomments' where postid='$tbpost'");
-	        $bBlog->modifiednow();
+	    $bBlog->modifiednow();
 		trackback_response(0,"");
-
-	}	
-
+	}
 }
 
 

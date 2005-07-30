@@ -58,9 +58,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
+	<title>bBlog upgrader</title>
 	<link rel="stylesheet" type="text/css" title="Main" href="../style/admin.css" media="screen" />
 </head>
-<body>
 <body><div id="header">
 <h1>bBlog</h1>
 <h2>Universal Upgrader v0.1</h2>
@@ -194,12 +194,13 @@
 	}
 	
 	// Add 'ip_domain' to the authors table.
+	// i think i need a check here too
+	// ---------------------------------
 	$qq[] = "ALTER TABLE `".T_AUTHORS."` ADD `ip_domain` VARCHAR( 255 ) NOT NULL default ''";
 
 	// Create a new 'checkcode' table which will include
 	// id, checksum, and timestamp.
-	$qq[] = "
-	CREATE TABLE IF NOT EXISTS `".T_CHECKCODE."` (
+	$qq[] = "CREATE TABLE IF NOT EXISTS `".T_CHECKCODE."` (
 		`id` int(10) unsigned NOT NULL auto_increment,
 		`checksum` varchar(255) NOT NULL default '',
 		`timestamp` timestamp(14) NOT NULL,
@@ -208,15 +209,19 @@
 
 	// Insert these new values to the config table. They are related to the
 	// New image stuff introduced in 0.8
-	// oops.. forgot to put a check so it won't append.. :) my bad..
-	$qq[] = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`) VALUES ('', 'COMMENT_TIME', '1')";
-	$qq[] = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`) VALUES ('', 'SMARTY_TAGS_IN_POST', 'false')";
-	$qq[] = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`) VALUES ('', 'CUSTOMURLS', 'false')";
-	$qq[] = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`) VALUES ('', 'CLEANURLS', 'false')";
-	$qq[] = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`) VALUES ('', 'IMAGE_VERIFICATION', 'false')";
-	$qq[] = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`) VALUES ('', 'WYSIWYG', 'false')";
-	$qq[] = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`) VALUES ('', 'FANCYURL', 'false')";
-
+	// to see if you have these updates installed or not, check if one of them
+	// exists or not.
+	$check = $db->get_var("select value from ".T_CONFIG." where name='WYSIWYG'");
+	if(!isset($check)) {
+		$qq[] = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`) VALUES ('', 'COMMENT_TIME', '1')";
+		$qq[] = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`) VALUES ('', 'SMARTY_TAGS_IN_POST', 'false')";
+		$qq[] = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`) VALUES ('', 'CUSTOMURLS', 'false')";
+		$qq[] = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`) VALUES ('', 'CLEANURLS', 'false')";
+		$qq[] = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`) VALUES ('', 'IMAGE_VERIFICATION', 'false')";
+		$qq[] = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`) VALUES ('', 'WYSIWYG', 'false')";
+		$qq[] = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`) VALUES ('', 'FANCYURL', 'false')";
+	}
+	
 	// Create a new table 'external_content' for .. something.. (help me out guys)
 	// not creating this table for some reason...
 	//-------------------------------------------
@@ -387,6 +392,7 @@ function updateVer($version) {
 ?>
 </div>
 
+<!-- Why not include the footers in all the files instead ? -->
 <div id="footer">
 <a href="http://www.bBlog.com" target="_blank">
 bBlog</a> &copy; 2005 <a href="http://www.eadz.co.nz" target=_blank>Eaden</a> &amp; <a href="index.php?b=about" target="_blank">The Dev Team</a>.

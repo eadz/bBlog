@@ -1,16 +1,73 @@
 <?php
 /**
- * xushi: this is the old installer
- * <p> 
- * Alright, this is the old one, which (more or less) works for now.
- * I'm keeping it here for anyone who wishes to install 0.8 for now,
- * until i make sure the other one works.
+ * xushi: notes
+ * 
+ * note: 
+ * -----
+ * remove the bottom comments and stick in a phpDoc or somewhere..
+ * its too much bulk here..
  * <p>
- * The new one (which will be the default one) is now in install/index.php
- * Use that one for all my notes and updates. And switch to it permanantly
- * when it works.
+ * EXPERIMENTAL
+ * ============
+ * This is the unstable version until all links are corrected.
+ * <p>
+ * note:
+ * -----
+ * im thinking of reducing the GUI installation steps
+ * from 6 pages/steps, down to 3.
+ * 1) The 'file permissions' can be binded to the 'agree'
+ * button on the first page (with the licence)
+ * 2) The second page will be the one asking the user to
+ * fill his details for the installation
+ * 3) All the other installation info can be grouped to a
+ * third single page.
+ * <p>
+ * note:
+ * -----
+ * i like how in 0.8, by default, a new install is determined by 
+ * weather you have a config.php or not.
+ * <p>
+ * note:
+ * ------
+ * Remove the switch case. Either stick all code in 1 blob, or replace
+ * case with functions.. Atleast with functions you can return SUCCSES
+ * or FAIL.
+ * <p>
+ * note:
+ * ------
+ * have a look down here at how i think the phpdoc would work..
+ * and don't let LEGAL confuse you with GPL. Please correct me
+ * if i did anything wrong..
  */
 
+
+/**
+ * install.php - bBlog installer
+ * {@link AUTHORS}
+ * <p>
+ * {@link COPYWRITE}
+ * <p>
+ * {@link LEGAL}
+ */
+ 
+/**
+ * bBlog Weblog http://www.bblog.com/
+ * Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 // using sessions becasue it makes things easy.
 session_start();
@@ -27,7 +84,7 @@ session_start();
 		unset($config);
 		unset($step);
 		@session_destroy();
-		header("Location: install.php");
+		header("Location: index.php");
 		exit;
 	}
 
@@ -39,7 +96,7 @@ session_start();
 	// provide some useful defaults, and prevents undefined indexes.
 
 	if(!isset($config['path'])) $config['path'] = dirname(__FILE__).'/';
-	if(!isset($config['url'])) $config['url'] = 'http://'.$_SERVER['HTTP_HOST'].str_replace('bblog/install.php','',$_SERVER['REQUEST_URI']);
+	if(!isset($config['url'])) $config['url'] = 'http://'.$_SERVER['HTTP_HOST'].str_replace('bblog/install/index.php','',$_SERVER['REQUEST_URI']);
 	if(!isset($config['mysql_host'])) $config['mysql_host'] = 'localhost';
 	if(!isset($config['username'])) $config['username'] = 'admin';
 	if(!isset($config['table_prefix'])) $config['table_prefix'] = 'bb_';
@@ -53,13 +110,15 @@ session_start();
 	if(!isset($config['blogname'])) $config['blogname'] = "";
 	if(!isset($config['blogdescription'])) $config['blogdescription'] = "";
 	
-	$config['version'] = "0.8beta1";
+	$config['version'] = "0.8beta2";
 	
-	include './libs/ez_sql.php';
-	include './install/steps.php';
-	include './install/header.php';
+	include '../libs/ez_sql.php';
+	include '../install/steps.php';
+	include '../install/header.php';
+	// note: take footer and stick in footer.php, load it here.
 	
 	if($step > 2) {
+		// construct a new db
 		$db = new db($config['mysql_username'], $config['mysql_password'], $config['mysql_database'], $config['mysql_host']);
 
 	}
@@ -67,12 +126,12 @@ session_start();
 	// i think we need to turn off the session before opening
 	// the new upgrade script.
 	if(isset($config['upgrade_from'])) {
-		if(file_exists('./install/standalone.upgrade.php')) {
-			include './install/standalone.upgrade.php';
+		if(file_exists('standalone.upgrade.php')) {
+			include 'standalone.upgrade.php';
 		} else {
 			echo "<h3>Error</h3>";
 			echo "<p>You have chosen an upgrade option, but the upgrade file (  install/standalone.upgrade.php ) is missing";
-			include 'install/footer.php';
+			include 'footer.php';
 			exit;
 		}
 	}
@@ -116,8 +175,10 @@ session_start();
 				// Since 0.7.4 had a default of 'bB_' as the table prefix, we'll try and maintain that.
 				//xushi: i dont think this is a good idea.. better to stick to {pfx}
 				$config['table_prefix'] = 'bB_';
-				$intro_func = 'upgrade_from_'.$config['upgrade_from'].'_intro';
-				if(function_exists($intro_func)) $intro_func();
+				
+				// unneeded now.. maby useful later? doubt it though..
+				//$intro_func = 'upgrade_from_'.$config['upgrade_from'].'_intro';
+				//if(function_exists($intro_func)) $intro_func();
 			}
 			?>
 			<h3>File and Folder Permissions</h3>
@@ -142,6 +203,8 @@ session_start();
 			?>
 			<h3>Database and blog settings</h3>
 			<?php 
+			
+			//this function definately needs a rewrite...
 			if (isset($message)) {
 				echo $message; 
 			}
@@ -242,14 +305,15 @@ session_start();
 		
 		case 3:
 			
-			$func = 'upgrade_from_'.$config['upgrade_from'].'_pre';
-			if(function_exists($func)) {
-				$func();
-			} else {
-				// this is really an error
-				$step=5;
-				echo "<p>Nothing to see here, <input type='submit' name='submit' value='Next &gt;' /></p>";
-			}
+			// unused anymore.. was for the old upgraders.
+			//$func = 'upgrade_from_'.$config['upgrade_from'].'_pre';
+			//if(function_exists($func)) {
+			//	$func();
+			//} else {
+			//	// this is really an error
+			//	$step=5;
+			//	echo "<p>Nothing to see here, <input type='submit' name='submit' value='Next &gt;' /></p>";
+			//}
 			// upgrade.
 			// if tables need to be created, such as MT or wordpress converstion, after this step go to step 4.
 			// otherwise, in the case of a bBlog upgrade where tables _dont_ need to be created, go to step 5.
@@ -275,7 +339,7 @@ session_start();
 			 * Stick the code in 1 place (functions?), and put a function to check
 			 * if we are upgrading or installing... still thinking about it...
 			 * 
-			 * Oh.. by the way.. change `{pfx}xxx` to `".T_xxx."` when i can...
+			 * untill then.. lets start by changing `{pfx}xxx` to `".T_xxx."` ...
 			 * 
 			 */
 			$q = array();
@@ -578,9 +642,10 @@ session_start();
 			} // end foreach
 			echo "</table>";
 			echo '<p>Done. <input type="submit" name="submit" value="Next &gt;" />';
-			$func = 'upgrade_from_'.$config['upgrade_from'].'_post';
-			if($config['install_type'] == 'upgrade' && function_exists($func)) $step = 6;
-				else $step = 7;
+			//$func = 'upgrade_from_'.$config['upgrade_from'].'_post';
+			//if($config['install_type'] == 'upgrade' && function_exists($func)) $step = 6;
+			//	else $step = 7;
+			$step = 7;
 		break;
 		
 		
@@ -622,7 +687,7 @@ session_start();
  *
  *  \$Id: install.php,v 1.77 2005/06/12 11:27:24 xushi Exp $ 
  * bBlog Weblog Software http://www.bblog.com/
- * Copyright (C) 2003-2004 Eaden McKee <email@eadz.co.nz>
+ * Copyright (C) 2003-2004 Eaden McKee <email@eadz.co.nz> & The bBlog Team.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -696,11 +761,11 @@ define('BBLOGID', '".md5(microtime().rand())."');
 // leave this line alone
 include BBLOGROOT.'inc/init.php';
 ?>";
-			$fp = fopen('./config.php', 'w');
+			$fp = fopen('../config.php', 'w');
 			fwrite($fp, $config_file);
 			fclose($fp);
 			if (1 == $clean_install) {
-				chmod('./config.php', 0644);
+				chmod('../config.php', 0644);
 			}
 			echo '<p>Config file written.</p><p><input type="submit" name="continue" value="Next &gt;" /></p>';
 			$step = 8;
@@ -737,17 +802,17 @@ include BBLOGROOT.'inc/init.php';
 
 	}
 
-	if (file_exists('install/footer.php')) {
-		include 'install/footer.php';
+	if (file_exists('footer.php')) {
+		include 'footer.php';
 	}
 
 	function make_dirs(){
 		$dirs = array(
-		  "./cache",
-		  "./compiled_templates",
-		  "./pbimages",
-		  "./pbimages/thumbs",
-		  "./files"
+		  "../cache",
+		  "../compiled_templates",
+		  "../pbimages",
+		  "../pbimages/thumbs",
+		  "../files"
 		);
 		foreach ($dirs as $dir){
 			if(!file_exists($dir)){
@@ -766,8 +831,8 @@ include BBLOGROOT.'inc/init.php';
 
 	function make_files(){
 		$files = array(
-		  "./cache/favorites.xml",
-		  "./config.php"
+		  "../cache/favorites.xml",
+		  "../config.php"
 		);
 	
 		foreach ($files as $file){
@@ -788,10 +853,10 @@ include BBLOGROOT.'inc/init.php';
 
 	function check_writable() {
 		$ok = TRUE;
-		if(is_writable("../bblog")) {
-			echo "../bblog is writeable<br />";
+		if(is_writable("../../bblog")) {
+			echo "../../bblog is writeable<br />";
 		} else {
-			echo "<span style='color:red;'>../bblog is NOT writable</span><br />";
+			echo "<span style='color:red;'>../../bblog is NOT writable</span><br />";
 			$ok = FALSE;
 		}
 	

@@ -125,19 +125,16 @@ switch($step) {
 			
 			break;
 		}
-		$func = 'upgrade_from_'.$config['upgrade_from'].'_pre';
-		if($config['install_type'] == 'upgrade') {
-			$step = 3;
-		} else {
+		//$func = 'upgrade_from_'.$config['upgrade_from'].'_pre';
+		//if($config['install_type'] == 'upgrade') {
+		//	$step = 3;
+		//} else {
 			$step = 4;
-		}
+		//}
 		break;
 
-	case 3:
-
-
-		break;
-
+	//case 3:
+	//	break;
 }
 
 ?>

@@ -42,7 +42,7 @@
 
 
 /**
- * install.php - bBlog installer
+ * install/index.php - bBlog installer
  * {@link AUTHORS}
  * <p>
  * {@link COPYWRITE}
@@ -72,9 +72,12 @@
 // using sessions becasue it makes things easy.
 session_start();
 
-/* Experimental setting to delete install folder and chmod config.php at the
-	end of the install procedure 
-	Now enabled by default
+/**
+ * EXPERIMENTAL: post install manager
+ * <p>
+ * Experimental setting to delete install folder and chmod config.php at the
+ * end of the install procedure
+ * Now enabled by default
 */
 
 	$clean_install = 1;
@@ -113,9 +116,9 @@ session_start();
 	$config['version'] = "0.8beta2";
 	
 	include '../libs/ez_sql.php';
-	include '../install/steps.php';
-	include '../install/header.php';
-	// note: take footer and stick in footer.php, load it here.
+	include 'steps.php';
+	include 'header.php';
+	
 	
 	if($step > 2) {
 		// construct a new db
@@ -139,6 +142,7 @@ session_start();
 	switch ($step) {
 		case 0:
 			?>
+			<title>bBlog Installer</title>
 			<h3>Welcome to the bBlog installer</h3>
 			<br />
 			<?php if(isset($message)) echo $message; ?>
@@ -147,7 +151,7 @@ session_start();
 			One thing to note: this installer uses sessions, so if you have disabled cookies, please re-enable them.</p>
 			<h4>Licence Agreement</h4>
 				<p>First things first, the licence agreement:</p>
-				<textarea rows="8" cols="80" style="border: 2px dotted #333; background: #f0f0f0; font-size:10px;" readonly><?php include 'docs/LICENCE.txt'; ?></textarea>
+				<textarea rows="8" cols="80" style="border: 2px dotted #333; background: #f0f0f0; font-size:10px;" readonly><?php include '../docs/LICENCE.txt'; ?></textarea>
 				<p><input type="checkbox" class="checkbox" name="agree" value="yes"> I agree to these terms </p>
 			<h4>Install Type</h4>
 			<ul class="form">
@@ -173,7 +177,7 @@ session_start();
 			if ((isset($config['install_type'])) && ($config['install_type'] == 'upgrade')) {
 				echo "<h3>Upgrading</h3>";
 				// Since 0.7.4 had a default of 'bB_' as the table prefix, we'll try and maintain that.
-				//xushi: i dont think this is a good idea.. better to stick to {pfx}
+				//xushi: i dont think this is a good idea.. better to stick to T_xxx
 				$config['table_prefix'] = 'bB_';
 				
 				// unneeded now.. maby useful later? doubt it though..
@@ -685,7 +689,7 @@ session_start();
  *         v1.0                    `..|'
  *
  *
- *  \$Id: install.php,v 1.77 2005/06/12 11:27:24 xushi Exp $ 
+ *  \$Id: install/index.php,v 1.77 2005/06/12 11:27:24 xushi Exp $ 
  * bBlog Weblog Software http://www.bblog.com/
  * Copyright (C) 2003-2004 Eaden McKee <email@eadz.co.nz> & The bBlog Team.
  *
@@ -780,7 +784,7 @@ include BBLOGROOT.'inc/init.php';
 				$clean = delete_install('install');
 				if (! $clean) {
 					echo "<p>The installer was unable to remove some install files.  It is advised that
-					you delete the install/ directory in your bBlog installation folder as well as the install.php file.  You may also want to check that your config.php file is not world readable!</p>";
+					you delete the install/ directory in your bBlog installation folder.  You may also want to check that your config.php file is not world readable!</p>";
 				}
 				else {
 					echo "<p>Installation complete!</p>";
@@ -792,8 +796,7 @@ include BBLOGROOT.'inc/init.php';
 				<h3>Security</h3>
 				<p>Now, you need to do 3 things to finish off
 				<ol>
-		    	<li>Delete install.php</li>
-		    	<li>delete the install folder</li>
+		    	<li>Delete the install folder</li>
 		    	<li>Chmod the config.php so that it is not writable by the webserver</li>
 		    	<li>When you have done that, you may <a href='index.php?b=options'>Login to bBLog. Be sure to visit the Options page to set your email address and other options.</a></li>
 					</ol></p>";

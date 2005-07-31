@@ -50,6 +50,12 @@
 		include 'config.php';
 	}
 	
+	// The header
+	if (file_exists('header.php')) {
+		include 'header.php';
+	}
+	
+	
 	// just a random number for now..
 	$ver = 0.74;
 	
@@ -369,7 +375,10 @@
 		</ol></p><br /><br />";
 
 
-
+	// The footer
+	if (file_exists('footer.php')) {
+		include 'footer.php';
+	}
 
 function getVer() {
 	// check if VERSION exists in db
@@ -389,14 +398,8 @@ function updateVer($version) {
 	$db->query("UPDATE ".T_CONFIG." SET VALUE='".$version."' WHERE `name`='VERSION'");
 }
 
+
 ?>
 </div>
-
-<!-- Why not include the footers in all the files instead ? -->
-<div id="footer">
-<a href="http://www.bBlog.com" target="_blank">
-bBlog</a> &copy; 2005 <a href="http://www.eadz.co.nz" target=_blank>Eaden</a> &amp; <a href="index.php?b=about" target="_blank">The Dev Team</a>.
-</div>
-
 </body>
 </html>

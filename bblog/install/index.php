@@ -4,12 +4,14 @@
  * 
  * note: 
  * -----
+ * The installer now works again. There is only 1 problem in it.
+ * By default it sets BBLOGROOT to bblog/install/ instead of just bblog/
+ * because of $config['path']. in line ~ 740
+ * <p>
+ * note:
+ * -----
  * remove the bottom comments and stick in a phpDoc or somewhere..
  * its too much bulk here..
- * <p>
- * EXPERIMENTAL
- * ============
- * This is the unstable version until all links are corrected.
  * <p>
  * note:
  * -----
@@ -610,7 +612,7 @@ session_start();
 			$newplugincount = 0;
 			$newpluginnames = array();
 			$plugin_files=array();
-			$dir="./bBlog_plugins";
+			$dir="../bBlog_plugins";
 			$dh = opendir( $dir ) or die("couldn't open directory");
 			while ( ! ( ( $file = readdir( $dh ) ) === false ) ) {
 				if(substr($file, -3) == 'php') $plugin_files[]=$file;
@@ -622,7 +624,7 @@ session_start();
 				$type = $far[0];
 				$name = $far[1];
 				if($type != 'builtin') {
-					include_once './bBlog_plugins/'.$plugin_file;
+					include_once '../bBlog_plugins/'.$plugin_file;
 					$func = 'identify_'.$type.'_'.$name;
 					if(function_exists($func)) {
 						$newplugin = $func();
@@ -789,7 +791,7 @@ include BBLOGROOT.'inc/init.php';
 				else {
 					echo "<p>Installation complete!</p>";
 				}
-				echo "You may now <a href='index.php?b=options'>Login to bBLog. Be sure to visit the Options page to set your email address and other options.</a>";
+				echo "You may now <a href='../index.php?b=options'>Login to bBLog. Be sure to visit the Options page to set your email address and other options.</a>";
 			}
 			else {
 				echo "<p>Install finished, almost....
@@ -797,6 +799,7 @@ include BBLOGROOT.'inc/init.php';
 				<p>Now, you need to do 3 things to finish off
 				<ol>
 		    	<li>Delete the install folder</li>
+		    	<li>Make sure your compiled_template folder is writable (chmod -R 777)
 		    	<li>Chmod the config.php so that it is not writable by the webserver</li>
 		    	<li>When you have done that, you may <a href='index.php?b=options'>Login to bBLog. Be sure to visit the Options page to set your email address and other options.</a></li>
 					</ol></p>";

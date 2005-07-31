@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <title>bBlog Installer</title>
-  <link rel="stylesheet" type="text/css" title="Main" href="style/admin.css" media="screen" />
+  <link rel="stylesheet" type="text/css" title="Main" href="../style/admin.css" media="screen" />
 
 </head>
 <body>
@@ -28,8 +28,8 @@
 <a <?php if ($step >2) echo 'class="active" '; ?> href="Javascript:;">Database Settings</a>
 <a <?php if ($step >3) echo 'class="active" '; ?> href="Javascript:;">Config</a>
 <a <?php if ($step >4) echo 'class="active" '; ?> href="Javascript:;">Finish</a>
-<a href="install.php?reset=true" style="cursor:pointer;">Reset install, start over.</a>
+<a href="index.php?reset=true" style="cursor:pointer;">Reset install, start over.</a>
 
 </div>
 <div id="content">
-<form action="install.php" method="POST" name="install">
+<form action="index.php" method="POST" name="install">

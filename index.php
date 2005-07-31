@@ -3,7 +3,7 @@ ob_start();
 if(file_exists('bblog/config.php') && filesize('bblog/config.php')>0){
 	include "bblog/config.php";
 } else {
-	header('Location: bblog/install.php');
+	header('Location: bblog/install/');
 	header('Pragma: no-cache'); // Opera
 }
 $q = "

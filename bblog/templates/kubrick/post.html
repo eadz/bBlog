@@ -62,7 +62,7 @@
 	{elseif $comment.deleted}
 	<p>Comment deleted</p>
 	{else}
-	<p>{$comment.body|nl2br|kses}</p>
+	<p>{$comment.body|kses|nl2br}</p>
 	{/if}
 	</li>
 {/foreach}

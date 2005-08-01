@@ -41,13 +41,16 @@
  * {@link LEGAL}
  */
 
+	//close any sessions that might still be open (as a precaution)
+	//@session_destroy();
 	
 	// the pot of gold...
 	// correct config.php path.
 	if(file_exists("../config.php")) {
 		include '../config.php';
 	} else {
-		include 'config.php';
+		//include 'config.php';
+		die('error: config.php not found.');
 	}
 	
 	// The header

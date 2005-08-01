@@ -179,7 +179,7 @@ session_start();
 			if ((isset($config['install_type'])) && ($config['install_type'] == 'upgrade')) {
 				echo "<h3>Upgrading</h3>";
 				// Since 0.7.4 had a default of 'bB_' as the table prefix, we'll try and maintain that.
-				//xushi: i dont think this is a good idea.. better to stick to T_xxx
+				//xushi: i dont think this is a good idea to give a static prefix (unless its just temporarely)
 				$config['table_prefix'] = 'bB_';
 				
 				// unneeded now.. maby useful later? doubt it though..

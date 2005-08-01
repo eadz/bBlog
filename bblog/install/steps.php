@@ -126,7 +126,7 @@ switch($step) {
 		 * PHP Stack trace:, referer: bblog/install/index.php
 		 * PHP   1. {main}() bblog/install/index.php:0, referer: http://localhost/xushi/08/bblog/install/index.php
 		 * PHP   2. include() bblog/install/index.php:121, referer: http://localhost/xushi/08/bblog/install/index.php
-		 * PHP Notice:  Undefined variable: EZSQL_ERROR in bblog/install/steps.php on line 123, referer: http://localhost/xushi/08/bblog/install/index.php
+		 * PHP Notice:  Undefined variable: EZSQL_ERROR in bblog/install/steps.php on line 131, referer: http://localhost/xushi/08/bblog/install/index.php
 		 */				 
 		if(is_array($EZSQL_ERROR)) {
 			$message = $EZSQL_ERROR[0]['error_str'];

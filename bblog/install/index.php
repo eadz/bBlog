@@ -935,6 +935,13 @@ include BBLOGROOT.'inc/init.php';
 			echo "<span style='color:red;'>../../bblog is NOT writable</span><br />";
 			$ok = FALSE;
 		}
+		
+		if(is_writable("../compiled_templates")) {
+			echo "../compiled_templates is writeable<br />";
+		} else {
+			echo "<span style='color:red;'>../compiled_templates is NOT writable</span><br />";
+			$ok = FALSE;
+		}
 	
 		if (FALSE != $ok) {
 			$ok = make_dirs();

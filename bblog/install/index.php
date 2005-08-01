@@ -644,6 +644,22 @@ session_start();
 						licence='".$newplugin['licence']."'";
 				 		$db->query($q);
 				 		echo '<tr><td>'.$newplugin['nicename'].'</td><td>..........Loaded</td></tr>';
+				 		
+				 		/**
+				 		 * Stack Trace: Error at line 644 and 642
+				 		 * <p>
+				 		 * [client 127.0.0.1] PHP Stack trace:, referer: http://localhost/xushi/08/bblog/install/index.php
+				 		 * [client 127.0.0.1] PHP   1. {main}() /home/xushi/public_html/08/bblog/install/index.php:0, referer: http://localhost/xushi/08/bblog/install/index.php
+				 		 * [client 127.0.0.1] PHP Notice:  Undefined index:  licence in /home/xushi/public_html/08/bblog/install/index.php on line 644, referer: http://localhost/xushi/08/bblog/install/index.php
+				 		 * <p>
+				 		 * [client 127.0.0.1] PHP Stack trace:, referer: http://localhost/xushi/08/bblog/install/index.php
+				 		 * [client 127.0.0.1] PHP   1. {main}() /home/xushi/public_html/08/bblog/install/index.php:0, referer: http://localhost/xushi/08/bblog/install/index.php
+				 		 * [client 127.0.0.1] PHP Notice:  Undefined index:  help in /home/xushi/public_html/08/bblog/install/index.php on line 642, referer: http://localhost/xushi/08/bblog/install/index.php
+				 		 * <p>
+				 		 * [client 127.0.0.1] PHP Stack trace:, referer: http://localhost/xushi/08/bblog/install/index.php
+				 		 * [client 127.0.0.1] PHP   1. {main}() /home/xushi/public_html/08/bblog/install/index.php:0, referer: http://localhost/xushi/08/bblog/install/index.php
+				 		 * [client 127.0.0.1] PHP Notice:  Undefined index:  help in /home/xushi/public_html/08/bblog/install/index.php on line 642, referer: http://localhost/xushi/08/bblog/install/index.php
+				 		 */
 	
 					} // end if function exists
 				} // end if
@@ -888,6 +904,29 @@ include BBLOGROOT.'inc/init.php';
 	 * Checks if folders are writable or not.
 	 * Currently checks the bblog/ directory.
 	 */
+	 
+	 /**
+	  * Stack Trace: warnings found (for debugging)
+	  * The lines are a bit off coz of the copy/paste of these dumps.
+	  * <p>
+	  * [client 127.0.0.1] PHP Stack trace:, referer: http://localhost/xushi/08/bblog/install/index.php
+	  * [client 127.0.0.1] PHP   1. {main}() /home/xushi/public_html/08/bblog/install/index.php:0, referer: http://localhost/xushi/08/bblog/install/index.php
+	  * [client 127.0.0.1] PHP   2. delete_install() /home/xushi/public_html/08/bblog/install/index.php:789, referer: http://localhost/xushi/08/bblog/install/index.php
+	  * [client 127.0.0.1] PHP   3. <a href='http://www.php.net/opendir' target='_new'>opendir</a>\n() /home/xushi/public_html/08/bblog/install/index.php:920, referer: http://localhost/xushi/08/bblog/install/index.php
+	  * [client 127.0.0.1] PHP Warning:  opendir(install) [<a href='function.opendir'>function.opendir</a>]: failed to open dir: No such file or directory in /home/xushi/public_html/08/bblog/install/index.php on line 920, referer: http://localhost/xushi/08/bblog/install/index.php
+	  *
+	  * [client 127.0.0.1] PHP Stack trace:, referer: http://localhost/xushi/08/bblog/install/index.php
+	  * [client 127.0.0.1] PHP   1. {main}() /home/xushi/public_html/08/bblog/install/index.php:0, referer: http://localhost/xushi/08/bblog/install/index.php
+	  * [client 127.0.0.1] PHP   2. delete_install() /home/xushi/public_html/08/bblog/install/index.php:789, referer: http://localhost/xushi/08/bblog/install/index.php
+	  * [client 127.0.0.1] PHP   3. <a href='http://www.php.net/readdir' target='_new'>readdir</a>\n() /home/xushi/public_html/08/bblog/install/index.php:921, referer: http://localhost/xushi/08/bblog/install/index.php
+	  * [client 127.0.0.1] PHP Warning:  readdir(): supplied argument is not a valid Directory resource in /home/xushi/public_html/08/bblog/install/index.php on line 921, referer: http://localhost/xushi/08/bblog/install/index.php
+	  * 
+	  * [client 127.0.0.1] PHP Stack trace:, referer: http://localhost/xushi/08/bblog/install/index.php
+	  * [client 127.0.0.1] PHP   1. {main}() /home/xushi/public_html/08/bblog/install/index.php:0, referer: http://localhost/xushi/08/bblog/install/index.php
+	  * [client 127.0.0.1] PHP   2. delete_install() /home/xushi/public_html/08/bblog/install/index.php:789, referer: http://localhost/xushi/08/bblog/install/index.php
+	  * [client 127.0.0.1] PHP   3. <a href='http://www.php.net/closedir' target='_new'>closedir</a>\n() /home/xushi/public_html/08/bblog/install/index.php:929, referer: http://localhost/xushi/08/bblog/install/index.php
+	  * [client 127.0.0.1] PHP Warning:  closedir(): supplied argument is not a valid Directory resource in /home/xushi/public_html/08/bblog/install/index.php on line 929, referer: http://localhost/xushi/08/bblog/install/index.php
+	  */
 	function check_writable() {
 		$ok = TRUE;
 		if(is_writable("../../bblog")) {

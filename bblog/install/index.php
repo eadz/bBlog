@@ -334,19 +334,21 @@ session_start();
 		case 4: // fresh install of bBlog
 			// do sql.
 			/**
+			 * The database installer
+			 * <p>
 			 * xushi: this will be rewritten.. Im thinking of a more
 			 * functional approach to create the databases, in order
 			 * to reduce code. Why?
-			 * 
+			 * <p>
 			 * The code here is 90% identical to the stuff found in the
 			 * upgrader. The difference being that the upgrader has
 			 * checks for every query its doing.
 			 * So, Why write and debug 2 copies of code ?
 			 * Stick the code in 1 place (functions?), and put a function to check
 			 * if we are upgrading or installing... still thinking about it...
-			 * 
-			 * untill then.. lets start by changing `{pfx}xxx` to `".T_xxx."` ...
-			 * 
+			 * <p>
+			 * edit: Stick with {pfx}..., T_xxx is only used when we have a working
+			 * config.php .. my bad :) 
 			 */
 			$q = array();
 			/* Creating Tables */
@@ -783,6 +785,7 @@ include BBLOGROOT.'inc/init.php';
 		case 8:
 			echo "<h3>All Done!</h3>";
 			if (1 == $clean_install) {
+				// xushi: i don't like this clean line..
 				$clean = delete_install('install');
 				if (! $clean) {
 					echo "<p>The installer was unable to remove some install files.  It is advised that
@@ -811,7 +814,20 @@ include BBLOGROOT.'inc/init.php';
 	if (file_exists('footer.php')) {
 		include 'footer.php';
 	}
-
+	
+	/**
+	 * Create directories
+	 * <p>
+	 * Creates the directories noted in the array.
+	 * Not sure why we need it now, coz half the
+	 * directories already exist, and the other
+	 * half doesn't seem like they are needed.
+	 * <p>
+	 * edit: ermm.. i can only see a check here to check
+	 * if the directories exist, or are writable or not.
+	 * I can't see any actual code that creates them...
+	 * should this function be renamed to check_dirs() ?
+	 */
 	function make_dirs(){
 		$dirs = array(
 		  "../cache",
@@ -835,6 +851,15 @@ include BBLOGROOT.'inc/init.php';
 		return TRUE;
 	}
 
+	/**
+	 * Create files
+	 * <p>
+	 * Creates config.php and sets the propper
+	 * permissions for it.
+	 * <p>
+	 * could be expanded by passing $files into
+	 * the function.
+	 */
 	function make_files(){
 		$files = array(
 		  "../cache/favorites.xml",
@@ -856,7 +881,13 @@ include BBLOGROOT.'inc/init.php';
 		}
 		return TRUE;
 	}
-
+	
+	/**
+	 * Check Writable
+	 * <p>
+	 * Checks if folders are writable or not.
+	 * Currently checks the bblog/ directory.
+	 */
 	function check_writable() {
 		$ok = TRUE;
 		if(is_writable("../../bblog")) {
@@ -874,9 +905,17 @@ include BBLOGROOT.'inc/init.php';
 			$ok = make_files();
 		}
 		return $ok;
-
 	}
 
+	/**
+	 * Delete the install directory?
+	 * <p>
+	 * Doesn't work... and i dont see how it
+	 * will work since the script is inside the
+	 * install folder anyway. And i do not recommend
+	 * auto delete of anything.. its better if the user
+	 * himself delets the install folder.
+	 */
 	function delete_install($path) {
 		$dir = opendir($path);
 		while($file = readdir($dir)) {

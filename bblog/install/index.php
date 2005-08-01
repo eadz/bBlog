@@ -131,8 +131,8 @@ session_start();
 	// i think we need to turn off the session before opening
 	// the new upgrade script.
 	if(isset($config['upgrade_from'])) {
-		if(file_exists('standalone.upgrade.php')) {
-			include 'standalone.upgrade.php';
+		if(file_exists('upgrade.bblog07.php')) {
+			include 'upgrade.bblog07.php';
 		} else {
 			echo "<h3>Error</h3>";
 			echo "<p>You have chosen an upgrade option, but the upgrade file (  install/standalone.upgrade.php ) is missing";

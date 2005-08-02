@@ -25,7 +25,7 @@ function identify_admin_comments () {
     'type'             =>'admin',
     'nicename'     =>'Comments',
     'description'   =>'Remove, Approve or Edit comments',
-    'authors'        =>'Eaden McKee <eadz@bblog.com>',
+    'authors'        =>'Eaden McKee <eadz@bblog.com>, Kenneth Power <kenneth.power@gmail.com>',
     'licence'         =>'GPL',
     'template' 	=> 'comments_admin.html',
     'help'    	=> ''
@@ -33,80 +33,121 @@ function identify_admin_comments () {
 }
 
 function admin_plugin_comments_run(&$bBlog) {
-// Again, the plugin API needs work.
-if(isset($_GET['commentdo']))  { $commentdo = $_GET['commentdo']; }
-elseif (isset($_POST['commentdo'])) { $commentdo = $_POST['commentdo']; }
-else { $commentdo = ""; }
-
-switch($commentdo) {
-	case "Delete" : // delete comment
-		if(is_numeric($_POST['commentid'])) {
-			$postid = $bBlog->get_var("select postid from ".T_COMMENTS." where commentid='".$_POST['commentid']."'");
-			$childcount = $bBlog->get_var("select count(*) as c from ".T_COMMENTS
-						." where parentid='".$_POST['commentid']."' group by commentid");
-			if($childcount > 0) { // there are replies to the comment so we can't delete it.
-				$bBlog->query("update ".T_COMMENTS." set deleted='true', postername='', posteremail='', posterwebsite='', pubemail=0, pubwebsite=0, commenttext='Deleted Comment' where commentid='".$_POST['commentid']."'");
-			} else { // just delete the comment
-				$bBlog->query("delete from ".T_COMMENTS." where   commentid='".$_POST['commentid']."'");
-			}
-            		
-			
-			$newnumcomments = $bBlog->get_var("SELECT count(*) as c FROM ".T_COMMENTS." WHERE postid='$postid' and deleted='false' group by postid");
-		        $bBlog->query("update ".T_POSTS." set commentcount='$newnumcomments' where postid='$postid'");
-		        $bBlog->modifiednow();
-		}
-		break;
-
-	case "Edit" :
-
-		if(!(is_numeric($_POST['commentid']) && is_numeric($_POST['postid']))) break;
-
-		$comment = $bBlog->get_comment($_POST['postid'],$_POST['commentid']);
-		if(!$comment) break;
-
-		$bBlog->smartyObj->assign('showeditform',TRUE);
-		$bBlog->smartyObj->assign('comment',$comment[0]);
-
-		break;
-
-	case "editsave" :
-		if(!(is_numeric($_POST['commentid']))) break;
-		$title = my_addslashes($_POST['title']);
-		$author = my_addslashes($_POST['author']);
-		$email  = my_addslashes($_POST['email']);
-		$websiteurl = my_addslashes($_POST['websiteurl']);
-		$body = my_addslashes($_POST['body']);
-		$q = "update ".T_COMMENTS." set title='$title', postername='$author', posterwebsite='$websiteurl', posteremail='$email', commenttext='$body' where commentid='{$_POST['commentid']}'";
-		$bBlog->query($q);
-
-		//print_r($_POST);
-		break;
-	case "Approve" :
-		if(!is_numeric($_POST['commentid'])) break;
-		$bBlog->query("update ".T_COMMENTS." set onhold='0' where commentid='".$_POST['commentid']."'");
-		break;
-	default : // show form
-        	break;
-	}
-	
-	if ((isset($_POST['post_comments'])) && (is_numeric($_POST['post_comments']))) {
-	        $post_comments_q = "SELECT * FROM `".T_COMMENTS."` , `".T_POSTS."` WHERE `".T_POSTS."`.`postid`=`".T_COMMENTS."`.`postid` and deleted='false' and `".T_COMMENTS."`.`postid`='".$_POST['post_comments']."' order by `".T_COMMENTS."`.`posttime` desc";
-	        $bBlog->smartyObj->assign('comments',$bBlog->get_results($post_comments_q));
-		$bBlog->smartyObj->assign('message','Showing comments for PostID '.$_POST['post_comments'].'.<br /><a href="index.php?b=plugins&amp;p=comments">Click here to show 20 most recent comments</a>.');
-		
-	} else {
-		
-		$bBlog->smartyObj->assign('message','Showing 20 most recent comments across all posts. ');
-		
-	        $bBlog->smartyObj->assign('comments',$bBlog->get_results("SELECT * FROM `".T_COMMENTS."` , `".T_POSTS."` WHERE `".T_POSTS."`.`postid`=`".T_COMMENTS."`.`postid` and deleted='false' order by `".T_COMMENTS."`.`posttime` desc limit 0,20"));
-
-	}
-	$posts_with_comments_q = "SELECT ".T_POSTS.".postid, ".T_POSTS.".title, count(*) c FROM ".T_COMMENTS.",  ".T_POSTS." 	WHERE ".T_POSTS.".postid = ".T_COMMENTS.".postid GROUP BY ".T_POSTS.".postid ORDER BY ".T_POSTS.".posttime DESC  LIMIT 0 , 30 ";
-	$posts_with_comments = $bBlog->get_results($posts_with_comments_q,ARRAY_A);
-	$bBlog->smartyObj->assign("postselect",$posts_with_comments);
-	
-	
-	
+    // Again, the plugin API needs work.
+    $commentAmount = 50;
+    if(isset($_GET['commentdo'])){
+        $commentdo = $_GET['commentdo'];
+    }
+    elseif (isset($_POST['commentdo'])){
+        $commentdo = $_POST['commentdo'];
+    }
+    else{
+        $commentdo = "";
+    }
+    
+    switch($commentdo) {
+        case "Delete" : // delete comments
+            if(is_array($_POST['commentid'])){
+              foreach($_POST['commentid'] as $key=>$val){
+                deleteComment(&$bBlog, $val);
+            }
+          }
+          break;
+        case "Edit" :
+            $commentid = intval($_GET['editComment']);
+            $postid = intval($_GET['postid']);
+            editComment(&$bBlog, $commentid, $postid);
+            break;
+        case "editsave" :
+            saveEdit(&$bBlog);
+            break;
+        case "Approve":
+            if(is_array($_POST['commentid'])){
+            foreach($_POST['commentid'] as $key=>$val)
+                $bBlog->query("UPDATE ".T_COMMENTS." SET onhold='0' WHERE commentid='".intval($val)."'");
+            }
+            break;
+        case "25":
+        case "50":
+        case "100":
+        case "150":
+        case "200":
+            $commentAmount = intval($commentdo);
+            break;
+        default : // show form
+            break;
+    }
+    
+    retrieveComments(&$bBlog, $commentAmount);
+    populateSelectList(&$bBlog);
+    
 }
 
+function deleteComment(&$bBlog, $id){
+    $id = intval($id);
+    $postid = $bBlog->get_var('select postid from '.T_COMMENTS.' where commentid="'.$id.'"');
+    $childcount = $bBlog->get_var('select count(*) as c from '.T_COMMENTS .' where parentid="'.$id.'" group by commentid');
+    if($childcount > 0) { // there are replies to the comment so we can't delete it.
+        $bBlog->query('update '.T_COMMENTS.' set deleted="true", postername="", posteremail="", posterwebsite="", pubemail=0, pubwebsite=0, commenttext="Deleted Comment" where commentid="'.$id.'"');
+    } else { // just delete the comment
+        $bBlog->query('delete from '.T_COMMENTS.' where commentid="'.$id.'"');
+    }
+    $newnumcomments = $bBlog->get_var('SELECT count(*) as c FROM '.T_COMMENTS.' WHERE postid="'.$postid.'" and deleted="false" group by postid');
+    $bBlog->query('update '.T_POSTS.' set commentcount="'.$newnumcomments.'" where postid="'.$postid.'"');
+    $bBlog->modifiednow();
+}
+
+function editComment(&$bBlog, $commentid, $postid){
+    $rval = true;
+    if($commentid === 0 && $postid === 0)
+        $rval = false;
+    else{
+        $comment = $bBlog->get_comment($postid,$commentid);
+        if(!$comment)
+            $rval = false;
+        if($rval === true){
+            $bBlog->assign('showeditform',TRUE);
+            $bBlog->assign('comment',$comment[0]);
+        }
+    }
+    return $rval;
+}
+
+function saveEdit(&$bBlog){
+    $rval = true;
+    $cid = intval($_POST['commentid']);
+    if($cid === 0)
+        $rval = false;
+    else{
+        $title = my_addslashes($_POST['title']);
+        $author = my_addslashes($_POST['author']);
+        $email  = my_addslashes($_POST['email']);
+        $websiteurl = my_addslashes($_POST['websiteurl']);
+        $body = my_addslashes($_POST['body']);
+        if($rval === true){
+            $q = "update ".T_COMMENTS." set title='$title', postername='$author', posterwebsite='$websiteurl', posteremail='$email', commenttext='$body' where commentid='{$_POST['commentid']}'";
+            if($bBlog->query($q) === true)
+                $bBlog->assign('message', 'Comment <em>'.$title.'</em> saved');
+        }
+    }
+    return $rval;
+}
+
+function retrieveComments(&$bBlog, $amount){
+    if ((isset($_POST['post_comments'])) && (is_numeric($_POST['post_comments']))) {
+        $post_comments_q = "SELECT * FROM `".T_COMMENTS."` , `".T_POSTS."` WHERE `".T_POSTS."`.`postid`=`".T_COMMENTS."`.`postid` and deleted='false' and `".T_COMMENTS."`.`postid`='".$_POST['post_comments']."' order by `".T_COMMENTS."`.`posttime` desc";
+        $bBlog->assign('comments',$bBlog->get_results($post_comments_q));
+        $bBlog->assign('message','Showing comments for PostID '.$_POST['post_comments']); //.'.<br /><a href="index.php?b=plugins&amp;p=comments">Click here to show 50 most recent comments</a>.');
+    } else {
+        //$bBlog->assign('message','Showing '.$amount.' most recent comments across all posts. ');
+        $bBlog->assign('comments',$bBlog->get_results("SELECT * FROM `".T_COMMENTS."` , `".T_POSTS."` WHERE `".T_POSTS."`.`postid`=`".T_COMMENTS."`.`postid` and deleted='false' order by `".T_COMMENTS."`.`posttime` desc limit 0,".$amount));
+        $bBlog->assign('commentAmount', $amount);
+    }
+}
+
+function populateSelectList(&$bBlog){
+    $posts_with_comments_q = "SELECT ".T_POSTS.".postid, ".T_POSTS.".title, count(*) c FROM ".T_COMMENTS.",  ".T_POSTS." 	WHERE ".T_POSTS.".postid = ".T_COMMENTS.".postid GROUP BY ".T_POSTS.".postid ORDER BY ".T_POSTS.".posttime DESC ";
+    $posts_with_comments = $bBlog->get_results($posts_with_comments_q,ARRAY_A);
+    $bBlog->assign("postselect",$posts_with_comments);
+}
 ?>

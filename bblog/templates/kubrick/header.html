@@ -1,16 +1,22 @@
+{if $charset != ''}
+	<?xml version="1.0" encoding="{$charset}"?>
+{/if} 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
 	<title>{$title|htmlspecialchars}</title>
-	
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<meta name="generator" content="bBlog 0.7" />
+	{if $charset != ''}
+     <meta http-equiv="content-type" content="text/html; charset={$charset}" />
+    {/if}
 
 	<style type="text/css">
 		@import url( {$bblogurl}templates/kubrick/style.css );
 	</style>
-
+	
+	<link rel="stylesheet" type="text/css" href="{$bblogurl}templates/kubrik/style.css" />
+    <meta name="generator" content="bBlog {$bBlog_version}" />
+    
     <meta name="description" content="{$metadescription}" />
     <meta name="keywords" content="{$metakeywords}" />
     <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{$blogurl}rss.php?ver=2" />

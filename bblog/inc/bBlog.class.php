@@ -1079,16 +1079,16 @@ class bBlog {
 				$moderated = TRUE;
 			}
 			elseif (C_COMMENT_MODERATION == 'urlonly') {
-				if ($comment != preg_replace('!<[^>]*?>!', ' ', $comment)) {
-					// found html tags
-					$moderated = TRUE;
-				}
-				if ($comment != preg_replace("#([\t\r\n ])([a-z0-9]+?){1}://([\w\-]+\.([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^ \"\n\r\t<]*)?)#i", '\1<a href="\2://\3" target="_blank">\2://\3</a>', $comment)) {
-					$moderated = TRUE;
-				}
-				if ($comment != preg_replace("#([\t\r\n ])(www|ftp)\.(([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^ \"\n\r\t<]*)?)#i", '\1<a href="http://\2.\3" target="_blank">\2.\3</a>', $comment)) {
-					$moderated = TRUE;
-				}
+                if(StringHandling::containsLinks($comment) === true){
+                    if(StringHandling::containsExternalLinks($comment)){
+                        $needsModerated = true;
+                        $lines = explode(" ", $comment);
+                        $result ='';
+                        foreach($lines as $k=>$line)
+                            $lines[$k] = StringHandling::transformLinks($line);
+                        $comment = implode(" ", $lines);
+                    }
+                }
 			}
 
 			if ($moderated == TRUE)

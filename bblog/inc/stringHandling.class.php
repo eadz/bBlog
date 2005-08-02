@@ -99,6 +99,9 @@ class StringHandling{
         return $result;
     }
     
+    function containsExternalLinks($str){
+        $str = $str;
+    }
     /* Google link redirector
     function googlify_href($input_text) {
 	$input_text = preg_replace("/href=\"/","href=\"http://www.google.com/url?sa=D&q=", $input_text);

@@ -1,0 +1,404 @@
+/*
+
+	Theme Name: Relaxation
+	URI: http://www.jowra.de/wp/
+	Description: A clean, simple and soothing theme.
+	Version: 1
+	Author: John Wrana
+	Author URI: http://www.jowra.de/
+
+	Relaxation
+	http://www.jowra.de/wp/
+	This theme was designed and built by John Wrana,
+	whose blog you will find at http://www.jowra.de/wp/
+	
+	While I've written this CSS for my own and nearly from scratch,
+	the famous Kubrick-Theme by Michael Heilemann (http://binarybonsai.com/kubrick/)
+	functioned as a base-template to start working.
+	
+	The CSS, XHTML and design is released under the GPL:
+	http://www.opensource.org/licenses/gpl-license.php
+	
+	This is the first release of this theme.
+	Maybe it's not really finished and therefore feedback is always appreciated.
+	If you have any questions installing, using and modifying this theme,
+	don't hesitate to contact me. Especially if you consider any errors on validating
+	XHTML 1.1 or CSS, please drop me a line.
+	
+	ToDo:
+	
+	- important: using as much as possible the localize-function
+	- cleanup the template files (some unused css-classes and such)
+	- some enhancements to the design of the comments and the response-box
+	- there are still some template files untouched, e.g. '404.php'
+	- other minor issues
+	
+*/
+
+html, body {
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+body {
+	background: #a9ac99 url(images/jowra.gif) no-repeat top right;
+	font-size: 13px;
+	font-family: 'Trebuchet MS', 'Bitstream Vera Sans', Verdana, Arial, 'Lucida Sans', 'Lucida Sans Unicode', Helvetica, sans-serif;
+	padding: 20px 0;
+}
+
+a {
+	color: #a06000;
+	text-decoration: none;
+}
+
+acronym {
+	text-decoration: none;
+	border: none;
+	border-bottom: 1px dotted #808979;
+}
+
+blockquote {
+	border-left: 1px solid #e0e0d0;
+	padding-left: 10px;
+	margin: 0 30px;
+}
+
+code {
+	color: #005577;
+	text-align: left;
+}
+
+h1, h1 a {
+	color: #005577;
+	font-size: 20px;
+	font-weight: normal;
+	font-family: Georgia, 'Times New Roman', Times,'Lucida Sans', 'Lucida Sans Unicode', serif;
+	margin: 40px 0 0 0;
+	padding: 0;
+	text-decoration: none;
+}
+
+h2, h2 a {
+	color: #990000;
+	font-size: 13px;
+	font-weight: normal;
+	letter-spacing: 0.09em;
+	margin: 0;
+	padding: 0;
+}
+
+h3 {
+	color: #005577;
+	font-size: 13px;
+	margin: 15px 0 15px 0;
+	padding: 0;
+}
+
+h4 {
+	font-size: 11px;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+}
+
+img {
+	border: none;
+}
+
+ol, form {
+	margin: 0;
+	padding: 0;
+}
+
+ul {
+	list-style-type: circle;
+}
+
+p {
+	line-height: 1.5em;
+	text-align: justify;
+}
+
+small {
+	font-size: 10px;
+	line-height: 1.2em;
+}
+
+#comment {
+	background: #ffffff;
+	border: 1px solid #e9e9d9;
+	color: #595949;
+	font-size: 11px;
+	padding-left: 2px;
+	vertical-align: middle;
+	width: 350px;
+}
+
+#content {
+	background: transparent;
+	border: none;
+	color: #000000;
+	margin: 0;
+	padding: 0 30px 30px 67px;
+	text-align: left;
+	width: 430px;
+}
+
+#content a:hover {
+	text-decoration: underline;
+}
+
+#content img {
+/*	float: left; */
+	margin: 5px 15px 0 0;
+	border: 1px solid #e0e0d0;
+}
+
+#email, #author {
+	background: #ffffff;
+	border: 1px solid #e9e9d9;
+	color: #595949;
+	font-size: 11px;
+	padding-left: 2px;
+	vertical-align: middle;
+}
+
+#footer {
+	background: transparent url(images/bottom.gif) no-repeat bottom center;
+	clear: both;
+	color: #808979;
+	font-size: 11px;
+	height: 65px;
+	margin: 0;
+	padding: 10px 10px 10px 67px;
+}
+
+#header {
+	background: transparent;
+	color: #a0a999;
+	font-size: 11px;
+	height: 120px;
+	margin: 0;
+	padding: 8px 30px 0 7px;
+	text-align: right;
+	width: 490px;
+}
+
+#headerleft {
+	background: transparent;
+	color: #a0a999;
+	font-size: 11px;
+	height: 120px;
+	margin: 0;
+	padding: 8px 30px 0 7px;
+	text-align: left;
+	width: 490px;
+}
+
+#header a {
+	color: #990000;
+}
+
+#header img {
+	border: none;
+}
+
+#page {
+	background: transparent url(images/middle.gif) repeat-y top center;
+	margin: 0 auto;
+	padding: 0;
+	text-align: left;
+	width: 714px;
+}
+
+#s {
+	background: #ffffff;
+	border: 1px solid #e0e0d0;
+	color: #595949;
+	font-size: 11px;
+	height: 15px;
+	padding-left: 2px;
+	vertical-align: middle;
+	width: 115px;
+}
+
+#sidebar {
+	background: transparent;
+	border: none;
+	color: #443;
+	float: right;
+	font-size: 11px;
+	margin: 0;
+	padding: 0 27px 30px 0px;
+	text-align: left;
+	width: 128px;
+}
+
+#sidebar a {
+	color: #444433;
+}
+
+#sidebar a:hover {
+	color: #a06000;
+}
+
+#sidebar h2 {
+	color: #005080;
+	font-size: 11px;
+	font-weight: normal;
+	letter-spacing: 0.3em;
+	margin: 20px 0 10px 0;
+	padding: 0;
+}
+
+#sidebar li {
+	line-height: 1.5em;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+#sidebar ul {
+	list-style-type: none;
+	margin: 0 0 0 10px;
+	padding: 0;
+}
+
+#noindent {
+	margin: 0 0 0 -10px;
+	padding: 0;
+}
+
+#submit {
+	background: #ffffff;
+	border: 1px solid #e9e9d9;
+	color: #595949;
+	font-size: 11px;
+	margin: 0;
+	padding: 0 10px;
+}
+
+#today {
+	background: #ffffff;
+}
+
+#top {
+	background: transparent url(images/top.gif) no-repeat top center;
+	height: 30px;
+}
+
+#url {
+	background: #ffffff;
+	border: 1px solid #e9e9d9;
+	color: #595949;
+	font-size: 11px;
+	padding-left: 2px;
+	vertical-align: middle;
+}
+
+#wrapper {
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+
+.alignleft {
+	float: left;
+	text-align: left;
+}
+
+.alignright {
+	float: right;
+	margin-top: -1px;
+	text-align: right;
+}
+
+.commentbody {
+	color: #595949;
+	font-size: 11px;
+	margin: 0 0 10px 0;
+	padding: 15px 15px 5px 15px;
+	background: #f7f7f0;
+	border: 1px solid #f0f0e0;
+	position: relative;
+}
+
+.commentbody p {
+	line-height: 1.2em;
+}
+
+.commentlink {
+	font-size: 10px;
+}
+
+.commentlist {
+	list-style: none;
+}
+
+.commentcount {
+	position: absolute;
+	right: 36px;
+	top: 0;
+	font-family: Georgia;
+	font-size: 24px;
+	font-weight: bold;
+	color: #e0e0d0;
+	float: right;
+}
+
+html[xmlns] .commentcount {
+	position: absolute;
+	right: 7px;
+	top: 0;
+}
+
+.date {
+	color: #808979;
+	font: 11px trebuchet ms,verdana,arial,helvetica,sans-serif;
+	letter-spacing: 0.09em;
+	margin: 0;
+	padding: 0 0 0 2px;
+}
+
+.navigation {
+	font-size: 11px;
+	padding: 40px 0 0 0;
+}
+
+.pagetitle {
+	font-size: 11px;
+	letter-spacing: 0.09em;
+	text-align: right;
+}
+
+.postmetadata {
+	color: #808979;
+	font-size: 11px;
+	letter-spacing: 0.09em;
+	margin: 0;
+	padding: 0;
+	text-align: right;
+}
+
+.postmetadata a {
+	color: #808979;
+}
+
+/* different postmetadata style for single.php */
+
+.alt {
+	line-height: 1.4em;
+	padding: 0 0 15px 30px;
+}
+
+.alt a {
+	color: #005577;
+}
+#blogpics {
+	float: right;
+	width:130px;
+	margin-left: 5px;
+}
+

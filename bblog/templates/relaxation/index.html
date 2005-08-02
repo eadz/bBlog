@@ -1,0 +1,29 @@
+{assign var=title value=$blogname}
+{include file="header.html"}
+<div id="content"> 
+{getrecentposts num=10 assign=posts home=true}
+{foreach from=$posts item=post}
+<div id="post">
+<h1 class="storytitle" id="post-{$post.id}">
+<a href="{$post.permalink}" rel="bookmark" title="Permanent Link: {$post.title}">{$post.title}</a>
+</h1>
+<p class="date">{$post.posttime|date_format:s2}</p>
+<div class="entry"> 
+<p>{$post.body}</p>
+</div>
+<p class="postmetadata">
+{foreach from=$post.sections item=sect}
+<a href='{$sect.url}' title='View all posts in {$sect.nicename}'>{$sect.nicename}</a>
+{/foreach}
+<strong> | </strong>
+<a href="{$post.permalink}">Comments ({$post.commentcount})</a></p>
+</div>
+{/foreach}
+<div class="navigation"> 
+<div class="alignleft"></div>
+<div class="alignright"></div>
+</div>
+</div>
+</div>
+{include file="index-sidebar.html"}
+{include file="footer.html"}

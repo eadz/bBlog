@@ -1,0 +1,37 @@
+{assign var=title value="Archives - $blogname"}
+{include file="header.html"}
+<br /><br /><br /><br /><br />
+<div id="content"> 
+{getarchiveposts all="1" day="$day" month="$month" year="$year" assign=posts}
+{foreach from=$posts item=post}
+<div class="post">
+{if $post.newmonth}
+<h2 class="posttitle">
+<a href="{$blogurl}archives.php?{$post.posttime|date_format:'\y\e\a\r\=Y\&\m\o\n\t\h\=m'}">Archive for {$post.posttime|date_format:'F, Y'}</a>
+</h2>
+{/if}
+<h1 class="storytitle" id="post-{$post.id}">
+<a href="{$post.permalink}" rel="bookmark" title="Permanent Link: {$post.title}">{$post.title}</a></h1>
+{if $post.newday}
+<span class="date">
+<a href="{$blogurl}archives.php?{$post.posttime|date_format:'\y\e\a\r\=Y\&\m\o\n\t\h\=m\&\d\a\y\=d'}">
+<b>{$post.posttime|date_format:"F j<\s\u\p>S</\s\u\p>"}</b></a>
+</span>
+{/if}	
+<div class="entry"> 
+<p>
+{$post.body|strip_tags|truncate:200:"..."}
+</p>
+
+</div>
+</div>
+{/foreach}
+
+<div class="navigation">
+<div class="alignleft"></div>
+<div class="alignright"></div>
+</div>
+</div>
+</div>
+{include file="index-sidebar.html"}
+{include file="footer.html"}

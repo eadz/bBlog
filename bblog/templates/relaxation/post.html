@@ -1,0 +1,106 @@
+{getpost assign=post postid=$postid}
+{assign var=title value="`$post.title` - $blogname"}
+{include file="header.html"}
+<div id="content">
+<div class="post">
+<h1 class="storytitle" id="post-{$post.id}">
+<a href="{$post.permalink}" rel="bookmark" title="Permanent Link: {$post.title}">{$post.title}</a>
+</h1>
+<div class="entrytext">
+{$post.body}
+</div>
+<p class="postmetadata alt">
+<small>This entry was posted on {$post.posttime|date_format:s2} and is filed under: {sectionlinks sep=", " sections=$post.sections}. <br/>
+The <acronym title="Uniform Resource Identifier">URI</acronym> to TrackBack this entry is: <em>{$post.trackbackurl}</em></small>
+</p>
+<!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+    rdf:about="{$post.permalink}"
+    dc:identifer="{$post.permalink}"
+    dc:title="{$post.title}"
+    trackback:ping="{$post.trackbackurl}" />
+</rdf:RDF>
+-->
+</div>
+
+
+
+<h3 id="comments">{if $post.commentcount==1}
+        There is currently 1 comment.
+        {else}
+	{if $post.commentcount==0}
+        No responses to "{$post.title}" 
+	{else}
+	There are currently {$post.commentcount} comments
+	{/if}
+        {/if}</h3>
+
+
+
+
+{getcomments assign=comments}
+<ol class="commentlist">
+{foreach from=$comments item=comment}
+	<li class="commentbody" id="comment-{$comment.commentid}">
+	{if $comment.onhold}
+	<em>Comment pending moderation</em>
+	{elseif $comment.deleted}
+	<em>Comment deleted</em>
+	{else}
+	
+        {if $comment.type eq 'comment'}
+	<a href="{if $comment.website}{$comment.website}{elseif $comment.email}mailto:{$comment.email}{/if}" rel='external nofollow'>{$comment.author}</a>
+	<br/>
+ <a class="commentlink" href="#comment-{$comment.commentid}" title="">
+	 {$comment.posted|date_format:s2} @ {$comment.posted|date_format:time} </a>
+	 | {$comment.replylink}</br>
+	 <div class="commentcount">{$comment.type}</div>
+	 <p>{$comment.body|kses|nl2br}</p>
+	 <br/>
+        {else}
+        <a href="{$comment.websiteurl}" rel='external nofollow'>{$comment.autor}</a> <br/>
+{$comment.posted|date_format:s2} @ {$comment.posted|date_format:time} | 
+{$comment.replylink} <br/> 
+<div class="commentcount">trackback</div>
+ Comment Trackback URL: {$comment.trackbackurl} 
+	{/if}
+	{/if}
+	</li>
+        {/foreach}
+</ol>
+
+<h3 id="respond">Leave a Reply</h3>
+{if $post.allowcomments}
+<form action="{$commentformaction}" method="post" id="commentform">
+<p><input type="text" name="name" id="author" class="textarea" value="" size="22" tabindex="1" />
+<label for="author"><small>Name</small></label>
+{$commentformhiddenfields}</p>
+<p><input type="text" name="email" id="email" value="" size="22" tabindex="2" />
+<label for="email"><small>Mail (will not be published)</small></label><input name="public_email" type="hidden" id="public_email" value="1" /></p>
+<p><input type="text" name="website" id="url" value="" size="22" tabindex="3" />
+<input name="public_website" type="hidden" id="public_website" value="1"/>
+<label for="url"><small>Website</small></label></p>
+<p> 
+<label for="comment"><small>Your Comment</small></label>
+<br />
+<textarea name="comment" id="comment" cols="50" rows="10" tabindex="4"></textarea>
+</p>
+<p>
+<input name="submit" type="submit" id="submit" tabindex="5" value="Submit" />
+</p>
+</form>
+{else}
+<p>Sorry, Comments have been disabled for this post</p>
+{/if}
+
+<div class="navigation">
+<div class="alignleft"></div>
+<div class="alignright"></div>
+</div>
+</div>
+</div>
+{include file="index-sidebar.html}
+{include file="footer.html}

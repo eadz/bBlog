@@ -1,0 +1,41 @@
+<div id="sidebar">
+<div id="noindent">	
+<ul>
+
+<li>
+<h2>{$blogname}</h2>
+<ul>
+{links presep="<li>" sep="</li>" num=20}
+</li> 
+</ul>
+
+<li>
+<h2>Recently</h2>
+{recentposts mode=list skip=10} 
+</li>
+
+
+<li>
+<h2>Sections</h2>
+{sectionlinks mode=list} 
+</li>
+			
+	
+<li>
+<h2>Archives</h2>
+{getarchives show=months count=true assign=archives}
+<ul>
+{foreach from=$archives item=ar}
+<li>
+<a href="{$blogurl}archives.php?year={$ar.year}&amp;month={$ar.month}">
+{$ar.ts|date_format:monthyear}
+</a> ( {$ar.count} )
+</li>
+{/foreach}
+</ul> 
+</li>
+	
+
+</ul>
+</div> <!-- end of noindent -->
+</div>

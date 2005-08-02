@@ -181,7 +181,7 @@ function getDateLink($day, &$values) {
         return;
     } else {
 	foreach($dayindex[$day] as $item) {
-	    $script .= sprintf("&raquo; <a href='%s'>%s</a><br>", $item['url'],$item['title']);
+	    $script .= sprintf("&raquo; <a href='%s'>%s</a><br />", $item['url'],$item['title']);
     	}
 
     	$script = str_replace('"', '\"', $script);

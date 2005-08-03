@@ -1,5 +1,5 @@
 <?php
-// function.header.php 
+// function.header.php
 //
 // Written by Tobias Schlottke
 //
@@ -38,7 +38,7 @@ $help = 'usage: <br/>
   );
 }
 function smarty_function_email($params) {
-    
+
     extract($params);
     if(!$name) $name = str_replace("."," dot ",str_replace("@"," at ",$email));
     $email = preg_replace("/\"/","\\\"",$email);
@@ -52,3 +52,4 @@ function smarty_function_email($params) {
     echo "<script language=\"JavaScript\" type=\"text/javascript\">eval(unescape('".$output."'))</script>";
 }
 
+?>

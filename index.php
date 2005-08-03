@@ -1,5 +1,11 @@
 <?php
 ob_start();
+
+// xushi: flyspray #55: make sure install/ is deleted
+if (file_exists("bblog/install/")) {
+	//die("Error: Make sure the folder bblog/install is deleted.");
+}
+
 if(file_exists('bblog/config.php') && filesize('bblog/config.php')>0){
 	include "bblog/config.php";
 } else {

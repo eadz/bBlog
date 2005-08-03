@@ -802,7 +802,10 @@ include BBLOGROOT.'inc/init.php';
 			echo "<h3>All Done!</h3>";
 			if (1 == $clean_install) {
 				// xushi: i don't like this clean line..
-				$clean = delete_install('install');
+				// DL8: Hope this works in Windows properly
+				//      Anyway, for this to work we need the
+				//      dir to be world writeable
+				$clean = delete_install(getcwd());
 				if (! $clean) {
 					echo "<p>The installer was unable to remove some install files.  It is advised that
 					you delete the install/ directory in your bBlog installation folder.  You may also want to check that your config.php file is not world readable!</p>";

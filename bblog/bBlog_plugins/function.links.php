@@ -32,7 +32,7 @@ function identify_function_links ()
     </li>
     <li>
         To return a list of all categories and links (nested in divs) <br/>
-        {links mode=cagetorylist presep='<div>' sep='<\/div>'}
+        {links mode=cagetorylist presep=\'&lt;div&gt;\' sep=\'&lt;/div&gt;\'}
     </li>
     <li>
         To limit the number of links returned <br/>

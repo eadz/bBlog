@@ -1,17 +1,21 @@
 <?php
 /**
+ * install/index.php - bBlog installer
+ * <p>
+ * @author Xushi <xushi.xushi@gmail.com>
+ * @copyright Copyright (C) 2005  Eaden McKee <email@eadz.co.nz>
+ * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @package bblog
+ */
+ 
+/**
  * xushi: notes
- * 
+ * <p>
  * note: 
  * -----
  * The installer now works again. There is only 1 problem in it.
  * By default it sets BBLOGROOT to bblog/install/ instead of just bblog/
  * because of $config['path']. in line ~ 740
- * <p>
- * note:
- * -----
- * remove the bottom comments and stick in a phpDoc or somewhere..
- * its too much bulk here..
  * <p>
  * note:
  * -----
@@ -27,49 +31,16 @@
  * note:
  * -----
  * i like how in 0.8, by default, a new install is determined by 
- * weather you have a config.php or not.
+ * weather you have a full config.php or not.
  * <p>
  * note:
  * ------
  * Remove the switch case. Either stick all code in 1 blob, or replace
  * case with functions.. Atleast with functions you can return SUCCSES
  * or FAIL.
- * <p>
- * note:
- * ------
- * have a look down here at how i think the phpdoc would work..
- * and don't let LEGAL confuse you with GPL. Please correct me
- * if i did anything wrong..
  */
 
 
-/**
- * install/index.php - bBlog installer
- * {@link AUTHORS}
- * <p>
- * {@link COPYWRITE}
- * <p>
- * {@link LEGAL}
- */
- 
-/**
- * bBlog Weblog http://www.bblog.com/
- * Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
 
 // using sessions becasue it makes things easy.
 session_start();
@@ -785,7 +756,7 @@ define('BBLOGID', '".md5(microtime().rand())."');
 // leave this line alone
 include BBLOGROOT.'inc/init.php';
 ?>";
-			$fp = fopen('../config.php', 'w');
+			$fp = fopen('../config.php', 'wb');
 			fwrite($fp, $config_file);
 			fclose($fp);
 			if (1 == $clean_install) {

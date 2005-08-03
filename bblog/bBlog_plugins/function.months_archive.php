@@ -1,4 +1,12 @@
 <?php
+/**
+ * function.months_archive.php
+ * <p>
+ * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @package bblog
+ */ 
+
 function identify_function_months_archive () {
 $help = '
 <p>the {getrecentposts} function is used to retrieve recent posts. It takes the following parameters:<br />

@@ -1,5 +1,12 @@
 <?php
-// modifier.date_format.php - smarty modifier to format a timestamp
+/**
+ * modifier.date_format.php - smarty modifier to format a timestamp
+ * <p>
+ * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @package bblog
+ */
+ 
 function smarty_modifier_date_format($date, $format="F j, Y, g:i a") {
   if($date < 1 ) return '';
 

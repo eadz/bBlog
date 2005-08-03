@@ -1,4 +1,12 @@
 <?php
+/**
+ * builtin.about.php - shows the credits
+ * <p>
+ * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @package bblog
+ */
+
 function identify_admin_help () {
   return array (
     'name'           =>'about',

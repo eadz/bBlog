@@ -1,4 +1,11 @@
 <?php
+/**
+ * function.wysiwygimage.php
+ * <p>
+ * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @package bblog
+ */
 if(preg_match('/function.wysiwygimage.php$/',$_SERVER['REQUEST_URI'])){
 	require_once(dirname(__FILE__).'/../config.php');
 	if($bBlog->admin_logged_in()){

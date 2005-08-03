@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * modifier.none.php
+ * <p>
+ * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @package bblog
+ */
+ 
  function identify_modifier_none () {
   return array (
     'name'           =>'none',

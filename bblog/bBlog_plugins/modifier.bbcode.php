@@ -1,7 +1,12 @@
 <?php
-// modifier.bbcode.php -  bBlog text formating plugin,
-// modifier.bbcode.php - Converts BBCode style tags to HTML
-// modifier.bbcode.php - and makes URLs clickable
+/**
+ * modifier.bbcode.php - converts BBCode style tags to html and makes URLs clickable
+ * <p>
+ * @author Reverend Jim <jim@revjim.net>
+ * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @package bblog
+ */
 
 function identify_modifier_bbcode () {
   $help = bblog_modifier_bbcode_help();

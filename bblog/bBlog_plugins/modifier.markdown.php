@@ -1,16 +1,12 @@
 <?php
-
-#
-# Markdown  -  A text-to-HTML conversion tool for web writers
-#
-# Copyright (c) 2004 John Gruber  
-# <http://daringfireball.net/projects/markdown/>
-#
-# Copyright (c) 2004 Michel Fortin - Translation to PHP  
-# <http://www.michelf.com/projects/php-markdown/>
-#
-
-
+/**
+ * modifier.markdown.php - A text-to-HTML conversion tool for web writers
+ * <p>
+ * @author John Gruber <http://daringfireball.net/projects/markdown/>
+ * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @package bblog
+ */
 
 global	$MarkdownPHPVersion, $MarkdownSyntaxVersion,
 		$md_empty_element_suffix, $md_tab_width,

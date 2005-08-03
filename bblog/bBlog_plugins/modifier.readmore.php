@@ -1,5 +1,13 @@
 <?php
-// modifier.readmore.php
+/**
+ * modifier.readmore.php
+ * <p>
+ * @author John Gruber <http://daringfireball.net/projects/markdown/>
+ * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @package bblog
+ */
+ 
 function smarty_modifier_readmore($text, $postid, $readmoretext="read more",$wordcount=true) {
 
     $PREG_TAG = '/<!--\s*(\/?read\s*more:?[^-]*)\s*-->/';

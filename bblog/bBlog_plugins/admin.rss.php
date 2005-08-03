@@ -1,5 +1,12 @@
 <?php
-// admin.rss.php - administer rss
+/**
+ * admin.rss.php - administer rss
+ * <p>
+ * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @package bblog
+ */
+ 
 function identify_admin_rss () {
 $help = '
 <p>

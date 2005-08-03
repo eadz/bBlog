@@ -1,4 +1,12 @@
 <?php
+/**
+ * modifier.phpsource.php
+ * <p>
+ * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @package bblog
+ */
+ 
 function smarty_modifier_phpsource($text) {
 	$text = preg_replace('/<php>[\r\n]+/', '<php>', $text);
 	$text = preg_replace('/[\r\n]+<\/php>/', '</php>', $text);

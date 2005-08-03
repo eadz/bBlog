@@ -1,5 +1,13 @@
 <?php
-// by photomatt : http://photomatt.net/tools/texturize
+/**
+ * modifier.texturize.php 
+ * <p>
+ * @author photomatt : http://photomatt.net/tools/texturize
+ * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @package bblog
+ */
+ 
 function identify_modifier_texturize () {
   return array (
     'name'           =>'texturize',

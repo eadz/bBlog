@@ -1,8 +1,14 @@
 <?PHP
-// function.getrss.php
+/**
+ * function.getposts.php
+ * <p>
+ * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @package bblog
+ */ 
+
 // Modified inc/init.php
 //	Libraries
-
 $library_dir = dirname(__FILE__).'/rss/';
 require_once($library_dir.'rss.php');
 

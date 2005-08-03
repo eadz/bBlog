@@ -1,6 +1,12 @@
 <?php
-// function.blogroll.php - outputs a blogroll from your favorites at blo.gs
-// based on php blogroll by phil ringnalda - http://philringnalda.com/phpblogroll/
+/**
+ * function.blogroll.php - outputs a blogroll from your favorites at blo.gs
+ * based on php blogroll by phil ringnalda - http://philringnalda.com/phpblogroll/
+ * <p>
+ * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @package bblog
+ */
 
 function identify_function_blogroll () {
 $help = '

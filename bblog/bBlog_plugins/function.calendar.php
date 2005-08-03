@@ -1,8 +1,12 @@
 <?php
+/**
+ * function.calendar.php - calendar plugin (duh..)
+ * <p>
+ * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @package bblog
+ */
 
-/* 
-    function.calendar.php - calendar plugin
-*/
 function identify_function_calendar () {
 
     $help = '

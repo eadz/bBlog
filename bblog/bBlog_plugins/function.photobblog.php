@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * function.photobblog.php
+ * <p>
+ * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @package bblog
+ */
+ 
 function identify_function_photobblog () {
 $help = 'Shows the picture from photobblog.  Sample usage: {photobblog postid=$postid}  Optional parameters:
 class - needs a string to the class name of this image.

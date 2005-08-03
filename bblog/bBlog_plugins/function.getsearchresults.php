@@ -1,8 +1,11 @@
 <?php
-
-// function.getsearchresults.php
-
-
+/**
+ * function.getsearchresults.php
+ * <p>
+ * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @package bblog
+ */ 
 
 function identify_function_getsearchresults()
 

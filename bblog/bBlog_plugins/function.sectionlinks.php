@@ -1,4 +1,12 @@
 <?php
+/**
+ * function.sectionlinks.php
+ * <p>
+ * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @package bblog
+ */
+ 
 function identify_function_sectionlinks () {
 $help = '
 <p>Sectionlinks is a Smarty function to be used in templates.

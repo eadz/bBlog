@@ -1,4 +1,12 @@
 <?php
+/**
+ * builtin.plugins.php - display information about and run plugins
+ * <p>
+ * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @package bblog
+ */
+ 
 // this is supposed to be a GUI for plugins.
 // need some help with some sort of api.
 // in the mean time we'll put them in an array.

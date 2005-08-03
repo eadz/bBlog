@@ -1,4 +1,12 @@
 <?php
+/**
+ * modifier.smilies.php
+ * <p>
+ * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @package bblog
+ */
+ 
 function smarty_modifier_smilies($stream, $path){
 	$smilies = array(
 	' :)'        => 'icon_smile.gif',

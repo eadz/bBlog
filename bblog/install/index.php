@@ -694,7 +694,7 @@ session_start();
 		case 7:
 			// Write config!
 			echo "<h3>Writing config.php file</h3>";
-		
+						$config['rootpath'] = dirname(dirname(__FILE__)).'/';
 			if (!isset($config['extra_config'])) $config['extra_config'] = '';
 		
 		$config_file = "<?php
@@ -756,7 +756,7 @@ define('TBL_PREFIX','".$config['table_prefix']."');
 
 // Full path of the directory where you've installed bBlog
 // ( i.e. the bblog folder )
-define('BBLOGROOT','".$config['path']."');
+define('BBLOGROOT','".$config['rootpath']."');
 
 /* URL config */
 

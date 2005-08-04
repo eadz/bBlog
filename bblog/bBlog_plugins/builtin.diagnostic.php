@@ -39,7 +39,6 @@ $bBlog->smartyObj->assign('extensions', get_loaded_extensions());
 $bBlog->smartyObj->assign('records_count',$bBlog->search->records_count());
 
 // security
-$security = file_exists(BBLOGROOT . 'install.php') ? false : true;
 $security = file_exists(BBLOGROOT . 'install') ? false : $security;
 $bBlog->smartyObj->assign('security', $security);
 

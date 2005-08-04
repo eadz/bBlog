@@ -600,7 +600,8 @@ a img {
     }
 
 .bb-code,
-.bb-php {
+.bb-php,
+.bb-quote {
     text-align:left;
     padding:4px;
     background-color:#f8f8f8;

@@ -188,7 +188,7 @@ session_start();
             ?>
             <p>Please fill in the config settings below</p>
 
-            <table border="0" class='list' cellpadding="4" cellspacing="0">
+            <table border="0" class='list' cellpadding="4" cellspacing="0" summary="Config Table">
             <tr>
                 <td colspan="3"><h4>General Config</h4></td>
             </tr>
@@ -231,7 +231,6 @@ session_start();
             <tr>
                 <td colspan="3"><h4>MySQL Settings</h4></td>
             </tr>
-            </td>
             <tr bgcolor="#eeeedf">
                 <td width="33%">MySQL Username</td>
                 <td width="200"><input type="text" name="mysql_username" value="<?php echo $config['mysql_username']; ?>"/></td>
@@ -792,10 +791,10 @@ include BBLOGROOT.'inc/init.php';
                 <p>Now, you need to do 3 things to finish off
                 <ol>
                 <li>Delete the install folder</li>
-                <li>Make sure your compiled_template folder is writable (chmod -R 777)
+                <li>Make sure your compiled_template folder is writable (chmod -R 777)</li>
                 <li>Chmod the config.php so that it is not writable by the webserver</li>
                 <li>When you have done that, you may <a href='index.php?b=options'>Login to bBLog. Be sure to visit the Options page to set your email address and other options.</a></li>
-                    </ol></p>";
+                    </ol><br /><br />";
             }
         break;
 

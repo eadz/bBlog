@@ -9,22 +9,23 @@
  */ 
 
 function identify_function_getpost () {
-$help = '
-<p>The {getpost} function is used to retrieve a single post. It takes the following parameters:<br />
-<br />
-assign: variable to assign data to<br />
-postid: to request a SINGLE post';
+	$help = '
+	<p>The {getpost} function is used to retrieve a single post. It takes the following parameters:<br />
+	<br />
+	assign: variable to assign data to<br />
+	postid: to request a SINGLE post';
 
-  return array (
-    'name'           =>'getpost',
-    'type'             =>'function',
-    'nicename'     =>'GetPost',
-    'description'   =>'Gets a single blog post',
-    'authors'        =>'Reverend Jim <jim@revjim.net>',
-    'licence'         =>'GPL',
-    'help'   => $help
-  );
+	return array (
+		'name'           =>'getpost',
+    	'type'             =>'function',
+    	'nicename'     =>'GetPost',
+    	'description'   =>'Gets a single blog post',
+    	'authors'        =>'Reverend Jim <jim@revjim.net>',
+    	'licence'         =>'GPL',
+    	'help'   => $help
+	);
 }
+
 function smarty_function_getpost($params, &$smartyObj) {
   $bBlog = & $smartyObj->get_template_vars("bBlog_object");
 

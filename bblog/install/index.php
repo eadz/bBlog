@@ -915,6 +915,13 @@ include BBLOGROOT.'inc/init.php';
             echo "<span style='color:red;'>../compiled_templates is NOT writable</span><br />";
             $ok = FALSE;
         }
+        
+        if(is_writable("../config.php")) {
+            echo "../config.php is writeable<br />";
+        } else {
+            echo "<span style='color:red;'>../config.php is NOT writable</span><br />";
+            $ok = FALSE;
+        }
 
         if (FALSE != $ok) {
             $ok = make_dirs();

@@ -223,10 +223,10 @@ return $o;
 function smarty_modifier_bbcode($message) {
     $preg = array(
         // [php] & [code]
-        '/(?<!\\\\)\[php(?::\w+)?\](.*?)\[\/php(?::\w+)?\]/sie'            => "'<div class=\"bb-php\">'.preg_replace('/\[/', '&#91;', preg_replace('/\]/', '&#93;', highlight_string(stripslashes('\\1'), true))).'</div>'",
+        '/(?<!\\\\)\[php(?::\w+)?\](.*?)\[\/php(?::\w+)?\]/sie'            => "'<div class=\"bb-php\">'.preg_replace('/<font color=\"/', '<span style=\"color:', preg_replace('/<\/font>/', '</span>', preg_replace('/<\/*code>/si', '', preg_replace('/\[/', '&#91;', preg_replace('/\]/', '&#93;', highlight_string(stripslashes('\\1'), true)))))).'</div>'",
         '/(?<!\\\\)(\[code(?::\w+)?\])(.*?)(\[\/code(?::\w+)?\])/sie'      => "'\\1'.htmlspecialchars('\\2').'\\3'",
         '/(?<!\\\\)\[code(?::\w+)?\](.*?)\[\/code(?::\w+)?\]/si'           => "<div class=\"bb-code\">\\1</div>",
-        // strip out any <br/> tags, we need to be able to replace them later
+        // strip out any <br/> tags, we'll re-define them later
         '/<br\s*\/?>/si'                                                   => "\n",
         // [basic...]
         '/(?<!\\\\)\[color(?::\w+)?=(.*?)\](.*?)\[\/color(?::\w+)?\]/si'   => "<span style=\"color:\\1\">\\2</span>",

@@ -22,7 +22,7 @@
 
 // xushi: flyspray #55: make sure install/ is deleted
 if (file_exists("install/")) {
-	//die("Error: Make sure the folder bblog/install is deleted.");
+    //die("Error: Make sure the folder bblog/install is deleted.");
 }
 
 
@@ -30,10 +30,10 @@ $loggedin = FALSE;
 define('IN_BBLOG_ADMIN',TRUE);
 // include the config and main code
 if(file_exists('config.php') && filesize('config.php')>0){
-	include "config.php";
+    include "config.php";
 } else {
-	header('Location: install.php');
-	header('Pragma: no-cache'); // Opera
+    header('Location: install.php');
+    header('Pragma: no-cache'); // Opera
 }
 
 include BBLOGROOT.'inc/taglines.php';
@@ -64,9 +64,9 @@ if(!$loggedin) { // we are not logged in! Display the login page
    $smartyObj->assign_by_ref('menu',$menu);
    $title= 'Login';
    if($_SERVER['REQUEST_URI'] != $_SERVER['SCRIPT_NAME']) {
-   	// tried to go somewhere but was kicked out as session timed out.
-	// so when they login we'll redirect them.
-   	$bBlog->smartyObj->assign('redirect',base64_encode($_SERVER['REQUEST_URI']));
+    // tried to go somewhere but was kicked out as session timed out.
+    // so when they login we'll redirect them.
+    $bBlog->smartyObj->assign('redirect',base64_encode($_SERVER['REQUEST_URI']));
    }
    $bBlog->display("login.html");
    exit;
@@ -75,8 +75,8 @@ if(!$loggedin) { // we are not logged in! Display the login page
 // seems this could be a reason for the blank page problem
 // I think the problem was that redirect was always set after login. Even when the redirect url was ""
 if (isset($_REQUEST['redirect']) && strlen($_REQUEST['redirect']) >0) {
-	header('Location: '.base64_decode($_REQUEST['redirect']));
-	exit;
+    header('Location: '.base64_decode($_REQUEST['redirect']));
+    exit;
 }
 
 // we're logged in, Hoorah!
@@ -94,12 +94,15 @@ $bindex['archives']=1;
 
 $plugins = $bBlog->get_results("select * from ".T_PLUGINS." where type='admin' order by ordervalue");
 $i = 2;
-foreach($plugins as $plugin) {
-	$menu[$i]['name'] = $plugin->nicename;
-	$menu[$i]['url']  = 'index.php?b=plugins&amp;p='.$plugin->name;
-	$menu[$i]['title'] = $plugin->description;
-	$pindex[$plugin->name] = $i;
-	$i++;
+if ($plugins)
+{
+    foreach($plugins as $plugin) {
+        $menu[$i]['name'] = $plugin->nicename;
+        $menu[$i]['url']  = 'index.php?b=plugins&amp;p='.$plugin->name;
+        $menu[$i]['title'] = $plugin->description;
+        $pindex[$plugin->name] = $i;
+        $i++;
+    }
 }
 
 $menu[$i]['name'] = 'Plugins';
@@ -137,20 +140,20 @@ $smartyObj->assign_by_ref('menu',$menu);
 
 
 // Custom URLS? Needed for admin template
-if(C_CUSTOMURLS == 'true') $bBlog->smartyObj->assign('custom_urls',TRUE); 
+if(C_CUSTOMURLS == 'true') $bBlog->smartyObj->assign('custom_urls',TRUE);
 
 
 
 
 
 if(isset($_REQUEST['p'])) {
-	$menu[$pindex[$_REQUEST['p']]]['active']=TRUE; // now that's an array
+    $menu[$pindex[$_REQUEST['p']]]['active']=TRUE; // now that's an array
 } else {
-	// Need's a fix here, in the case $_REQUEST['b'] doesn't exists.
-	// @ is shut-up mode
-	@$m = $bindex[$_REQUEST['b']];
-	if($m < 1) $m = 0; // prevent against null values
-	@$menu[$m]['active'] = TRUE;
+    // Need's a fix here, in the case $_REQUEST['b'] doesn't exists.
+    // @ is shut-up mode
+    @$m = $bindex[$_REQUEST['b']];
+    if($m < 1) $m = 0; // prevent against null values
+    @$menu[$m]['active'] = TRUE;
 
 }
 
@@ -194,13 +197,13 @@ switch ($b) {
          $title='About bBlog '.BBLOG_VERSION;
          include BBLOGROOT.'bBlog_plugins/builtin.about.php';
          break;
-		
-		case 'diagnostic' :
+
+        case 'diagnostic' :
          $title='Diagnostic';
          include BBLOGROOT.'bBlog_plugins/builtin.diagnostic.php';
          break;
-				 
-		case 'upload' :
+
+        case 'upload' :
          $title='Upload image';
          include BBLOGROOT.'bBlog_plugins/builtin.upload.php';
          break;

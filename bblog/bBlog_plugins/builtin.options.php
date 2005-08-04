@@ -311,10 +311,14 @@ foreach($options as $option) {
 
               case "modifierselect" :
                    $formright = '<select name="'.$option['name'].'" class="bf">';
-                   foreach($bBlog->modifiers as $mod) {
-                       $formright .= '<option value="'.$mod->name.'" ';
-                       if(C_DEFAULT_MODIFIER == $mod->name) $formright .= 'selected';
-                       $formright .= '>'.$mod->nicename.'</option>';
+                   if ($bBlog->modifiers)
+                   {
+                       foreach($bBlog->modifiers as $mod)
+                       {
+                           $formright .= '<option value="'.$mod->name.'" ';
+                           if(C_DEFAULT_MODIFIER == $mod->name) $formright .= 'selected';
+                           $formright .= '>'.$mod->nicename.'</option>';
+                       }
                    }
                    $formright .= '</select>';
                    break;

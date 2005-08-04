@@ -179,13 +179,14 @@ session_start();
         case 2:
             ?>
             <h3>Database and blog settings</h3>
+            
             <?php
-
-            //this function definately needs a rewrite...
-            if (isset($message)) {
-                echo $message;
-            }
+            	if (isset($message)) {
+                	echo $message;
+            	}
             ?>
+            
+            
             <p>Please fill in the config settings below</p>
 
             <table border="0" class='list' cellpadding="4" cellspacing="0" summary="Config Table">
@@ -508,7 +509,7 @@ session_start();
             $q[]="INSERT INTO `{$pfx}config` (`id`, `name`, `value`) VALUES
               ('', 'EMAIL', '".$config['email']."'),
               ('', 'BLOGNAME', '".$config['blogname']."'),
-              ('', 'TEMPLATE', 'l'),
+              ('', 'TEMPLATE', 'lines'),
               ('', 'DB_TEMPLATES', 'false'),
               ('', 'DEFAULT_MODIFIER', 'simple'),
 			  ('', 'CHARSET', 'UTF-8'),
@@ -860,7 +861,7 @@ include BBLOGROOT.'inc/init.php';
 
         foreach ($files as $file){
             if(!file_exists($file)){
-                if ($handle = fopen($file, "w")) {
+                if ($handle = fopen($file, "wb")) {
                     fwrite($handle, '');
                     chmod($file, 0777);
                     fclose($handle);
@@ -886,9 +887,9 @@ include BBLOGROOT.'inc/init.php';
       * The lines are a bit off coz of the copy/paste of these dumps.
       * <p>
       * [client 127.0.0.1] PHP Stack trace:, referer: http://localhost/xushi/08/bblog/install/index.php
-      * [client 127.0.0.1] PHP   1. {main}() /home/xushi/public_html/08/bblog/install/index.php:0, referer: http://localhost/xushi/08/bblog/install/index.php
-      * [client 127.0.0.1] PHP   2. delete_install() /home/xushi/public_html/08/bblog/install/index.php:789, referer: http://localhost/xushi/08/bblog/install/index.php
-      * [client 127.0.0.1] PHP   3. <a href='http://www.php.net/opendir' target='_new'>opendir</a>\n() /home/xushi/public_html/08/bblog/install/index.php:920, referer: http://localhost/xushi/08/bblog/install/index.php
+      * [client 127.0.0.1] PHP   1. {main}() bblog/install/index.php:0, referer: http://localhost/xushi/08/bblog/install/index.php
+      * [client 127.0.0.1] PHP   2. delete_install() bblog/install/index.php:789, referer: http://localhost/xushi/08/bblog/install/index.php
+      * [client 127.0.0.1] PHP   3. <a href='http://www.php.net/opendir' target='_new'>opendir</a>\n() bblog/install/index.php:920, referer: http://localhost/xushi/08/bblog/install/index.php
       * [client 127.0.0.1] PHP Warning:  opendir(install) [<a href='function.opendir'>function.opendir</a>]: failed to open dir: No such file or directory in /home/xushi/public_html/08/bblog/install/index.php on line 920, referer: http://localhost/xushi/08/bblog/install/index.php
       *
       * [client 127.0.0.1] PHP Stack trace:, referer: http://localhost/xushi/08/bblog/install/index.php
@@ -898,10 +899,10 @@ include BBLOGROOT.'inc/init.php';
       * [client 127.0.0.1] PHP Warning:  readdir(): supplied argument is not a valid Directory resource in /home/xushi/public_html/08/bblog/install/index.php on line 921, referer: http://localhost/xushi/08/bblog/install/index.php
       *
       * [client 127.0.0.1] PHP Stack trace:, referer: http://localhost/xushi/08/bblog/install/index.php
-      * [client 127.0.0.1] PHP   1. {main}() /home/xushi/public_html/08/bblog/install/index.php:0, referer: http://localhost/xushi/08/bblog/install/index.php
-      * [client 127.0.0.1] PHP   2. delete_install() /home/xushi/public_html/08/bblog/install/index.php:789, referer: http://localhost/xushi/08/bblog/install/index.php
-      * [client 127.0.0.1] PHP   3. <a href='http://www.php.net/closedir' target='_new'>closedir</a>\n() /home/xushi/public_html/08/bblog/install/index.php:929, referer: http://localhost/xushi/08/bblog/install/index.php
-      * [client 127.0.0.1] PHP Warning:  closedir(): supplied argument is not a valid Directory resource in /home/xushi/public_html/08/bblog/install/index.php on line 929, referer: http://localhost/xushi/08/bblog/install/index.php
+      * [client 127.0.0.1] PHP   1. {main}() bblog/install/index.php:0, referer: http://localhost/xushi/08/bblog/install/index.php
+      * [client 127.0.0.1] PHP   2. delete_install() bblog/install/index.php:789, referer: http://localhost/xushi/08/bblog/install/index.php
+      * [client 127.0.0.1] PHP   3. <a href='http://www.php.net/closedir' target='_new'>closedir</a>\n() bblog/install/index.php:929, referer: http://localhost/xushi/08/bblog/install/index.php
+      * [client 127.0.0.1] PHP Warning:  closedir(): supplied argument is not a valid Directory resource in bblog/install/index.php on line 929, referer: http://localhost/xushi/08/bblog/install/index.php
       */
     function check_writable() {
         $ok = TRUE;

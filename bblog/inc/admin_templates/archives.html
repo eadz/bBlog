@@ -7,9 +7,9 @@
 
 {if $editpost}
 <form action='index.php' method='post' name='post' enctype='multipart/form-data'>
-<input type='hidden' name='b' value='archives'>
-<input type='hidden' name='postid' value='{$postid}'>
-<input type='hidden' name='postedit' value='true'>
+<input type='hidden' name='b' value='archives'/>
+<input type='hidden' name='postid' value='{$postid}'/>
+<input type='hidden' name='postedit' value='true'/>
 {include file="common/post_edit.html"}
 
 </form>
@@ -22,7 +22,7 @@
 <div class='frame'>
 <input type='hidden' name='b' value='archives' />
 <input type='hidden' name='filter' value='true' />
-Show 
+Show
 <select name='shownum'>
 <option value='20' {if $smarty.post.shownum eq 20} selected{/if}>20</option>
 <option value='50' {if $smarty.post.shownum eq 50} selected{/if}>50</option>
@@ -35,7 +35,7 @@ Show
  <option value='{$section->sectionid}' {if $smarty.post.showsection eq $section->sectionid} selected{/if}>{$section->nicename}</option>
  {/foreach}
  </select>
- section, 
+ section,
  from <select name='showmonth'>
  <option value='any'>any month</option>
  {foreach from=$postmonths item=postmonth}

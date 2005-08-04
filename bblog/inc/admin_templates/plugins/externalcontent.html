@@ -7,9 +7,9 @@
 </tr>
 {section name=s loop=$eproviders}
 <form action="index.php" method="post">
-  <input type="hidden" name="b" value="plugins">
-  <input type="hidden" name="p" value="externalcontent">
-  <input type="hidden" name="providerid" value="{$eproviders[s]->id}">
+  <input type="hidden" name="b" value="plugins"/>
+  <input type="hidden" name="p" value="externalcontent"/>
+  <input type="hidden" name="providerid" value="{$eproviders[s]->id}"/>
 
   <tr class="{cycle values="high,low"}">
     <td>
@@ -23,7 +23,7 @@
     </td>
     <td class="action">
       <input type="submit" name="action" value="Save" class="submit"/>
-      <input type="submit" name="action" value="Delete" onclick="return confirm('Do you really want to delete this content provider?');" class="submit">
+      <input type="submit" name="action" value="Delete" onclick="return confirm('Do you really want to delete this content provider?');" class="submit"/>
     </td>
   </tr>
 </form>
@@ -32,9 +32,9 @@
 
 
 <form action="index.php" method="post" style="margin-top:20px">
-<input type="hidden" name="b" value="plugins">
-<input type="hidden" name="p" value="externalcontent">
-<input type="hidden" name="action" value="New">
+<input type="hidden" name="b" value="plugins"/>
+<input type="hidden" name="p" value="externalcontent"/>
+<input type="hidden" name="action" value="New"/>
 
 <h3>New Content Provider</h3>
 <h4>Provider Name</h4>

@@ -1,31 +1,26 @@
     <div id="sidebar">
         <ul>
+            <li></li>
             <li>
+                <form action="" method="get">
+                <h2>Search</h2>
+                <input type="text" name="search"/>
+                <input type="submit" value="Search"/>
             </li>
-						
-						<li><form action="" method="get">
-						<h2>Search</h2>
-							<input type="text" name="search">
-							<input type="submit" value="Search">
-						</li>
-
             <li>
                 <h2>Sections</h2>
                 {sectionlinks mode=list}
             </li>
-            
             <li>
                 <h2>Recently</h2>
                 {recentposts mode=list skip=5}
             </li>
-    
             <li>
                 <h2>Links</h2>
                 <ul>
                     {links presep="<li>" sep="</li>"}
                 </ul>
             </li>
-
             <li>
                 <h2>Archives</h2>
                 {getarchives show=months count=true assign=archives}
@@ -34,8 +29,7 @@
                     <li><a href="{$blogurl}archives.php?year={$ar.year}&amp;month={$ar.month}">{$ar.ts|date_format:monthyear}</a> ( {$ar.count} )</li>
                     {/foreach}
                 </ul>
-            </li>    
-    
+            </li>
         </ul>
     </div>
 

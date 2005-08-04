@@ -4,7 +4,7 @@
 {literal}
 <script language="javascript" type="text/javascript">
 function doPreview() {
-	document.post.dopreview.value = 'true';
+    document.post.dopreview.value = 'true';
 }
 </script>
 {/literal}
@@ -13,9 +13,9 @@ function doPreview() {
      {include file="common/message.html"}
 {/if}
 
-<form action='index.php' method='post' name='post' enctype='multipart/form-data' >
-<input type='hidden' name='b' value='post'>
-<input type='hidden' name='newpost' value='true'>
+<form action="index.php" method="post" name="post" enctype="multipart/form-data" >
+<input type="hidden" name="b" value="post"/>
+<input type="hidden" name="newpost" value="true"/>
 <input type="hidden" name="dopreview" value="false">
 {assign var="enable_preview" value="true"}
 {include file="common/post_edit.html"}

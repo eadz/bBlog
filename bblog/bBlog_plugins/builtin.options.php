@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GPL
  * @package bblog
  */
- 
+
 function identify_admin_options () {
   return array (
     'name'           =>'options',
@@ -128,8 +128,8 @@ $options = array(
         "value" => C_IMAGE_VERIFICATION,
         "type"  => "truefalse"
     ),
-		
-		array(
+
+        array(
         "name"  => "FANCYURL",
         "label" => "Fancy url's",
         "value" => C_FANCYURL,
@@ -140,12 +140,12 @@ $options = array(
 );
 
 if(file_exists(BBLOGROOT . 'inc/admin_templates/jscripts/tiny_mce/tiny_mce.js')){
-	$options[] = array(
-		"name"  => "WYSIWYG",
-		"label" => "WYSIWYG editor",
-		"value" => C_WYSIWYG,
-		"type"  => "truefalse"
-	);
+    $options[] = array(
+        "name"  => "WYSIWYG",
+        "label" => "WYSIWYG editor",
+        "value" => C_WYSIWYG,
+        "type"  => "truefalse"
+    );
 }
 
 return $options;
@@ -206,7 +206,7 @@ if ((isset($_POST['submit'])) && ($_POST['submit'] == 'Save Options')) { // savi
                                         );
                    break;
 
-	      case "commentmoderation" :
+          case "commentmoderation" :
                    if($_POST[$option['name']] == 'none')
                          $updatevars[]= array(
                                         "name" => $option['name'],
@@ -218,7 +218,7 @@ if ((isset($_POST['submit'])) && ($_POST['submit'] == 'Save Options')) { // savi
                                         "name" => $option['name'],
                                         "value" => 'all'
                                         );
-		     if($_POST[$option['name']] == 'urlonly')
+             if($_POST[$option['name']] == 'urlonly')
                          $updatevars[]= array(
                                         "name" => $option['name'],
                                         "value" => 'urlonly'
@@ -233,12 +233,12 @@ if ((isset($_POST['submit'])) && ($_POST['submit'] == 'Save Options')) { // savi
                                        );
 
                    break;
-	      case "truefalse" : 
-			$updatevars[] = array(
-				"name"=>$option['name'],
-				"value"=>$_POST[$option['name']]
-				);
-			break;
+          case "truefalse" :
+            $updatevars[] = array(
+                "name"=>$option['name'],
+                "value"=>$_POST[$option['name']]
+                );
+            break;
               default: break;
 
 
@@ -265,12 +265,12 @@ foreach($options as $option) {
               case "email" :
               case "url"   :
                    $formright = '<input type="text" name="'.$option['name'].'"
-                                    class="bf" value="'.$option['value'].'">';
+                                    class="bf" value="'.$option['value'].'"/>';
                    break;
 
               case "password" :
                    $formright = '<input type="password" name="'.$option['name'].'"
-                                    class="bf" value="'.$option['value'].'">';
+                                    class="bf" value="'.$option['value'].'"/>';
                    break;
 
               case "templateselect" :
@@ -283,7 +283,7 @@ foreach($options as $option) {
                            $formright .= ">$entry</option>";
                        }
                    }
-                   $d->close();                 
+                   $d->close();
                    $formright .= '</select>';
                    break;
 
@@ -319,18 +319,18 @@ foreach($options as $option) {
                    $formright .= '</select>';
                    break;
 
-	      case "commentmoderation" :
+          case "commentmoderation" :
                    $formright = '<select name="'.$option['name'].'" class="bf">';
 
                    $formright .= '<option value="none" ';
                    if(C_COMMENT_MODERATION == 'none') $formright .= 'selected';
                    $formright .= '>No Moderation</option>';
 
-		   $formright .= '<option value="urlonly" ';
+           $formright .= '<option value="urlonly" ';
                    if(C_COMMENT_MODERATION == 'urlonly') $formright .= 'selected';
                    $formright .= '>Only for comments with links</option>';
 
-		   $formright .= '<option value="all" ';
+           $formright .= '<option value="all" ';
                    if(C_COMMENT_MODERATION == 'all') $formright .= 'selected';
                    $formright .= '>Moderate All Comments</option>';
 

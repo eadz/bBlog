@@ -1,5 +1,5 @@
 <div class="frame">
-<p>Here is where you can change the look of your blog, by editing the templates. Your site is divided into 6 templates; 
+<p>Here is where you can change the look of your blog, by editing the templates. Your site is divided into 6 templates;
 <ul style='margin-left:20px;'>
 <li><a href="index.php?b=plugins&amp;p=templates&amp;t=css">css</a> - you put your css here</li>
 <li><a href="index.php?b=plugins&amp;p=templates&amp;t=header">header</a> - the global header on all pages</li>
@@ -13,10 +13,10 @@
 {$message}
 {if $showform}
 <form action="index.php" method="post" style="margin-top:0px">
-<input type="hidden" name="b" value="plugins">
-<input type="hidden" name="p" value="templates">
-<input type="hidden" name="t" value="{$smarty.request.t}">
-<input type="hidden" name="edit" value"true">
+<input type="hidden" name="b" value="plugins"/>
+<input type="hidden" name="p" value="templates"/>
+<input type="hidden" name="t" value="{$smarty.request.t}"/>
+<input type="hidden" name="edit" value"true"/>
 <h3>Edit Template : {$smarty.request.t}</h3>
 <div class="frame" title="template">
   <textarea name='templatetext'class="text" cols="60" rows="15" style="width:99%;">{$templatetext}</textarea>

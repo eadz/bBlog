@@ -6,7 +6,7 @@
 {/if}
 {if $showoptions ne "no"}
 <form action="index.php" method="post">
-  <input type="hidden" name="b" value="options">
+  <input type="hidden" name="b" value="options"/>
 
   {section name=o loop=$optionrows}
     <h4>{$optionrows[o].left}</h4>
@@ -16,7 +16,7 @@
   {/section}
 
 <div class="button">
-  <input type="submit" name="submit" class="submit" value="Save Options">
+  <input type="submit" name="submit" class="submit" value="Save Options"/>
 </div>
 </form>
 {/if}

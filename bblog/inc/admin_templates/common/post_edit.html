@@ -29,12 +29,12 @@
 {literal}
 <script language="javascript" type="text/javascript" src="./inc/admin_templates/jscripts/tiny_mce/tiny_mce.js"></script>
 <script language="javascript" type="text/javascript">
-	tinyMCE.init({
-		mode : "textareas",
-		relative_urls : false,
-		force_br_newlines : true,
-		force_p_newlines : false
-	});
+    tinyMCE.init({
+        mode : "textareas",
+        relative_urls : false,
+        force_br_newlines : true,
+        force_p_newlines : false
+    });
 </script>
 {/literal}
 <!-- /tinyMCE -->
@@ -106,7 +106,7 @@ function PluginHelp(mod){
 <h4>Fancy url</h4>
 
 <div class="frame">
-	{$blogurl}<input type="text" size="30" name="fancyurl" value="{$fancyurl}"/>.html<br/><br/>
+    {$blogurl}<input type="text" size="30" name="fancyurl" value="{$fancyurl}"/>.html<br/><br/>
 </div>
 {/if}
 
@@ -115,19 +115,19 @@ function PluginHelp(mod){
 {photobblogimage postid=$postid}
 <div class="frame">
     Image Caption: &nbsp; &nbsp; <input type="text" size="20" name="caption" value="{$imagecaption}"/><br/><br/>
-	<input type="radio" name="image" value="none" {if $imageloc eq ''}checked{/if} onclick="nonecheck();"/>None<br/>
-	<input type="radio" name="image" value="upload" onclick="ulcheck();"/>Upload Image<br/>
-	<div class="hide" id="fileul">
-		&nbsp; &nbsp;<i>Click browse, and select an image to upload</i><br/><br/>
+    <input type="radio" name="image" value="none" {if $imageloc eq ''}checked{/if} onclick="nonecheck();"/>None<br/>
+    <input type="radio" name="image" value="upload" onclick="ulcheck();"/>Upload Image<br/>
+    <div class="hide" id="fileul">
+        &nbsp; &nbsp;<i>Click browse, and select an image to upload</i><br/><br/>
 
-		&nbsp; &nbsp;<input type="file" name="uploadimage">
-	</div>
-	<input type="radio" name="image" value="server" {if $imageloc neq ''}checked{/if} onclick="servcheck();"/>Use a file already uploaded
-	<div {if $imageloc eq ''}class="hide"{/if} id="fileserv">
+        &nbsp; &nbsp;<input type="file" name="uploadimage"/>
+    </div>
+    <input type="radio" name="image" value="server" {if $imageloc neq ''}checked{/if} onclick="servcheck();"/>Use a file already uploaded
+    <div {if $imageloc eq ''}class="hide"{/if} id="fileserv">
         &nbsp; &nbsp;<img {if $imageloc eq ''}src="pbimages/questpic.gif"{else}src="pbimages/thumb_{$imageloc}"{/if} name="imagethumb"/><br/>
-		&nbsp; &nbsp;<a href="photobblogbrowse.php?directory=pbimages/" target="_blank">Browse online images</a>
-		<input type="hidden" name="serverimage" {if $imageloc eq ''}value="none"{else}value="{$imageloc}"{/if}/>
-	</div>
+        &nbsp; &nbsp;<a href="photobblogbrowse.php?directory=pbimages/" target="_blank">Browse online images</a>
+        <input type="hidden" name="serverimage" {if $imageloc eq ''}value="none"{else}value="{$imageloc}"{/if}/>
+    </div>
 </div>
 
 <h4>Publication Status</h4>
@@ -176,7 +176,7 @@ function PluginHelp(mod){
 <div class="frame">
   <ul class="form">
     <li>
-      <input class="checkbox" type="checkbox" name="send_trackback" value="TRUE" id="send_trackback" onClick="document.getElementById('tb').style.display ='block';" /> 
+      <input class="checkbox" type="checkbox" name="send_trackback" value="TRUE" id="send_trackback" onClick="document.getElementById('tb').style.display ='block';" />
       <label for="send_trackback">
       Send Trackback?</label>
     </li>
@@ -195,11 +195,11 @@ function PluginHelp(mod){
 <h4>Edit Timestamp</h4>
 <div class="frame">
   <ul class="form">
-    <li><input type="checkbox" class="checkbox" name="edit_timestamp" id="edit_timestamp" value="TRUE" onClick="document.getElementById('timestamp').style.display='block';"> <label for="edit_timestamp">Edit Timestamp</label>
+    <li><input type="checkbox" class="checkbox" name="edit_timestamp" id="edit_timestamp" value="TRUE" onClick="document.getElementById('timestamp').style.display='block';"/> <label for="edit_timestamp">Edit Timestamp</label>
     </li>
  </ul>
  <div class="hide" id="timestamp">
- 	{$timestampform}	
+    {$timestampform}
  </div>
 </div>
 {/if}

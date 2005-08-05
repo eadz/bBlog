@@ -32,6 +32,13 @@ function identify_admin_comments () {
   );
 }
 
+/**
+* Main function of plugin
+*
+* @param object $bBlog Instance of bBlog object
+* @return void
+*
+*/
 function admin_plugin_comments_run(&$bBlog) {
     // Again, the plugin API needs work.
     $commentAmount = 50;
@@ -83,6 +90,17 @@ function admin_plugin_comments_run(&$bBlog) {
 
 }
 
+/**
+* Delete a single comment
+*
+* Remove the comment specified, first checking whether child comments
+* exist. If child comments exist mark the comment as deleted, which
+* blocks it from displaying.
+*
+* @param object $bBlog Instance of the bBlog class
+* @param integer $id ID of comment to delete
+* @return void
+*/
 function deleteComment(&$bBlog, $id){
     $id = intval($id);
     $postid = $bBlog->get_var('select postid from '.T_COMMENTS.' where commentid="'.$id.'"');
@@ -97,6 +115,13 @@ function deleteComment(&$bBlog, $id){
     $bBlog->modifiednow();
 }
 
+/**
+* Retrieve comment details to allow editing
+*
+* @param object $bBlog Instance of bBlog class
+* @param integer $commentid ID of comment to edit
+* @param integer $postid ID of post to which comment is attached
+*/
 function editComment(&$bBlog, $commentid, $postid){
     $rval = true;
     if($commentid === 0 && $postid === 0)
@@ -113,6 +138,11 @@ function editComment(&$bBlog, $commentid, $postid){
     return $rval;
 }
 
+/**
+* Save the changes made to a comment
+*
+* @param object $bBlog Instance of bBlog class
+*/
 function saveEdit(&$bBlog){
     $rval = true;
     $cid = intval($_POST['commentid']);
@@ -133,18 +163,28 @@ function saveEdit(&$bBlog){
     return $rval;
 }
 
+/**
+* Retrieve a list of comments
+*
+* @param object $bBlog Instance of bBlog class
+* @param integer $amount How many comments to retrieve
+*/
 function retrieveComments(&$bBlog, $amount){
     if ((isset($_POST['post_comments'])) && (is_numeric($_POST['post_comments']))) {
         $post_comments_q = "SELECT * FROM `".T_COMMENTS."` , `".T_POSTS."` WHERE `".T_POSTS."`.`postid`=`".T_COMMENTS."`.`postid` and deleted='false' and `".T_COMMENTS."`.`postid`='".$_POST['post_comments']."' order by `".T_COMMENTS."`.`posttime` desc";
         $bBlog->smartyObj->assign('comments',$bBlog->get_results($post_comments_q));
-        $bBlog->smartyObj->assign('message','Showing comments for PostID '.$_POST['post_comments']); //.'.<br /><a href="index.php?b=plugins&amp;p=comments">Click here to show 50 most recent comments</a>.');
+        $bBlog->smartyObj->assign('message','Showing comments for PostID '.$_POST['post_comments']);
     } else {
-        //$bBlog->smartyObj->assign('message','Showing '.$amount.' most recent comments across all posts. ');
         $bBlog->smartyObj->assign('comments',$bBlog->get_results("SELECT * FROM `".T_COMMENTS."` , `".T_POSTS."` WHERE `".T_POSTS."`.`postid`=`".T_COMMENTS."`.`postid` and deleted='false' order by `".T_COMMENTS."`.`posttime` desc limit 0,".$amount));
         $bBlog->smartyObj->assign('commentAmount', $amount);
     }
 }
 
+/**
+* Retrieve a list of posts that contain comments
+*
+* @param object $bBlog Instance of bBlog class
+*/
 function populateSelectList(&$bBlog){
     $posts_with_comments_q = "SELECT ".T_POSTS.".postid, ".T_POSTS.".title, count(*) c FROM ".T_COMMENTS.",  ".T_POSTS." 	WHERE ".T_POSTS.".postid = ".T_COMMENTS.".postid GROUP BY ".T_POSTS.".postid ORDER BY ".T_POSTS.".posttime DESC ";
     $posts_with_comments = $bBlog->get_results($posts_with_comments_q,ARRAY_A);

@@ -26,21 +26,21 @@ if (!empty($_POST)){
 
 // test nice url support
 $tester = @file_get_contents(BLOGURL . 'error.tester')=='ok' ? true : false;
-$bBlog->smartyObj->assign('state_404', $tester);
+$bBlog->smarty->assign('state_404', $tester);
 
 // gd
 $gdtester = function_exists('ImageCreateFromJPEG') ? true : false;
-$bBlog->smartyObj->assign('state_gd', $gdtester);
+$bBlog->smarty->assign('state_gd', $gdtester);
 
 // extensions
-$bBlog->smartyObj->assign('extensions', get_loaded_extensions());
+$bBlog->smarty->assign('extensions', get_loaded_extensions());
 
 // search
-$bBlog->smartyObj->assign('records_count',$bBlog->search->records_count());
+$bBlog->smarty->assign('records_count',$bBlog->search->records_count());
 
 // security
 $security = file_exists(BBLOGROOT . 'install') ? false : $security;
-$bBlog->smartyObj->assign('security', $security);
+$bBlog->smarty->assign('security', $security);
 
 $bBlog->display("diagnostic.html");
 ?>

@@ -69,6 +69,18 @@ switch($step) {
 		{
 			$missing_fields .= "Passwords mismatched.";
 		}
+		
+		// secret question
+		if (isset($_POST['secretQuestion']))
+		{
+			$config['secretQuestion'] = $_POST['secretQuestion'];
+		}
+		
+		// secret answer
+		if (isset($_POST['secretAnswer']))
+		{
+			$config['secretAnswer'] = $_POST['secretAnswer'];
+		}
 
         if (isset($_POST['email']) && '' != $_POST['email']) {
 			$config['email'] = $_POST['email'];

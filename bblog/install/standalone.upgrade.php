@@ -204,6 +204,27 @@
         else if($matches[1]==40) echo 'No need for changes <br /><br />';
 	}
 	
+	
+		
+	//lets see if you have SECRET_QUESTION or not.
+	echo "***Checking Q&A exists...<br />";
+	$testvar = $bBlog->get_var("select value from ".T_CONFIG." where name='SECRET_QUESTION'");
+	if (isset($testvar)){
+		//no updates necessary :)
+		echo "Secret Q&A found. No patch needed.<br /><br />";
+	}else{
+		//we should add 2 values to db
+		echo "Not found, patching...";
+		$q = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`) VALUES
+		('', 'SECRET_QUESTION', 'Yellow and long?'),
+		('', 'SECRET_ANSWER', 'banana')";
+		
+		//just do it
+		$bBlog->query($q);
+		echo "Done.<br />Please change the Q&A when done.<br /><br />";
+	}	
+	
+	
 	// Add 'ip_domain' to the authors table.
 	// i think i need a check here too
 	// ---------------------------------

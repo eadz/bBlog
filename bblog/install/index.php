@@ -80,6 +80,8 @@ session_start();
     if(!isset($config['secondPassword'])) $config['secondPassword'] = "";
     if(!isset($config['email'])) $config['email'] = "";
     if(!isset($config['fullname'])) $config['fullname'] = "";
+    if(!isset($config['secretQuestion'])) $config['secretQuestion'] = "";
+	if(!isset($config['secretAnswer'])) $config['secretAnswer'] = "";
     if(!isset($config['mysql_username'])) $config['mysql_username'] = "";
     if(!isset($config['mysql_password'])) $config['mysql_password'] = "";
     if(!isset($config['mysql_database'])) $config['mysql_database'] = "";
@@ -229,6 +231,16 @@ session_start();
                 <td width="200"><input type="text" name="email" value="<?php echo $config['email']; ?>"/></td>
                 <td width="33%" class='si'>Where to send notifications of comments</td>
             </tr>
+            <tr bgcolor="#eeeeee">
+				<td width="33%">Secret Question</td>
+				<td width="200"><input type="text" name="secretQuestion" value="<?php echo $config['secretQuestion']; ?>" /></td>
+				<td width="33%" class='si'>Enter a secret question</td>
+			</tr>
+			<tr bgcolor="#eeeeee">
+				<td width="33%">Secret Answer</td>
+				<td width="200"><input type="password" name="secretAnswer" value="<?php echo $config['secretAnswer']; ?>" /></td>
+				<td width="33%" class='si'>Secret Answer</td>
+			</tr>
             <tr>
                 <td colspan="3"><h4>MySQL Settings</h4></td>
             </tr>
@@ -519,6 +531,8 @@ session_start();
               ('', 'PING','bblog.com/ping.php'),
               ('', 'COMMENT_TIME_LIMIT','1'),
               ('', 'NOTIFY','false'),
+              ('', 'SECRET_QUESTION', '".$config['secretQuestion']."'),
+			  ('', 'SECRET_ANSWER', '".$config['secretAnswer']."'),
               ('', 'BLOG_DESCRIPTION', '".$config['blogdescription']."'),
               ('', 'COMMENT_MODERATION','none'),
               ('', 'META_DESCRIPTION','Some words about this blog'),

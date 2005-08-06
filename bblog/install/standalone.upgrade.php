@@ -231,6 +231,7 @@
 		$qq[] = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`) VALUES ('', 'IMAGE_VERIFICATION', 'false')";
 		$qq[] = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`) VALUES ('', 'WYSIWYG', 'false')";
 		$qq[] = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`) VALUES ('', 'FANCYURL', 'false')";
+		$qq[] = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`) VALUES ('', 'LOCALE', '')";
 	}
 	
 	// Create a new table 'external_content' for .. something.. (help me out guys)

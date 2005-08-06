@@ -529,6 +529,7 @@ session_start();
               ('', 'IMAGE_VERIFICATION','false'),
               ('', 'WYSIWYG','false'),
               ('', 'FANCYURL', 'false'),
+              ('', 'LOCALE', ''),
               ('', 'LAST_MODIFIED', UNIX_TIMESTAMP());";
 
             // Categories

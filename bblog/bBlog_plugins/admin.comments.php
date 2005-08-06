@@ -160,11 +160,11 @@ function saveEdit(&$bBlog){
 function retrieveComments(&$bBlog, $amount){
     if ((isset($_POST['post_comments'])) && (is_numeric($_POST['post_comments']))) {
         $post_comments_q = "SELECT * FROM `".T_COMMENTS."` , `".T_POSTS."` WHERE `".T_POSTS."`.`postid`=`".T_COMMENTS."`.`postid` and deleted='false' and `".T_COMMENTS."`.`postid`='".$_POST['post_comments']."' order by `".T_COMMENTS."`.`posttime` desc";
-        $bBlog->assign('comments',$bBlog->get_results($post_comments_q));
-        $bBlog->assign('message','Showing comments for PostID '.$_POST['post_comments']);
+        $bBlog->smartyObj->assign('comments',$bBlog->get_results($post_comments_q));
+        $bBlog->smartyObj->assign('message','Showing comments for PostID '.$_POST['post_comments']);
     } else {
-        $bBlog->assign('comments',$bBlog->get_results("SELECT * FROM `".T_COMMENTS."` , `".T_POSTS."` WHERE `".T_POSTS."`.`postid`=`".T_COMMENTS."`.`postid` and deleted='false' order by `".T_COMMENTS."`.`posttime` desc limit 0,".$amount));
-        $bBlog->assign('commentAmount', $amount);
+        $bBlog->smartyObj->assign('comments',$bBlog->get_results("SELECT * FROM `".T_COMMENTS."` , `".T_POSTS."` WHERE `".T_POSTS."`.`postid`=`".T_COMMENTS."`.`postid` and deleted='false' order by `".T_COMMENTS."`.`posttime` desc limit 0,".$amount));
+        $bBlog->smartyObj->assign('commentAmount', $amount);
     }
 }
 
@@ -176,6 +176,6 @@ function retrieveComments(&$bBlog, $amount){
 function populateSelectList(&$bBlog){
     $posts_with_comments_q = "SELECT ".T_POSTS.".postid, ".T_POSTS.".title, count(*) c FROM ".T_COMMENTS.",  ".T_POSTS." 	WHERE ".T_POSTS.".postid = ".T_COMMENTS.".postid GROUP BY ".T_POSTS.".postid ORDER BY ".T_POSTS.".posttime DESC ";
     $posts_with_comments = $bBlog->get_results($posts_with_comments_q,ARRAY_A);
-    $bBlog->assign("postselect",$posts_with_comments);
+    $bBlog->smartyObj->assign("postselect",$posts_with_comments);
 }
 ?>

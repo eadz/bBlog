@@ -44,13 +44,13 @@
 *   <dt>rss20</dt>
 *       <dd>Format as: Wed, 03 Aug 2005 14:05:13 EST</dd>
 *   <dt>rss92</dt>
-*       <dd>Format as: Aug, 03 Aug 2005 14:05:13 EST</dd>
+*       <dd>Same as rss20</dd>
 *   <dt>suffix</dt>
 *       <dd>Provide the English ordinal suffix for the day of the month, 2 characters.
 *           <em>st</em>, <em>nd</em>, <em>rd</em> or <em>th</em>
 *       </dd>
-*   <dt>rss10</dt>
-*       <dd>substr(date("Y-m-d\Th:i:sO", $date),0,22).":".substr(date("O", $date),3)</dd>
+*   <dt>ISO8601</dt>
+*       <dd>Format as: 2005-08-03T14:13:13-05:00</dd>
 *   <dt>elapsed</dt>
 *       <dd>Displays the year(s), month(s), day(s), hour(s), minute(s) and second(s) between $date and now</dd>
 *   <dt>default</dt>
@@ -103,20 +103,23 @@ function smarty_modifier_date_format($date, $format="%F %j, %Y, %g:%i %a") {
     
     case "atom" : return strftime("%Y-%b-%d\%Z %T"); //date('Y-m-d\TH:i:s\Z',$date);
 		break;
-    
-    case "rss20" : return strftime("%a, %d %b %Y %H:%M:%S %Z", $date);
-		break;
-    
-    case "rss92" : return strftime("%a, %d %b %Y %H:%M:%S %Z", $date);
+        
+    case "rss92":
+    case "rss20" :
+        return strftime("%a, %d %b %Y %H:%M:%S %Z", $date);
 		break;
     
     case "suffix" : return date("S", $date);
 		break;
     
     // a clever little hack to make date() return a ISO 8601 standard date string for use in RSS 1.0
-    case "rss10" : return substr(date("Y-m-d\Th:i:sO", $date),0,22).":".substr(date("O", $date),3);
+    case "rss10":
+    case "ISO8601":
+        return substr(date("Y-m-d\Th:i:sO", $date),0,22).":".substr(date("O", $date),3);
  		break;
     
+    case "jim":
+    case "since":
     case "elapsed" :
         //return since($date)." on ".date("F j, Y",$date); 
         return time_diff($date, time());
@@ -150,21 +153,77 @@ function identify_modifier_date_format () {
 
 function bblog_modifier_date_format_help () {
 ?>
-<p>Date format takes a timestamp, and turns it into a nice looking date.
-<br />It is used as a modifier inside a template. For example, if you are in a
- <span class="tag">{post} {/post}</span> loop, you will have the varible {$post.dateposted}
+<p>Date format takes a timestamp, and turns it into a nice looking date. 
+It is used as a modifier inside a template. For example, if you are in a
+ <span class="tag">{post} {/post}</span> loop, you will have the varible <em>{$post.dateposted}</em>
  set which will contain a timestamp of when the post was made,
  and you will apply the date_format modifier to this tag.</p>
+<p><strong>date_format</strong> accepts the following pre-defined formats:</p>
+ <dl>
+   <dt>full</dt>
+       <dd>Format as: Weekday, day. Month Year, Hour:Minute.
+           <strong>Example</strong>: Wednesday, 03. August 2005, 14:05
+       </dd>
+   <dt>date</dt>
+       <dd>Format as Wednesday, 03 August 2005</dd>
+   <dt>europe</dt>
+       <dd>Format as 03.08.2005</dd>
+   <dt>shortdate</dt>
+       <dd>Preferred date representation for the current locale without the time </dd>
+   <dt>month</dt>
+       <dd>Format as: August</dd>
+   <dt>year</dt>
+       <dd>Format as: 2005</dd>
+   <dt>monthyear</dt>
+       <dd>Format as: August 2005</dd>
+   <dt>time</dt>
+       <dd>Format as: 14:05</dd>
+   <dt>12hour</dt>
+       <dd>Format as: 2:05 PM</dd>
+   <dt>s1</dt>
+       <dd>Format as: August 3, 2005, 2:05 pm</dd>
+   <dt>s2</dt>
+       <dd>Format as: August 3, 2005</dd>
+   <dt>atom</dt>
+       <dd>Format as: 2005-08-03EST 14:05:13 -18000</dd>
+   <dt>rss20</dt>
+       <dd>Format as: Wed, 03 Aug 2005 14:05:13 EST</dd>
+   <dt>rss92</dt>
+       <dd>Same as rss20</dd>
+   <dt>suffix</dt>
+       <dd>Provide the English ordinal suffix for the day of the month, 2 characters.
+           <em>st</em>, <em>nd</em>, <em>rd</em> or <em>th</em>
+       </dd>
+   <dt>ISO8601</dt>
+       <dd>Format as: 2005-08-03T14:13:13-05:00</dd>
+   <dt>elapsed</dt>
+       <dd>Displays the year(s), month(s), day(s), hour(s), minute(s) and second(s) between $date and now</dd>
+   <dt>default</dt>
+       <dd></dd>
+ </dl>
 <p>Examples :<br />
-<span class="tag">{$post.dateposted|date_format}</span> will return a date like May 26, 2003, 2:29 pm<br />
-<span class="tag">{$post.dateposted|date_format:since}</span> will return Posted 7 hours, 3 minutes ago<br />
+<span class="tag">{$post.dateposted|date_format}</span> will return a date like <em>May 26, 2003, 2:29 pm</em><br />
+<span class="tag">{$post.dateposted|date_format:since}</span> will return <em>7 hours, 3 minutes</em><br />
 <span class="tag">{$post.dateposted|date_format:"F j, Y"}</span> will return May 26, 2003. The "F j, Y" is in php date() format, for more infomation see <a href="http://www.php.net/date">php.net/date</a></p>
-
-
 <?php
 }
 
+/**
+* Calculate the difference between two time stamps
+*
+* Given two time stamps, this function calculates the difference
+* in to the second between the two. If only one timestamp is given
+* the difference is calculated between it and the current time. The
+* first parameter is supposed to be the older of the two timestamps.
+* In the case where it isn't, we transpose the two arguments.
+*
+* @param integer $from The older of the two timestamps
+* @param integer $to The younger of the timestamps. If not specified, defaults to the current time
+* @return string
+*/
 function time_diff($from, $to) {
+    if(empty($to))
+        $top = time();
 	if ($from > $to) {
 		$t = $to;
 		$to = $from;
@@ -254,7 +313,6 @@ function time_diff($from, $to) {
     if($pos !== false)
         $result = substr($result, 0, $pos - 1);
     
-	//return "$years years, $months months, $days days, $hours hours, $minutes minutes, $seconds seconds";
     return $result;
 }
 ?>

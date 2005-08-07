@@ -1,6 +1,6 @@
 <?php
 /**
- * Jumbled up by Xushi ... =)
+ * standalone.upgrade.php - The bBlog upgrade script
  * <p>
  * This will be the default standalone standard upgrader, which will 
  * include all patches to previous versions. It mainly has to do with updates
@@ -8,7 +8,7 @@
  * going through the installer.
  * <p>
  * Note: This file is stable enough to *work*, and enter beta mode.
- * It is reverse compatible to 0.7.2. I decided not to put in the 0.6
+ * It is reverse compatible down to 0.7.2. I decided not to put in the 0.6
  * and below patches because we all decided such versions are too old
  * and unsupported.. And besides.. that means another ~400 lines extra.
  * <p>
@@ -26,10 +26,12 @@
  * of the patcher, you make a $db->query($q);, instead of several small ones like
  * now.
  * <p>
- * This idea occured
- * to me while merging 0.6, because half of the db was missing, and 0.7.2 corrected
- * it by doing the exact method just explained. The same could be expanded to the
- * whole upgrade proccess.
+ * This idea occured to me while merging 0.6, because half of the db was missing, 
+ * and 0.7.2 corrected it by doing the exact method just explained. The same could 
+ * be expanded to the whole upgrade proccess.
+ * <p>
+ * @author - Xushi <xushi.xushi@gmail.com>
+ * @license - GPL <http://www.gnu.org/copyleft/gpl.html>
  */
  
 /**
@@ -41,7 +43,7 @@
  * {@link LEGAL}
  */
 
-	//close any sessions that might still be open (as a precaution)
+	//TODO: close any sessions that might still be open (as a precaution)
 	//@session_destroy();
 	
 	/**
@@ -163,10 +165,10 @@
 	
 	echo "*** Checking if you need 0.8 upgrades...<br />";
 	
-	// err.. do we really need this one?
+	// TODO: err.. do we really need this one?
 	//$url = $config['url'];
 
-	// xushi: Check first to see if varchar is 20, or 40.
+	// Check first to see if varchar is 20, or 40.
 	// So that we only have to update it once.
 	// Thanks keefaz, kolba, DL8
 	$matches = array();
@@ -208,27 +210,35 @@
 		
 	//lets see if you have SECRET_QUESTION or not.
 	echo "***Checking Q&A exists...<br />";
-	$testvar = $bBlog->get_var("select value from ".T_CONFIG." where name='SECRET_QUESTION'");
+	$testvar = $bBlog->get_results("select secret_question from ".T_AUTHORS."");
 	if (isset($testvar)){
 		//no updates necessary :)
 		echo "Secret Q&A found. No patch needed.<br /><br />";
 	}else{
 		//we should add 2 values to db
 		echo "Not found, patching...";
-		$q = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`) VALUES
-		('', 'SECRET_QUESTION', 'Yellow and long?'),
-		('', 'SECRET_ANSWER', 'banana')";
+		
+		// Add secret_question, secret_answer, and password_reset_request.
+		// Since its an upgrade, the fields will be empty, and will be filled
+		// by the user(s) in the option panel after their upgrade.
+		$q[] = "ALTER TABLE `".T_AUTHORS."` ADD `secret_question` VARCHAR( 50 ) NOT NULL default ''";
+		$q[] = "ALTER TABLE `".T_AUTHORS."` ADD `secret_answer` VARCHAR( 20 ) NOT NULL default ''";
+		$q[] = "ALTER TABLE `".T_AUTHORS."` ADD `password_reset_request` int( 1 ) NOT NULL default '0'";
 		
 		//just do it
-		$bBlog->query($q);
+		foreach($q as $q2do) {
+ 		$db->query($q2do);
+		}
+		
 		echo "Done.<br />Please change the Q&A when done.<br /><br />";
 	}	
 	
 	
 	// Add 'ip_domain' to the authors table.
-	// i think i need a check here too
-	// ---------------------------------
+	// TODO: i think i need a check here too
 	$qq[] = "ALTER TABLE `".T_AUTHORS."` ADD `ip_domain` VARCHAR( 255 ) NOT NULL default ''";
+	
+	
 
 	// Create a new 'checkcode' table which will include
 	// id, checksum, and timestamp.

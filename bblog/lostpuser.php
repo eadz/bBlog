@@ -1,26 +1,14 @@
 <?php
-
-// Author: Xushi ... =)
-//
-// Will retrieve the secret quesetion from the DB, and
-// secret answer from the user, and send it to getp.php
-// in order to retrieve the admin password.
-
-	
-// the pot of gold..
-include 'config.php';
-
-
-
-// make sure the page is never cached - we should probally set no-cache headers also.
-$bBlog->setmodifytime(time());
-
-
-	// get question from DB
-	$secQuestion = $bBlog->get_var("select value from ".T_CONFIG." where name='SECRET_QUESTION'");
-	
+/**
+ * lostpuser.php Password retrieval: Stage 1
+ * <p>
+ * Will ask for the username in which to get
+ * the secret question for.
+ * <p>
+ * @author Xushi <xushi.xushi@gmail.com>
+ * @licence GPL <http://www.gnu.org/copyleft/gpl.html>
+ */
 ?>
-
 <html>
 	<header>
 		<link rel="stylesheet" type="text/css" title="Main" href="style/admin.css" media="screen" />
@@ -34,19 +22,11 @@ $bBlog->setmodifytime(time());
 
 
 		<div style="width: 500px; margin-left: auto; margin-right: auto; margin-top: 80px;">
-		<form action="get-email-pass.php" method="post">
+		<form action="lostpquestion.php" method="post">
 			<table border="0" class='list' cellpadding="4" cellspacing="0">
 				<tr bgcolor="#FFFFF">
 					<td width="33%">Username:</td>
 		  			<td width="200"><input type="text" name="username" value="" /></td>
-				</tr>
-				<tr bgcolor="#FFFFF">
-					<td width="33%">Question:</td>
-		  			<td width="200"><?php echo $secQuestion; ?></td>
-		  		</tr>
-				<tr bgcolor="#FFFFF">
-					<td width="33%">Answer:</td>
-		  			<td width="200"><input type="password" name="pass" value="" /></td>
 				</tr>
 			</table>
 			<p><input type="submit" name="submit" value="Submit" />

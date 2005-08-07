@@ -21,10 +21,6 @@
 	// Instantiate your new class
 	$mail = new bblogMailer;
 	$passwd = new passwdManager;
-
-
-	// temporary until propper username is implemented.
-	$username = "temp";
 ?>
 <html>
 	<header>
@@ -77,7 +73,7 @@ function getPass() {
 	global $mydb;
 	
 	// get the answer from db
-	$cat = $mydb->get_var("select value from ".T_CONFIG." where name='SECRET_ANSWER'");
+	$cat = $mydb->get_var("select secret_answer from ".T_AUTHORS." where nickname='".$_SESSION['username']."'");
 	$secAnswer = $_POST['pass'];
 		
 	// test if they're the same
@@ -93,20 +89,23 @@ function getPass() {
 
 		// Now, send an email to the user with the new (unhashed) password
 		// TODO: for more than 1 user, add 'where nickname = "user"'
-		$mail->AddAddress($mydb->get_var("SELECT email from ".T_AUTHORS.""), $mydb->get_var("SELECT nickname from ".T_AUTHORS.""));
+		$mail->AddAddress($mydb->get_var("SELECT email from ".T_AUTHORS." WHERE nickname='".$_SESSION['username']."'"), $mydb->get_var("SELECT nickname from ".T_AUTHORS." WHERE nickname='".$_SESSION['username']."'"));
 		$mail->Subject = "bBlog password recovery.";
 		$mail->Body    = "Thank you for using bBlog. 
 
 You have requested for your password to be sent to you via email. If you did not, then please reset your secret answer/question as someone else might know it.
 
+Your username is : ".$_SESSION['username']."
 Your new password is: ".$p.". 
 
-Please make sure to change it as soon as you log in.
+Click on the link below and make sure to change the password immediately.
 
 This is an automatic message. Please do not reply to it.
-For further enquiries please visit the forum at http://www.bblog.com/forum.php
+For further enquiries, visit the forum at http://www.bblog.com/forum.php
 
-Remember, the bBlog team will NEVER ask you for your password, so do not give it away to anyone.
+Remember, the bBlog team will !!!NEVER!!! ask you for your password, so do !!!NOT!!! give it away to anyone.
+
+Thank you,
 The bBlog Team.";
 
 		//$mail->AddAttachment("c:/temp/11-10-00.zip", "new_name.zip");  // optional name

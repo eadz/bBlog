@@ -424,7 +424,7 @@ session_start();
             $q[] = "CREATE TABLE {$pfx}authors (
               id int(10) NOT NULL auto_increment,
               nickname varchar(20) NOT NULL default '',
-              email varchar(50) NOT NULL default '',
+              email varchar(100) NOT NULL default '',
               password varchar(40) NOT NULL default '',
               fullname varchar(50) NOT NULL default '',
               url varchar(50) NOT NULL default '',
@@ -435,9 +435,6 @@ session_start();
               location varchar(25) NOT NULL default '',
               aboutme text NOT NULL,
               ip_domain VARCHAR( 255 ) NOT NULL,
-              secret_question varchar(50) NOT NULL default '',
-              secret_answer varchar(20) NOT NULL default '',
-              password_reset_request int(1) NOT NULL default '0',
               PRIMARY KEY  (id)
             ) TYPE=MyISAM;";
 
@@ -510,13 +507,7 @@ session_start();
               PRIMARY KEY  (id)
             ) TYPE=MyISAM";
 
-            
-            
-            /* ----------------------------------------
-            				inserting data
-            ----------------------------------------- */
-            
-            
+            /* inserting data */
             $q[]= "INSERT INTO `{$pfx}rss` VALUES (9, '', '')";
             $q[]= "INSERT INTO `{$pfx}rss` VALUES (8, '', '')";
             $q[]= "INSERT INTO `{$pfx}rss` VALUES (7, '', '')";
@@ -540,6 +531,8 @@ session_start();
               ('', 'PING','bblog.com/ping.php'),
               ('', 'COMMENT_TIME_LIMIT','1'),
               ('', 'NOTIFY','false'),
+              ('', 'SECRET_QUESTION', '".$config['secretQuestion']."'),
+			  ('', 'SECRET_ANSWER', '".$config['secretAnswer']."'),
               ('', 'BLOG_DESCRIPTION', '".$config['blogdescription']."'),
               ('', 'COMMENT_MODERATION','none'),
               ('', 'META_DESCRIPTION','Some words about this blog'),
@@ -566,11 +559,10 @@ session_start();
 
             // Only add new admin on a fresh install
             if(!isset($config['upgrade_from'])) {
-                $q[]="INSERT INTO `{$pfx}authors` (`nickname`,`password`,`email`,`fullname`,`secret_question`,`secret_answer`) VALUES
-                ('".$config['username']."','".sha1($config['password'])."','".$config['email']."','".$config['fullname']."','".$config['secretQuestion']."','".$config['secretAnswer']."');";
+                $q[]="INSERT INTO `{$pfx}authors` (`nickname`,`password`,`email`,`fullname`) VALUES
+                ('".$config['username']."','".sha1($config['password'])."','".$config['email']."','".$config['fullname']."');";
             }
-            
-            
+
             $q[] = "INSERT INTO `{$pfx}posts` (`postid`, `title`, `body`, `posttime`, `modifytime`, `status`, `modifier`, `sections`, `commentcount`,`ownerid`) VALUES (1, 'First Post', '[b]This is the first post of bBlog.[/b]\r\n\r\nYou may delete this post in the admin section. Make sure you have deleted the install file and changed the admin password. \r\n\r\nBe sure to visit the [url=http://www.bblog.com/forum.php]bBlog forum[/url] if you have any questions, comments, bug reports etc. \r\n\r\nHappy bBlogging!', UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 'live', 'bbcode', '', 0, 1);";
 
             $q[] = "INSERT INTO `{$pfx}sections` (`sectionid`, `nicename`, `name`) VALUES (1, 'News', 'news'),
@@ -693,7 +685,6 @@ session_start();
             echo "<h3>Writing config.php file</h3>";
                         $config['rootpath'] = dirname(dirname(__FILE__)).'/';
             if (!isset($config['extra_config'])) $config['extra_config'] = '';
-
         $config_file = "<?php
 /**
  *
@@ -786,7 +777,7 @@ include BBLOGROOT.'inc/init.php';
             fwrite($fp, $config_file);
             fclose($fp);
             if (1 == $clean_install) {
-                chmod('../config.php', 0644);
+                @chmod('../config.php', 0644);
             }
             echo '<p>Config file written.</p><p><input type="submit" name="continue" value="Next &gt;" /></p>';
             $step = 8;

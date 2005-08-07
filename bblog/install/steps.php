@@ -31,101 +31,43 @@ switch($step) {
 		// tests : 
 		// 1 - mysql connects
 		// 2 - everything is set
+		$missing_fields = '';
+		$config_vals = array(
+            'blogname'=>'Blog name',
+            'blogdescription' => 'Blog description',
+            'username' => 'Username',
+            'password'=> 'Password',
+            'secondPassword' => 'Second password',
+            'secretQuestion' => 'Secret question',
+            'secretAnswer' => 'Secret answer',
+            'email' => 'E-mail',
+            'fullname' => 'Full name',
+            'mysql_username' => 'MySQL Username',
+            'mysql_password' => 'MySQL Password',
+            'mysql_database' => 'MySQL Database',
+            'mysql_host' => 'MySQL Host',
+            'table_prefix' => 'MySQL Table prefix',
+            'url' => 'Blog URL',
+            'path' => 'Path to blog directory'
+		);
+		
 		$allfilled=TRUE;
-		
-		if (isset($_POST['blogname']) && '' != $_POST['blogname']) {
-			$config['blogname'] = $_POST['blogname'];
-		} else {
-			$missing_fields = "'Blog name' ";
-		}
-			
-
-		if (isset($_POST['blogdescription']) && '' != $_POST['blogdescription']) {
-			$config['blogdescription'] = $_POST['blogdescription'];
-		} else {
-			$missing_fields .= "'Blog description' ";
-		}
-
-		if (isset($_POST['username']) && '' != $_POST['username']) {
-			$config['username'] = $_POST['username'];
-		} else {
-			$missing_fields .= "'Username' ";
-		}
-
-		if (isset($_POST['password']) && '' != $_POST['password']) {
-			$config['password'] = $_POST['password'];
-		} else {
-			$missing_fields .=  "'Password' ";
-		}
-		
-		//second password field
-		if (isset($_POST['secondPassword']))
-		{
-			$config['secondPassword'] = $_POST['secondPassword'];
+		foreach($config_vals as $field=>$prompt){
+            if(isset($_POST[$field]) && !empty($_POST[$field]))
+                $config[$field] = $_POST[$field];
+            else
+                $missing_fields .= $prompt.' ';
 		}
 		
 		//Test first to see if the passwords both match
-		if ($config['password'] != $config['secondPassword'])
-		{
+		if ($config['password'] !== $config['secondPassword']){
 			$missing_fields .= "Passwords mismatched.";
 		}
-		
-		// secret question
-		if (isset($_POST['secretQuestion']))
-		{
-			$config['secretQuestion'] = $_POST['secretQuestion'];
-		}
-		
-		// secret answer
-		if (isset($_POST['secretAnswer']))
-		{
-			$config['secretAnswer'] = $_POST['secretAnswer'];
-		}
-
-        if (isset($_POST['email']) && '' != $_POST['email']) {
-			$config['email'] = $_POST['email'];
-        } else {
-			$missing_fields .= "'E-Mail' ";
-        }
-        
-		if (isset($_POST['fullname']) && '' != $_POST['fullname']) {
-			$config['fullname'] = $_POST['fullname'];
-		} else {
-			$missing_fields .="'Full Name' ";
-		}
-		
-		if (isset($_POST['mysql_username']) && '' != $_POST['mysql_username']) {
-			$config['mysql_username'] = $_POST['mysql_username'];
-		} else {
-			$missing_fields .= "'MySQL Username' ";
-		}
-		
-		if (isset($_POST['mysql_password']) && '' != $_POST['mysql_password']) {
-			$config['mysql_password'] = $_POST['mysql_password'];
-		} else {
-			$missing_fields .= "'MySQL Password' ";
-		}
-		
-		if (isset($_POST['mysql_database']) && '' != $_POST['mysql_database']) {
-			$config['mysql_database'] = $_POST['mysql_database'];
-		} else {
-			$missing_fields .= "'MySQL Database' ";
-		}
-
-		if (isset($_POST['mysql_host']) && '' != $_POST['mysql_host']) {
-			$config['mysql_host'] = $_POST['mysql_host'];
-		} else {
-			$missing_fields .= "'MySQL Host' ";
-		}
-		
-		if (isset($_POST['table_prefix']) && '' != $_POST['table_prefix']) {
-			$config['table_prefix'] = $_POST['table_prefix'];
-		} else {
-			$missing_fields .= "'MySQL table prefix' ";
-		}
-		
-		
-		if (isset($missing_fields)) {
+		//trim bblog/install/index.php off the URL
+		$pos = strpos($config['url'], 'bblog/install/');
+        $config['url'] = ($pos !== false) ? substr($config['url'], 0, $pos) : $config['url'];
+            
+		if (strlen($missing_fields) > 0) {
 			$message = "<p style='color:red;'>You must fill all the fields. Following fields are missing<br />$missing_fields</p>";
 			break;
 		}
@@ -151,6 +93,7 @@ switch($step) {
 		//} else {
 			$step = 4;
 		//}
+		$_SESSION['config'] =& $config;
 		break;
 
 	//case 3:

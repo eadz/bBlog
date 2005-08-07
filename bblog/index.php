@@ -32,7 +32,7 @@ define('IN_BBLOG_ADMIN',TRUE);
 if(file_exists('config.php') && filesize('config.php')>0){
     include "config.php";
 } else {
-    header('Location: install.php');
+    header('Location: install/index.php');
     header('Pragma: no-cache'); // Opera
 }
 
@@ -131,7 +131,7 @@ $menu[$i+4]['title'] = 'Link to the online documentation at bBlog.com';
 $bindex['docs']=$i+4;
 
 $menu[$i+5]['name']='Bugs';
-$menu[$i+5]['url']='http://www.bblog.com/bugs/" target="_blank'; // NASTY hack! (again)
+$menu[$i+5]['url']='http://www.bblog.com/http://www.bblog.com/forum.php" target="_blank'; // NASTY hack! (again)
 $menu[$i+5]['title'] = 'Link to the online bug tracker at bBlog.com';
 $bindex['bugs']=$i+5;
 

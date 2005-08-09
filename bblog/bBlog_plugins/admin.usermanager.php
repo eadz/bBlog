@@ -47,7 +47,7 @@ switch($userdo) {
 		$nickname = my_addslashes($_POST['nickname']);
 		$email  = my_addslashes($_POST['email']);
 		$fullname = my_addslashes($_POST['fullname']);
-		$password = my_addslashes($_POST['password']);
+		$password = sha1(my_addslashes($_POST['password']));
 		$location = my_addslashes($_POST['location']);
 		$ip_domain = my_addslashes($_POST['ip_domain']);
 		$url = my_addslashes($_POST['url']);

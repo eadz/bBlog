@@ -11,10 +11,14 @@
 
 <h4>Uploaded files ({$path})</h4>
 <div class="frame">
+{if $have_files}
 <ul style='margin-left: 20px; list-style: square;'>
 {foreach from=$files item=file}
 	<li><a href="{$path}{$file}">{$file}</a></li>
 {/foreach}
-<ul>
+</ul>
+{else}
+No uploaded files
+{/if}
 </div>
 </form>

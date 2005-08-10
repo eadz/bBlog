@@ -32,6 +32,10 @@ function admin_plugin_files_run(){
 		}
 	}
 	$dir = scandir(UPLOADFILES);
+	// Remove '.' and '..' from the list
+	unset($dir[0],$dir[1]);
+	// If we don't have files, we don't need to start the list and keep it empty
+	$bBlog->smartyObj->assign('have_files',count($dir)>0);
 	$bBlog->smartyObj->assign("files",$dir);
 	$bBlog->smartyObj->assign("path",UPLOADFILESURL);
 }

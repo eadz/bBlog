@@ -7,6 +7,20 @@
  * @package bblog
  */
  
+ /**
+  * TODO: xushi: add ability to change users secret question/answer
+  */
+ 
+ /**
+  * TODO: xushi - major security enhancement
+  * 
+  * Add an extra 'isadmin (bool)' field in authors table. Currently,
+  * anyone who logs in can see all other users details and can edit them
+  * at will. We need this to happen only if the user is an admin. So add
+  * this boolean, and if a user isnt an admin, then mask all other users but
+  * himself (select * from t_authors ... ... ... where nickname='user')
+  */
+ 
 function identify_admin_usermanager () {
     return array (
     'name'           =>'usermanager',

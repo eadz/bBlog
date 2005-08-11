@@ -1,7 +1,7 @@
 <?php
 /**
  * install/index.php - bBlog installer
- * <p>
+ * 
  * @author Xushi <xushi.xushi@gmail.com>
  * @copyright Copyright (C) 2005  Eaden McKee <email@eadz.co.nz>
  * @license http://www.gnu.org/copyleft/gpl.html GPL
@@ -10,13 +10,7 @@
 
 /**
  * xushi: notes
- * <p>
- * note:
- * -----
- * The installer now works again. There is only 1 problem in it.
- * By default it sets BBLOGROOT to bblog/install/ instead of just bblog/
- * because of $config['path']. in line ~ 740
- * <p>
+ * 
  * note:
  * -----
  * im thinking of reducing the GUI installation steps
@@ -27,7 +21,7 @@
  * fill his details for the installation
  * 3) All the other installation info can be grouped to a
  * third single page.
- * <p>
+ * 
  * note:
  * -----
  * i like how in 0.8, by default, a new install is determined by
@@ -38,6 +32,8 @@
  * Remove the switch case. Either stick all code in 1 blob, or replace
  * case with functions.. Atleast with functions you can return SUCCSES
  * or FAIL.
+ * ------
+ * TODO: Delete blogurl section from install page
  */
 
 
@@ -87,6 +83,7 @@ session_start();
     if(!isset($config['mysql_database'])) $config['mysql_database'] = "";
     if(!isset($config['blogname'])) $config['blogname'] = "";
     if(!isset($config['blogdescription'])) $config['blogdescription'] = "";
+    if(!isset($config['bblogemail'])) $config['bblogemail'] = "";
 
     $config['version'] = "0.8beta2";
 
@@ -207,6 +204,14 @@ session_start();
             <td  width="33%" class='si'>A short descriptive subtitle e.g. "A blog about fish"</td>
             </tr>
             <tr bgcolor="#eeeedf">
+                <td width="33%" bgcolor="#eeeeee">bBlog Email Address</td>
+                <td width="200"><input type="text" name="bblogemail" value="<?php echo $config['bblogemail']; ?>"/></td>
+                <td width="33%" class='si'>What address to use when sending emails to your users, such as password resets or notifications of comments</td>
+            </tr>
+			<tr>
+                <td colspan="3"><h4>Admin Settings</h4></td>
+            </tr>
+            <tr bgcolor="#eeeedf">
                 <td width="33%" bgcolor="#eeeedf">Full Name</td>
                 <td><input type="text" name="fullname" value="<?php echo $config['fullname']; ?>"/></td>
                 <td class='si'>The owners full name </td>
@@ -229,7 +234,7 @@ session_start();
             <tr bgcolor="#eeeedf">
                 <td width="33%" bgcolor="#eeeeee">Email Address</td>
                 <td width="200"><input type="text" name="email" value="<?php echo $config['email']; ?>"/></td>
-                <td width="33%" class='si'>Where to send notifications of comments</td>
+                <td width="33%" class='si'>Your personal email address. Useful for password recovery.</td>
             </tr>
             <tr bgcolor="#eeeeee">
 				<td width="33%">Secret Question</td>
@@ -268,19 +273,6 @@ session_start();
                 <td width="33%">Table Prefix</td>
                 <td width="200"><input type="text" name="table_prefix" value="<?php echo $config['table_prefix']; ?>" /></td>
                 <td width="33%" class='si'>Prefix of tables ( usually bb_ )</td>
-            </tr>
-            <tr>
-                <td colspan="3"><h4>Server Settings</h4></td>
-            </tr>
-            <tr bgcolor="#eeeedf">
-                <td width="33%">Url to your blog</td>
-                <td width="200"><input type="text" name="url" value="<?php echo $config['url']; ?>" /></td>
-                <td width="33%" class='si'>The full URL to your blog</td>
-            </tr>
-            <tr bgcolor="#eeeeee">
-                <td width="33%">Path to bBlog</td>
-                <td width="200"><input type="text" name="path" value="<?php echo $config['path']; ?>" /></td>
-                <td width="33%" class='si'>The full UNIX path to the bblog directory</td>
             </tr>
             </table>
             <p><input type="submit" name="submit" value="Next &gt;" />
@@ -424,7 +416,7 @@ session_start();
             $q[] = "CREATE TABLE {$pfx}authors (
               id int(10) NOT NULL auto_increment,
               nickname varchar(20) NOT NULL default '',
-              email varchar(100) NOT NULL default '',
+              email varchar(50) NOT NULL default '',
               password varchar(40) NOT NULL default '',
               fullname varchar(50) NOT NULL default '',
               url varchar(50) NOT NULL default '',
@@ -435,6 +427,9 @@ session_start();
               location varchar(25) NOT NULL default '',
               aboutme text NOT NULL,
               ip_domain VARCHAR( 255 ) NOT NULL,
+              secret_question varchar(50) NOT NULL default '',
+              secret_answer varchar(20) NOT NULL default '',
+              password_reset_request int(1) NOT NULL default '0',
               PRIMARY KEY  (id)
             ) TYPE=MyISAM;";
 
@@ -507,7 +502,13 @@ session_start();
               PRIMARY KEY  (id)
             ) TYPE=MyISAM";
 
-            /* inserting data */
+            
+            
+            /* ----------------------------------------
+            				inserting data
+            ----------------------------------------- */
+            
+            
             $q[]= "INSERT INTO `{$pfx}rss` VALUES (9, '', '')";
             $q[]= "INSERT INTO `{$pfx}rss` VALUES (8, '', '')";
             $q[]= "INSERT INTO `{$pfx}rss` VALUES (7, '', '')";
@@ -519,7 +520,7 @@ session_start();
             $q[]= "INSERT INTO `{$pfx}rss` VALUES (1, 'http://www.bblog.com/rdf.php', 'I88592')";
 
             $q[]="INSERT INTO `{$pfx}config` (`id`, `name`, `value`) VALUES
-              ('', 'EMAIL', '".$config['email']."'),
+              ('', 'EMAIL', '".$config['bblogemail']."'),
               ('', 'BLOGNAME', '".$config['blogname']."'),
               ('', 'TEMPLATE', 'lines'),
               ('', 'DB_TEMPLATES', 'false'),
@@ -531,8 +532,6 @@ session_start();
               ('', 'PING','bblog.com/ping.php'),
               ('', 'COMMENT_TIME_LIMIT','1'),
               ('', 'NOTIFY','false'),
-              ('', 'SECRET_QUESTION', '".$config['secretQuestion']."'),
-			  ('', 'SECRET_ANSWER', '".$config['secretAnswer']."'),
               ('', 'BLOG_DESCRIPTION', '".$config['blogdescription']."'),
               ('', 'COMMENT_MODERATION','none'),
               ('', 'META_DESCRIPTION','Some words about this blog'),
@@ -559,10 +558,11 @@ session_start();
 
             // Only add new admin on a fresh install
             if(!isset($config['upgrade_from'])) {
-                $q[]="INSERT INTO `{$pfx}authors` (`nickname`,`password`,`email`,`fullname`) VALUES
-                ('".$config['username']."','".sha1($config['password'])."','".$config['email']."','".$config['fullname']."');";
+                $q[]="INSERT INTO `{$pfx}authors` (`nickname`,`password`,`email`,`fullname`,`secret_question`,`secret_answer`) VALUES
+                ('".$config['username']."','".sha1($config['password'])."','".$config['email']."','".$config['fullname']."','".$config['secretQuestion']."','".$config['secretAnswer']."');";
             }
-
+            
+            
             $q[] = "INSERT INTO `{$pfx}posts` (`postid`, `title`, `body`, `posttime`, `modifytime`, `status`, `modifier`, `sections`, `commentcount`,`ownerid`) VALUES (1, 'First Post', '[b]This is the first post of bBlog.[/b]\r\n\r\nYou may delete this post in the admin section. Make sure you have deleted the install file and changed the admin password. \r\n\r\nBe sure to visit the [url=http://www.bblog.com/forum.php]bBlog forum[/url] if you have any questions, comments, bug reports etc. \r\n\r\nHappy bBlogging!', UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 'live', 'bbcode', '', 0, 1);";
 
             $q[] = "INSERT INTO `{$pfx}sections` (`sectionid`, `nicename`, `name`) VALUES (1, 'News', 'news'),
@@ -683,8 +683,9 @@ session_start();
         case 7:
             // Write config!
             echo "<h3>Writing config.php file</h3>";
-                        $config['rootpath'] = dirname(dirname(__FILE__)).'/';
+            $config['rootpath'] = dirname(dirname(__FILE__)).'/';
             if (!isset($config['extra_config'])) $config['extra_config'] = '';
+
         $config_file = "<?php
 /**
  *
@@ -694,7 +695,7 @@ session_start();
  *   ||  ||  ||   ||   ||  ||  || ||  ||
  *  .||..|' .||...|'  .||. `|..|' `|..||
  *                                    ||
- *         v1.0                    `..|'
+ *         v0.8.0                 `....|'
  *
  *
  *  \$Id: install/index.php,v 1.77 2005/06/12 11:27:24 xushi Exp $

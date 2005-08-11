@@ -40,15 +40,14 @@ switch($step) {
             'secondPassword' => 'Second password',
             'secretQuestion' => 'Secret question',
             'secretAnswer' => 'Secret answer',
-            'email' => 'E-mail',
+            'email' => 'Admins Email address',
+            'bblogemail' => 'bBlog Email',
             'fullname' => 'Full name',
             'mysql_username' => 'MySQL Username',
             'mysql_password' => 'MySQL Password',
             'mysql_database' => 'MySQL Database',
             'mysql_host' => 'MySQL Host',
-            'table_prefix' => 'MySQL Table prefix',
-            'url' => 'Blog URL',
-            'path' => 'Path to blog directory'
+            'table_prefix' => 'MySQL Table prefix'
 		);
 		
 		$allfilled=TRUE;
@@ -87,17 +86,9 @@ switch($step) {
 			
 			break;
 		}
-		//$func = 'upgrade_from_'.$config['upgrade_from'].'_pre';
-		//if($config['install_type'] == 'upgrade') {
-		//	$step = 3;
-		//} else {
-			$step = 4;
-		//}
+		
+		$step = 4;
 		$_SESSION['config'] =& $config;
 		break;
-
-	//case 3:
-	//	break;
 }
-
 ?>

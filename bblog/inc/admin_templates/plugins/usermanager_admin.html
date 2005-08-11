@@ -31,6 +31,14 @@
 <div class="frame">
   <input class="text" size="40" type="password" name="password" value="***OLDPASSWORD***" />
 </div>
+<h4>Secret Question</h4>
+<div class="frame">
+  <input class="text" size="40" type="text" name="secretQuestion" value="{$user.secret_question|htmlspecialchars}" />
+</div>
+<h4>Secret Answer</h4>
+<div class="frame">
+  <input class="text" size="40" type="text" name="secretAnswer" value="{$user.secret_answer|htmlspecialchars}" />
+</div>
 <h4>Ip/Domain</h4>
 <div class="frame">
   <input class="text" size="40" type="text" name="ip_domain" value="{$user.ip_domain|htmlspecialchars}" />
@@ -45,7 +53,7 @@
 </div>
 <h4>ICQ</h4>
 <div class="frame">
-  <input class="text" size="15" type="text" name="icq" value="{$user.icq|htmlspecialchars}" />
+  <input class="text" size="10" type="text" name="icq" value="{$user.icq|htmlspecialchars}" />
 </div>
 <h4>Save User</h4>
 <div class="button">

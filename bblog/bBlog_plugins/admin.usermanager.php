@@ -1,22 +1,26 @@
 <?php
 /**
  * admin.usermanager.php - administer users
- * <p>
+ * 
+ * Adds / Edits / Deletes user accounts.
+ * 
  * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
  * @license http://www.gnu.org/copyleft/gpl.html GPL
  * @package bblog
  */
  
  /**
-  * TODO: xushi: add ability to change users secret question/answer
+  * TODO: xushi: Should the secret answer be sha1() hashed for extra security?
+  * since it handles password resets & critical account information?
   */
  
  /**
   * TODO: xushi - major security enhancement
   * 
-  * Add an extra 'isadmin (bool)' field in authors table. Currently,
-  * anyone who logs in can see all other users details and can edit them
-  * at will. We need this to happen only if the user is an admin. So add
+  * Currently, anyone who logs in can see all other users details and can
+  * edit them at will. We need this to happen only if the user is an admin.
+  * 
+  * Add an extra 'isadmin (bool)' field in authors table.  So add
   * this boolean, and if a user isnt an admin, then mask all other users but
   * himself (select * from t_authors ... ... ... where nickname='user')
   */
@@ -66,7 +70,9 @@ switch($userdo) {
 		$ip_domain = my_addslashes($_POST['ip_domain']);
 		$url = my_addslashes($_POST['url']);
 		$icq = my_addslashes($_POST['icq']);
-		$q = "insert into ".T_AUTHORS." (nickname, email, fullname, password, location, url, icq) values ('$nickname', '$email', '$fullname', '$password', '$location', '$url', '$icq')";
+		$secretQuestion = my_addslashes($_POST['secretQuestion']);
+		$secretAnswer = my_addslashes($_POST['secretAnswer']);
+		$q = "insert into ".T_AUTHORS." (nickname, email, fullname, password, location, url, icq, secret_question, secret_answer) values ('$nickname', '$email', '$fullname', '$password', '$location', '$url', '$icq', '$secretQuestion', '$secretAnswer')";
 		$bBlog->query($q);
 
 		break;
@@ -94,7 +100,9 @@ switch($userdo) {
 		$ip_domain = my_addslashes($_POST['ip_domain']);
 		$url = my_addslashes($_POST['url']);
 		$icq = my_addslashes($_POST['icq']);
-		$q = "update ".T_AUTHORS." set nickname='$nickname', email='$email', fullname='$fullname', password='$password', location='$location', url='$url', icq='$icq', ip_domain='$ip_domain' where id='{$_POST['userid']}'";
+		$secretQuestion = my_addslashes($_POST['secretQuestion']);
+		$secretAnswer = my_addslashes($_POST['secretAnswer']);
+		$q = "update ".T_AUTHORS." set nickname='$nickname', email='$email', fullname='$fullname', password='$password', location='$location', url='$url', icq='$icq', secret_question='$secretQuestion', secret_answer='$secretAnswer', ip_domain='$ip_domain' where id='{$_POST['userid']}'";
 		$bBlog->query($q);
 
 		break;

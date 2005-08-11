@@ -1,17 +1,17 @@
 <?php
 /**
  * standalone.upgrade.php - The bBlog upgrade script
- * <p>
+ * 
  * This will be the default standalone standard upgrader, which will 
  * include all patches to previous versions. It mainly has to do with updates
  * regarding the DB. And can also be used as a stand alone upgrader, without
  * going through the installer.
- * <p>
+ * 
  * Note: This file is stable enough to *work*, and enter beta mode.
  * It is reverse compatible down to 0.7.2. I decided not to put in the 0.6
  * and below patches because we all decided such versions are too old
  * and unsupported.. And besides.. that means another ~400 lines extra.
- * <p>
+ * 
  * EDIT:
  * -------------------------
  * I've just noticed a nice idea which will greatly reduce the complexity and size
@@ -19,35 +19,27 @@
  * anything from you except 2 things.
  * - What the last version of the db looks like, and
  * - What your current db looks like.
- * <p>
+ * 
  * If anything is different/missing, then it patches and updates. That's really it.
  * I mean it'll look similar to the install php, but with each querry protected by 
  * a check to see if what you have is old, missing, or the same. At the very end
  * of the patcher, you make a $db->query($q);, instead of several small ones like
  * now.
- * <p>
+ * 
  * This idea occured to me while merging 0.6, because half of the db was missing, 
  * and 0.7.2 corrected it by doing the exact method just explained. The same could 
  * be expanded to the whole upgrade proccess.
- * <p>
+ * 
  * @author - Xushi <xushi.xushi@gmail.com>
  * @license - GPL <http://www.gnu.org/copyleft/gpl.html>
+ * @package bblog
  */
- 
-/**
- * standalone.upgrade.php - bBlog upgrader
- * {@link AUTHORS}
- * <p>
- * {@link COPYWRITE}
- * <p>
- * {@link LEGAL}
- */
+
 
 	//TODO: close any sessions that might still be open (as a precaution)
 	//@session_destroy();
 	
 	/**
-	 * The pot of gold.
 	 * Flyspray 70: die if config.php not found. This is useful for
 	 * anyone who forgot to put it back when upgrading.
 	 */	
@@ -123,13 +115,14 @@
 
 
 
-	// -----------------0.7.6 patches-----------------------
-	// Currently, the only difference
-	// in the database between 0.7.5 and 0.7.6 is 
-	// * The addition of VERSION to T_CONFIG table.
-	//
-	// I still think we should keep it for now. If ever we decide
-	// that we don't need it, then we can easly remove it.
+	/**
+	 * -----------------0.7.6 patches-----------------------
+	 * Currently, the only difference
+	 * in the database between 0.7.5 and 0.7.6 is
+	 * + The addition of VERSION to T_CONFIG table.
+	 * I still think we should keep it for now. If ever we decide
+	 * that we don't need it, then we can easly remove it.
+	 */
 	
 	echo "*** Checking if you need 0.7.6 upgrades...<br />";
 	$ver = $db->get_var("select value from ".T_CONFIG." where name='VERSION'");

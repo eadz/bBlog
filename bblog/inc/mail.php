@@ -1,6 +1,17 @@
 <?php
-// mail.php - send notifications and the like
-// mail.php - author: Eaden McKee
+/**
+ * mail.php - send notifications and the like
+ * 
+ * PHP versions 4 and 5
+ * 
+ * @author Eaden McKee - <email@eadz.co.nz>
+ * @licence GPL <http://www.gnu.org/copyleft/gpl.html>
+ * @package bblog
+ */
+
+/**
+ * TODO: xushi: we could use bblogMailer class here
+ */
 
 // first lets set some defaults
 

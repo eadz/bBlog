@@ -1,9 +1,9 @@
 <?php
 /**
  * get-email-pass.php - checks password and sends email.
- * <p>
+ * 
  * Checks the secret answer, if all's good, sends email.
- * <p>
+ * 
  * @author xushi - <xushi.xushi@gmail.com>
  * @license http://www.gnu.org/copyleft/gpl.html GPL
  * @copyright Copyright (C) 2005  Eaden McKee <email@eadz.co.nz>
@@ -57,8 +57,8 @@
 
 
 /**
- * getPass() - 
- * <p>
+ * getPass() - function to reset password
+ * 
  * compares the secret answer to the one in the db. If
  * the same, then it calls the mail and passwd classes
  * and sends an email to the user with the new password.
@@ -88,27 +88,30 @@ function getPass() {
 
 
 		// Now, send an email to the user with the new (unhashed) password
-		// TODO: for more than 1 user, add 'where nickname = "user"'
 		$mail->AddAddress($mydb->get_var("SELECT email from ".T_AUTHORS." WHERE nickname='".$_SESSION['username']."'"), $mydb->get_var("SELECT nickname from ".T_AUTHORS." WHERE nickname='".$_SESSION['username']."'"));
 		$mail->Subject = "bBlog password recovery.";
-		$mail->Body    = "Thank you for using bBlog. 
-
-You have requested for your password to be sent to you via email. If you did not, then please reset your secret answer/question as someone else might know it.
+		$mail->From = $mydb->get_var("SELECT value FROM ".T_CONFIG." WHERE name='email'");
+		$mail->Reciever = $mydb->get_var("SELECT fullname from ".T_AUTHORS." WHERE nickname='".$_SESSION['username']."'");
+		$mail->Body    = "Dear ".$mail->Reciever.",
+		
+Thank you for using bBlog. 
+You have requested for your password to be sent to you via email.
+If you did not, then please reset your secret answer/question immediately.
 
 Your username is : ".$_SESSION['username']."
 Your new password is: ".$p.". 
 
 Click on the link below and make sure to change the password immediately.
+TODO: link to his blog...
 
-This is an automatic message. Please do not reply to it.
-For further enquiries, visit the forum at http://www.bblog.com/forum.php
+This is an automatic message. Please do not reply to it. For further enquiries, visit the forum at http://www.bblog.com/forum.php
 
-Remember, the bBlog team will !!!NEVER!!! ask you for your password, so do !!!NOT!!! give it away to anyone.
+Remember, the bBlog team will NEVER ask you for your password, so do NOT give it away to anyone.
 
 Thank you,
 The bBlog Team.";
 
-		//$mail->AddAttachment("c:/temp/11-10-00.zip", "new_name.zip");  // optional name
+		//$mail->AddAttachment("c:/temp/11-10-00.zip", "new_name.zip");  // optional
 
 
 		// Send email, or display an error.

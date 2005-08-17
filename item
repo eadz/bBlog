@@ -1,17 +1,34 @@
 <?php
+
+/**
+ * Need a description for this file
+ *
+ * @package bBlog
+ * @author bBlog Weblog, http://www.bblog.com/ - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
+
 include "bblog/config.php";
 $uriparams = explode("/",$_SERVER['PATH_INFO']);
 $postid = $uriparams[1];
 
-if(!is_numeric($postid) && C_CUSTOMURLS == 'true') {
-	$pagename = my_addslashes($postid);
-	$postid = $bBlog->get_var("select postid from ".T_POSTS." where pagename='$pagename'");
+if(!is_numeric($postid) && (C_CUSTOMURLS == 'true'))
+{
+    $pagename = my_addslashes($postid);
+    $postid = $bBlog->get_var("select postid from " . T_POSTS . " where pagename='$pagename'");
 }
 
-if(is_numeric($postid)) {
-  $bBlog->show_post = $postid;
-  $bBlog->smartyObj->assign('postid',$postid);
-  $bBlog->display('post.html',true,false);
-} else {
-  echo '<p>Error,not a post id</p>';
-} ?>
+if(is_numeric($postid))
+{
+    $bBlog->show_post = $postid;
+    $bBlog->smartyObj->assign('postid', $postid);
+    $bBlog->display('post.html', true, false);
+}
+else
+{
+    echo '<p>Error,not a post id</p>';
+}
+
+?>

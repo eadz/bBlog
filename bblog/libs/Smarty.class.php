@@ -23,14 +23,14 @@
  * smarty-general-subscribe@lists.php.net
  *
  * @link http://smarty.php.net/
- * @copyright 2001-2004 ispi of Lincoln, Inc.
- * @author Monte Ohrt <monte@ispi.net>
+ * @copyright 2001-2005 New Digital Group, Inc.
+ * @author Monte Ohrt <monte at ohrt dot com>
  * @author Andrei Zmievski <andrei@php.net>
  * @package Smarty
- * @version 2.6.6
+ * @version 2.6.10
  */
 
-/* $Id: Smarty.class.php,v 1.6 2004/11/02 17:56:39 rcgabriel Exp $ */
+/* $Id: Smarty.class.php,v 1.516 2005/07/18 08:43:53 messju Exp $ */
 
 /**
  * DIR_SEP isn't used anymore, but third party apps might
@@ -50,7 +50,7 @@ if (!defined('SMARTY_DIR')) {
 }
 
 if (!defined('SMARTY_CORE_DIR')) {
-    define('SMARTY_CORE_DIR', SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR);
+    define('SMARTY_CORE_DIR', SMARTY_DIR . 'internals' . DIRECTORY_SEPARATOR);
 }
 
 define('SMARTY_PHP_PASSTHRU',   0);
@@ -164,7 +164,7 @@ class Smarty
      *
      * @var string
      */
-    var $cache_dir       =  '../cache';
+    var $cache_dir       =  'cache';
 
     /**
      * This is the number of seconds cached content will persist.
@@ -232,7 +232,7 @@ class Smarty
                                                                'isset', 'empty',
                                                                'count', 'sizeof',
                                                                'in_array', 'is_array',
-                                                               'true','false'),
+                                                               'true', 'false', 'null'),
                                     'INCLUDE_ANY'     => false,
                                     'PHP_TAGS'        => false,
                                     'MODIFIER_FUNCS'  => array('count'),
@@ -464,7 +464,7 @@ class Smarty
      *
      * @var string
      */
-    var $_version              = '2.6.6';
+    var $_version              = '2.6.10';
 
     /**
      * current template inclusion depth
@@ -1132,8 +1132,7 @@ class Smarty
                     $this->debugging = true;
                 }
             } else {
-                $_cookie_var = $this->request_use_auto_globals ? $_COOKIE['SMARTY_DEBUG'] : $GLOBALS['HTTP_COOKIE_VARS']['SMARTY_DEBUG'];
-                $this->debugging = $_cookie_var ? true : false;
+                $this->debugging = (bool)($this->request_use_auto_globals ? @$_COOKIE['SMARTY_DEBUG'] : @$GLOBALS['HTTP_COOKIE_VARS']['SMARTY_DEBUG']);
             }
         }
 
@@ -1701,12 +1700,9 @@ class Smarty
 
 
     /**
-     * read in a file from line $start for $lines.
-     * read the entire file if $start and $lines are null.
+     * read in a file
      *
      * @param string $filename
-     * @param integer $start
-     * @param integer $lines
      * @return string
      */
     function _read_file($filename)
@@ -1893,7 +1889,7 @@ class Smarty
 
         if ($this->_cache_including) {
             /* return next set of cache_attrs */
-            $_return =& current($_cache_attrs);
+            $_return = current($_cache_attrs);
             next($_cache_attrs);
             return $_return;
 

@@ -19,7 +19,7 @@
  * Install:  Drop into the plugin directory, call
  *           <code>$smarty->load_filter('output','trimwhitespace');</code>
  *           from application.
- * @author   Monte Ohrt <monte@ispi.net>
+ * @author   Monte Ohrt <monte at ohrt dot com>
  * @author Contributions from Lars Noschinski <lars@usenet.noschinski.de>
  * @version  1.3
  * @param string
@@ -37,12 +37,6 @@ function smarty_outputfilter_trimwhitespace($source, &$smarty)
     preg_match_all("!<pre>.*?</pre>!is", $source, $match);
     $_pre_blocks = $match[0];
     $source = preg_replace("!<pre>.*?</pre>!is",
-                           '@@@SMARTY:TRIM:PRE@@@', $source);
-													 
-		// Pull out the code blocks
-    preg_match_all("!<code>.*?</code>!is", $source, $match);
-    $_pre_blocks = $match[0];
-    $source = preg_replace("!<code>.*?</code>!is",
                            '@@@SMARTY:TRIM:PRE@@@', $source);
 
     // Pull out the textarea blocks

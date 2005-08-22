@@ -1,7 +1,6 @@
 <?php
-
 /**
- * Need a description for this file
+ * Archives - Archive all the posts, but call from template.
  *
  * @package bBlog
  * @author bBlog Weblog, http://www.bblog.com/ - last modified by $LastChangedBy: $
@@ -15,6 +14,7 @@
  */
 if (file_exists("bblog/install/"))
 {
+	// TODO: Make sure to uncomment before new release.
     //die("Error: Make sure the folder bblog/install is deleted.");
 }
 

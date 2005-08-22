@@ -1,6 +1,6 @@
 <?php
 /**
- * standalone.upgrade.php - The bBlog upgrade script
+ * The bBlog standalone upgrade script
  * 
  * This will be the default standalone standard upgrader, which will 
  * include all patches to previous versions. It mainly has to do with updates
@@ -29,10 +29,12 @@
  * This idea occured to me while merging 0.6, because half of the db was missing, 
  * and 0.7.2 corrected it by doing the exact method just explained. The same could 
  * be expanded to the whole upgrade proccess.
- * 
- * @author - Xushi <xushi.xushi@gmail.com>
- * @license - GPL <http://www.gnu.org/copyleft/gpl.html>
- * @package bblog
+ *
+ * @package bBlog
+ * @author xushi <xushi.xushi@gmail.com>, http://www.bblog.com/ - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  */
 
 

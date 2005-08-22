@@ -1,11 +1,12 @@
 <?php
 /**
- * install/index.php - bBlog installer
- * 
- * @author Xushi <xushi.xushi@gmail.com>
- * @copyright Copyright (C) 2005  Eaden McKee <email@eadz.co.nz>
- * @license http://www.gnu.org/copyleft/gpl.html GPL
- * @package bblog
+ * bBlog main installation file
+ *
+ * @package bBlog
+ * @author xushi <xushi.xushi@gmail.com>, http://www.bblog.com/ - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  */
 
 /**
@@ -26,7 +27,7 @@
  * -----
  * i like how in 0.8, by default, a new install is determined by
  * weather you have a full config.php or not.
- * <p>
+ * 
  * note:
  * ------
  * Remove the switch case. Either stick all code in 1 blob, or replace
@@ -325,8 +326,13 @@ session_start();
              * edit: Stick with {pfx}..., T_xxx is only used when we have a working
              * config.php .. my bad :)
              */
-            $q = array();
-            /* Creating Tables */
+			
+			$q = array();
+			
+			/* ----------------------------------------
+							Creating Tables
+			----------------------------------------- */
+			
             $pfx = $config['table_prefix'];
             $q[]="DROP TABLE IF EXISTS `{$pfx}comments;";
             $q[]="CREATE TABLE `{$pfx}comments` (
@@ -350,11 +356,15 @@ session_start();
               FULLTEXT KEY `commenttext` (`commenttext`)
             ) TYPE=MyISAM;";
 
+
             $q[]="DROP TABLE IF EXISTS `{$pfx}config;";
             $q[]="CREATE TABLE `{$pfx}config` (
               `id` int(11) NOT NULL auto_increment,
               `name` varchar(50) NOT NULL default '',
               `value` varchar(255) NOT NULL default '',
+              'label' varchar(100) NOT NULL default '',
+              'type' varchar(25) NOT NULL default '',
+              'possible' varchar(100) NOT NULL default '',
               PRIMARY KEY  (`id`)
             ) TYPE=MyISAM;";
 
@@ -508,6 +518,7 @@ session_start();
             				inserting data
             ----------------------------------------- */
             
+            //TODO: add telcor's option panel patch to config table
             
             $q[]= "INSERT INTO `{$pfx}rss` VALUES (9, '', '')";
             $q[]= "INSERT INTO `{$pfx}rss` VALUES (8, '', '')";
@@ -519,7 +530,7 @@ session_start();
             $q[]= "INSERT INTO `{$pfx}rss` VALUES (2, '', '')";
             $q[]= "INSERT INTO `{$pfx}rss` VALUES (1, 'http://www.bblog.com/rdf.php', 'I88592')";
 
-            $q[]="INSERT INTO `{$pfx}config` (`id`, `name`, `value`) VALUES
+            $q[]="INSERT INTO `{$pfx}config` (`id`, `name`, `value`, `label`, `type`, `possible`) VALUES
               ('', 'EMAIL', '".$config['bblogemail']."'),
               ('', 'BLOGNAME', '".$config['blogname']."'),
               ('', 'TEMPLATE', 'lines'),
@@ -696,33 +707,16 @@ session_start();
  *  .||..|' .||...|'  .||. `|..|' `|..||
  *                                    ||
  *         v0.8.0                 `....|'
- *
- *
- *  \$Id: install/index.php,v 1.77 2005/06/12 11:27:24 xushi Exp $
- * bBlog Weblog Software http://www.bblog.com/
- * Copyright (C) 2003-2004 Eaden McKee <email@eadz.co.nz> & The bBlog Team.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
-**/
+ * 
+ * @package bBlog
+ * @author bBlog weblog
+ * @copyright The bBlog Project, http://www.bblog.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
 
-/* login details are stored in the database */
-
-
-
+/* ************* */
 /* MySQL details */
+/* ************* */
 
 // MySQL database username
 define('DB_USERNAME','".$config['mysql_username']."');
@@ -741,13 +735,19 @@ define('DB_HOST','".$config['mysql_host']."');
 // don't change this unless you know what you're doing.
 define('TBL_PREFIX','".$config['table_prefix']."');
 
+
+/* ************** */
 /* file and paths */
+/* ************** */
 
 // Full path of the directory where you've installed bBlog
 // ( i.e. the bblog folder )
 define('BBLOGROOT','".$config['rootpath']."');
 
+
+/* ********** */
 /* URL config */
+/* ********** */
 
 // URL to your blog ( one folder below the 'bBlog' folder )
 // e.g, if your bBlog folder is at www.example.com/blog/bblog, your

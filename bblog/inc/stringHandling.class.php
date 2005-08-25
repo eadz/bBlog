@@ -15,29 +15,60 @@ class StringHandling{
     /**
     * Converts typed links into clickable links
     *
+    * The following tests are performed during the transformation
+    * process:
+    *   1. Is the text already transformed? If so, call redirectHref
+    *   2. Is the protocal present (http:// or ftp://)?
+    *      2a. Yes - call transformWithProtocol
+    *      2b. No - call transformWithoutProtocol
+    *
     * @param string $str String to check and convert
     * @return string
     */
     function transformLinks($str){
-        $match = array();
-        $pattern = "/(.*)([fh]+[t]*tp[s]*:\/\/[a-zA-Z0-9_~#=&%\/\:;@,\.\?\+-]+)(.*)/";
-        if (preg_match($pattern, $str, $match)){
-            $str = StringHandling::encodeHTML($match[1]);
-            $str.= "<a href=\"".$match[2]."\" target=_blank\">".$match[2]."</a>";
-            $str.= StringHandling::encodeHTML($match[3]);
-            $html_encoded = true;
+        if(StringHandling::containsTransformedLinks($str)){
+            $str = StringHandling::redirectHref($str);
         }
-        $pattern = "/^(www|ftp)\.([a-zA-Z0-9_~#=&%\/\:;@,\.\?\+-]+)(.*)/";
-        if(preg_match($pattern, $str, $match)){
-            var_dump($match);
-            //$str = StringHandling::encodeHTML($match[1]);
-            $str = '';
-            $str.= "<a href=\"http://".$match[0]."\" target=_blank\">".$match[2]."</a>";
-            $str.= StringHandling::encodeHTML($match[3]);
-            $html_encoded = true;
+        else{
+            if(StringHandling::isProtocolPresent($str)){
+                $str = StringHandling::wrapLink($str, true);
+            }
+            else{
+                $str = StringHandling::wrapLink($str, false);
+            }
         }
         return $str;
-        
+    }
+    /**
+    * Wraps a hyperlink with the proper HTML tag
+    *
+    * @param string $str The hyperlink to wrap
+    * @param bool $present Does the link already contain the protocol
+    * @return string
+    */
+    function wrapLink($str, $present=false){
+        $match = array();
+        if($present){
+            $pattern = "/(.*)([fh]+[t]*tp[s]*:\/\/([a-zA-Z0-9_~#=&%\/\:;@,\.\?\+-]+))(.*)/";
+            if (preg_match($pattern, $str, $match)){
+                //var_dump($match);
+                $str = StringHandling::encodeHTML($match[1]);
+                $str.= '<a href="'.StringHandling::redirectUrl($match[2]).'">'.$match[3].'</a>';
+                $str.= StringHandling::encodeHTML($match[4]);
+                $html_encoded = true;
+            }
+        }
+        else{
+            $pattern = "/^(www|ftp)\.([a-zA-Z0-9_~#=&%\/\:;@,\.\?\+-]+)(.*)/";
+            if(preg_match($pattern, $str, $match)){
+                //var_dump($match);
+                $str = '';
+                $str.= '<a href="'.StringHandling::redirectUrl('http://'.$match[0]).'">'.$match[0].'</a>';
+                $str.= StringHandling::encodeHTML($match[3]);
+                $html_encoded = true;
+            }
+        }
+        return $str;
     }
     /**
     * Remove HTML tags from a string
@@ -59,6 +90,7 @@ class StringHandling{
     */
     function containsLinks($str){
         $rval = false;
+        $str = strtolower($str);
         if(strpos($str, 'href') !== false)
             $rval = true;
         if(strpos($str, 'http') !== false)
@@ -72,16 +104,39 @@ class StringHandling{
         if(strpos($str, 'mailto') !== false)
             $rval = true;
         return $rval;
-        /*if($str != preg_replace('!<[^>]*?>!', ' ', $str)) {
-            // found html tags
-            $needsModerated = true;
-        }
-        if($str != preg_replace("#([\t\r\n ])([a-z0-9]+?){1}://([\w\-]+\.([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^ \"\n\r\t<]*)?)#i", '\1<a href="\2://\3" target="_blank">\2://\3</a>', $str)) {
-            $needsModerated = true;
-        }
-        if($str != preg_replace("#([\t\r\n ])(www|ftp)\.(([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^ \"\n\r\t<]*)?)#i", '\1<a href="http://\2.\3" target="_blank">\2.\3</a>', $str)) {
-            $needsModerated = true;
-        }*/
+    }
+    
+    /**
+    * Simple check for presence of a protocol
+    *
+    * Checks a string for the http:// and ftp:// protocol
+    * qualifiers
+    *
+    * @param string $str
+    * @return bool
+    */
+    function isProtocolPresent($str){
+        $str = strtolower($str);
+        $rval = false;
+        if(strpos($str, 'http://') !== false)
+            $rval = true;
+        if(strpos($str, 'ftp://') !== false)
+            $rval = true;
+        return $rval;
+    }
+    
+    /**
+    * Reports whether a string contains clickable links
+    *
+    * @param string $str The string to check
+    * @return bool
+    */
+    function containsTransformedLinks($str){
+        $rval = false;
+        $str = strtolower($str);
+        if(strpos($str, '<a') !== false)
+            $rval = true;
+        return $rval;
     }
     
     /**
@@ -102,16 +157,30 @@ class StringHandling{
     function containsExternalLinks($str){
         $str = $str;
     }
-    /* Google link redirector
-    function googlify_href($input_text) {
-	$input_text = preg_replace("/href=\"/","href=\"http://www.google.com/url?sa=D&q=", $input_text);
-	return $input_text;
+    
+    /**
+    * Prepends the Google redirector service to the HREF attribute of anchor tags
+    * Use this when a hyperlink already exists as a HTML tag
+    *
+    * @param string $str
+    * @return string
+    */
+    function redirectHref($str){
+    // Google link redirector
+        return preg_replace("/href=\"/i","href=\"http://www.google.com/url?sa=D&q=", $str);
     }
     
-    function googlify_url($input_text) {
-        $input_text = preg_replace("/http:\/\//","http://www.google.com/url?sa=D&q=http://", $input_text);
-        return $input_text;
+    /**
+    * Prepends the Google redirector service to raw hyperlinks
+    * Use this when the hyperlink is raw text, not transformed into a HTML tag
+    *
+    * Only works for the http protocol
+    *
+    * @param string $str
+    * @return str
+    */
+    function redirectUrl($str) {
+        return preg_replace("/http:\/\//i","http://www.google.com/url?sa=D&q=http://", $str);
     }
-*/
 }
 ?>

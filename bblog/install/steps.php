@@ -92,7 +92,7 @@ switch($step) {
 		 * PHP Notice:  Undefined variable: EZSQL_ERROR in bblog/install/steps.php on line 131, referer: http://localhost/xushi/08/bblog/install/index.php
 		 */				 
 		if(is_array($EZSQL_ERROR)) {
-			$message = $EZSQL_ERROR[0]['error_str'];
+			$message = (isset($EZSQL_ERROR[0]['error_str']) ? $EZSQL_ERROR[0]['error_str'] : '');
 			
 			break;
 		}

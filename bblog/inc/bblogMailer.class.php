@@ -2,14 +2,14 @@
 /**
  * bblogMailer.class.php - extends the PHPMailer class
  *
- * Here's a class that extends the PHPMailer class 
+ * Here's a class that extends the PHPMailer class
  * and sets the defaults for our bBlog site.
  * This saves us the trouble of hacking the original phpMaier,
  * to ease upgrading and make our life easier :)
  *
  * @author Xushi - <xushi.xushi@gmail.com>
  * @source phpmailer - <http://phpmailer.sourceforge.net/>
- * @licence GPL <http://www.gnu.org/copyleft/gpl.html>
+ * @license GPL <http://www.gnu.org/copyleft/gpl.html>
  */
 
 require("class.phpmailer.php");
@@ -17,10 +17,10 @@ require("class.phpmailer.php");
 class bblogMailer extends PHPMailer {
 
     // Set default variables for all new objects
-    
-	/**
+
+    /**
      * TODO: i'd rather have $Host be read from bb_config,
-     * instead of writing it here. Just incase any robot 
+     * instead of writing it here. Just incase any robot
      * would come, or any faggot wants to hack this file
      * for spam reasons.
      */
@@ -30,10 +30,10 @@ class bblogMailer extends PHPMailer {
     var $Mailer   = "smtp";                         // Alternative to IsSMTP()
     var $WordWrap = 75;
     var $Reciever = ".";
-    
-    
+
+
     /**
-     * Replace the default error_handler  
+     * Replace the default error_handler
      * @param string $msg
      * @return void
      */
@@ -43,6 +43,6 @@ class bblogMailer extends PHPMailer {
         printf("%s", $msg);
         exit;
     }
-    
+
 }
 ?>

@@ -3,51 +3,51 @@
  * function.getsearchresults.php
  * <p>
  * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
- * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @package bblog
- */ 
+ */
 
 function identify_function_getsearchresults()
 
 {
 
-	$help = '<p>the {getsearchresults} function is used to retrieve a listing of results for a certain search term.<br />
+    $help = '<p>the {getsearchresults} function is used to retrieve a listing of results for a certain search term.<br />
 
-		It takes the following parameters:<br />
+        It takes the following parameters:<br />
 
-		<br />
+        <br />
 
-		assign: variable to assign data to<br />
+        assign: variable to assign data to<br />
 
-		string: what we are searching for<br />
+        string: what we are searching for<br />
 
-		num: the number of entries to return<br />
+        num: the number of entries to return<br />
 
-		skip: the number of entries to skip<br />
+        skip: the number of entries to skip<br />
 
-		section: to request results from one section<br />
+        section: to request results from one section<br />
 
-		trim: amount of characters to show before cutting off result preview';
+        trim: amount of characters to show before cutting off result preview';
 
 
 
-	return array (
+    return array (
 
-		'name'			=> 'getsearchresults',
+        'name'			=> 'getsearchresults',
 
-		'type'			=> 'function',
+        'type'			=> 'function',
 
-		'nicename'		=> 'GetSearchResults',
+        'nicename'		=> 'GetSearchResults',
 
-		'description'	=> 'Search your blog!',
+        'description'	=> 'Search your blog!',
 
-		'authors'		=> 'Chris Boulton',
+        'authors'		=> 'Chris Boulton',
 
-		'license'		=> 'GPL',
+        'license'		=> 'GPL',
 
-		'help'			=> $help
+        'help'			=> $help
 
-	);
+    );
 
 }
 
@@ -59,267 +59,267 @@ function smarty_function_getsearchresults($params, &$smartyObj)
 
 {
 
-	
-
-	$bBlog = & $smartyObj->get_template_vars("bBlog_object");
 
 
-
-	$ar = array();
-
-	$opt = array();
-
-	
-
-	// need to handle multiple keywords!!!
-
-	
-
-	$keywords_ar = preg_split('/[^\w]/',$params['string']);
-
-	if(count($keywords_ar) > 1) {
-
-		$kw1 = array_shift($keywords_ar); // takes [0] off the array
-
-		$sql = "AND ( posts.body like '%$kw1%' OR posts.title LIKE '%$kw1%' ";
-
-		foreach($keywords_ar as $kw) {
-
-			$sql .= " OR posts.body like '%$kw%' OR posts.title LIKE '%$kw%' ";
-
-		}
-
-		$sql .= " ) ";
-
-	} else {
-
-        	$search = "'%" . $params['string'] . "%'";
-
-		$sql = "AND ( posts.body LIKE " . $search . " OR posts.title LIKE " . $search . ") ";
-
-	}
-
-	$opt['where'] = $sql;
-
-	// If "assign" is not set... we'll establish a default.
-
-	if($params['assign'] == '') {
-
-		$params['assign'] = 'posts';
-
-	}
+    $bBlog = & $smartyObj->get_template_vars("bBlog_object");
 
 
 
-	// If num is set, we'll only get that many results in return
+    $ar = array();
 
-	if(is_numeric($params['num'])) {
-
-		$opt['num'] = $params['num'];
-
-	}
+    $opt = array();
 
 
 
-	// If skip is set, we'll skip that many results
-
-	if(is_numeric($params['skip'])) {
-
-		$opt['skip'] = $params['skip'];
-
-	}
-
-     
-
-	if ($params['section'] != '') {
-
-		  $opt['sectionid'] = $bBlog->sect_by_name[$params['section']];
-
-	}
-
-	if($params['skipsection'] != '') {
-
-		$opt['skipsection'] = $bBlog->sect_by_name[$params['skipsection']];
-
-	}
+    // need to handle multiple keywords!!!
 
 
 
-	if($params['trim'] == '') {
+    $keywords_ar = preg_split('/[^\w]/',$params['string']);
 
-		$params['trim'] = '200';
+    if(count($keywords_ar) > 1) {
 
-	}
+        $kw1 = array_shift($keywords_ar); // takes [0] off the array
 
-	
+        $sql = "AND ( posts.body like '%$kw1%' OR posts.title LIKE '%$kw1%' ";
 
-	if($bBlog->show_section) {
+        foreach($keywords_ar as $kw) {
 
-		$opt['sectionid'] = $bBlog->show_section;
+            $sql .= " OR posts.body like '%$kw%' OR posts.title LIKE '%$kw%' ";
 
-	}
+        }
+
+        $sql .= " ) ";
+
+    } else {
+
+            $search = "'%" . $params['string'] . "%'";
+
+        $sql = "AND ( posts.body LIKE " . $search . " OR posts.title LIKE " . $search . ") ";
+
+    }
+
+    $opt['where'] = $sql;
+
+    // If "assign" is not set... we'll establish a default.
+
+    if($params['assign'] == '') {
+
+        $params['assign'] = 'posts';
+
+    }
+
+
+
+    // If num is set, we'll only get that many results in return
+
+    if(is_numeric($params['num'])) {
+
+        $opt['num'] = $params['num'];
+
+    }
+
+
+
+    // If skip is set, we'll skip that many results
+
+    if(is_numeric($params['skip'])) {
+
+        $opt['skip'] = $params['skip'];
+
+    }
+
+
+
+    if ($params['section'] != '') {
+
+          $opt['sectionid'] = $bBlog->sect_by_name[$params['section']];
+
+    }
+
+    if($params['skipsection'] != '') {
+
+        $opt['skipsection'] = $bBlog->sect_by_name[$params['skipsection']];
+
+    }
+
+
+
+    if($params['trim'] == '') {
+
+        $params['trim'] = '200';
+
+    }
+
+
+
+    if($bBlog->show_section) {
+
+        $opt['sectionid'] = $bBlog->show_section;
+
+    }
 
 
 
 
 
-	$q = $bBlog->make_post_query($opt);
+    $q = $bBlog->make_post_query($opt);
 
 //die($q);
 
-	$ar['posts'] = $bBlog->get_posts($q);
+    $ar['posts'] = $bBlog->get_posts($q);
 
-        
 
-	// No posts.
 
-	if(!is_array($ar['posts'])) {
+    // No posts.
 
-		return '';
+    if(!is_array($ar['posts'])) {
 
-	  }
+        return '';
 
+      }
 
 
-	$lastmonth = 0;
 
-	$lastdate = 0;
+    $lastmonth = 0;
 
+    $lastdate = 0;
 
 
-	//$stringlen = strlen($params['string']);
 
+    //$stringlen = strlen($params['string']);
 
 
-	foreach($ar['posts'] as $key => $value) {
 
-		// It seems silly to do this. Especially since,
+    foreach($ar['posts'] as $key => $value) {
 
-		// this kind of check can be done in Smarty template.
+        // It seems silly to do this. Especially since,
 
-		// Additionally, since {newday} and {newmonth} require
+        // this kind of check can be done in Smarty template.
 
-		// the data to be in a variable named "post" it may not
+        // Additionally, since {newday} and {newmonth} require
 
-		// function at all.
+        // the data to be in a variable named "post" it may not
 
-		//
+        // function at all.
 
-		// We'll leave it here for now.
+        //
 
-		
+        // We'll leave it here for now.
 
-		/* check if new day  - used by block.newday.php */
 
-		if(date('Ymd',$ar['posts'][$key]['posttime']) != $lastdate) {
 
-			$ar['posts'][$key]['newday'] = TRUE;
+        /* check if new day  - used by block.newday.php */
 
-		}
+        if(date('Ymd',$ar['posts'][$key]['posttime']) != $lastdate) {
 
-		$lastdate = date('Ymd',$ar['posts'][$key]['posttime']);
+            $ar['posts'][$key]['newday'] = TRUE;
 
+        }
 
+        $lastdate = date('Ymd',$ar['posts'][$key]['posttime']);
 
-		/* check if new month - use by block.newmonth.php */
 
-		if(date('Fy',$ar['posts'][$key]['posttime']) != $lastmonth) {
 
-			$ar['posts'][$key]['newmonth'] = TRUE;
+        /* check if new month - use by block.newmonth.php */
 
-		}
+        if(date('Fy',$ar['posts'][$key]['posttime']) != $lastmonth) {
 
-		$lastmonth = date('Fy',$ar['posts'][$key]['posttime']);
+            $ar['posts'][$key]['newmonth'] = TRUE;
 
+        }
 
+        $lastmonth = date('Fy',$ar['posts'][$key]['posttime']);
 
-		// Trim the message to get us a preview :-D
 
-		/* 
 
-		if($params['trim']) {
+        // Trim the message to get us a preview :-D
 
-			if(strlen($ar['posts'][$key]['body']) > $params['trim']) {
+        /*
 
-				$ar['posts'][$key]['preview'] = substr($ar['posts'][$key]['body'], 0, $params['trim'])."...";
+        if($params['trim']) {
 
-				
+            if(strlen($ar['posts'][$key]['body']) > $params['trim']) {
 
-			} else {
+                $ar['posts'][$key]['preview'] = substr($ar['posts'][$key]['body'], 0, $params['trim'])."...";
 
-				$ar['posts'][$key]['preview'] = $ar['posts'][$key]['body']; 
 
-			}
 
-		}
+            } else {
 
-		*/
+                $ar['posts'][$key]['preview'] = $ar['posts'][$key]['body'];
 
-		$_snippit = "";
+            }
 
-		
+        }
 
-		$_txt = strip_tags($ar['posts'][$key]['body']);
+        */
 
-		$keywords_ar = preg_split('/[^\w]/',$params['string']);
+        $_snippit = "";
 
-		
 
-		$matches = stripos_words($_txt,$params['string'],false);
 
-		if($matches) {
+        $_txt = strip_tags($ar['posts'][$key]['body']);
 
-			foreach($matches as $match) {
+        $keywords_ar = preg_split('/[^\w]/',$params['string']);
 
-				$_snippit .= "..." 
 
-					.substr($_txt,$match['start']-10,$match['end']+10)
 
-					."...";
+        $matches = stripos_words($_txt,$params['string'],false);
 
-			}
+        if($matches) {
 
-		} else { // something went wrong!  OR keyword was found in title only.
+            foreach($matches as $match) {
 
-			$_snippit = substr($_txt, 0, $params['trim'])."...";
+                $_snippit .= "..."
 
-			//echo "SOMETHING WENT WRONG!";
+                    .substr($_txt,$match['start']-10,$match['end']+10)
 
-		
+                    ."...";
 
-		}
+            }
 
+        } else { // something went wrong!  OR keyword was found in title only.
 
+            $_snippit = substr($_txt, 0, $params['trim'])."...";
 
-		foreach($keywords_ar as $kw) $_snippit = str_ireplace("$kw","<b><i>$kw</i></b>",$_snippit);
+            //echo "SOMETHING WENT WRONG!";
 
-		
 
-		$ar['posts'][$key]['preview'] = $_snippit;
 
-		
+        }
 
-		$_title = "";
 
-		foreach($keywords_ar as $kw) $_title =
 
-			str_ireplace("$kw","<b><i>$kw</i></b>",$ar['posts'][$key]['title']);
+        foreach($keywords_ar as $kw) $_snippit = str_ireplace("$kw","<b><i>$kw</i></b>",$_snippit);
 
-		$ar['posts'][$key]['title'] = $_title;
 
-		
 
-	}
+        $ar['posts'][$key]['preview'] = $_snippit;
 
-	
 
-	
 
-	
+        $_title = "";
 
-	$smartyObj->assign($params['assign'],$ar['posts']);
+        foreach($keywords_ar as $kw) $_title =
 
-	return '';
+            str_ireplace("$kw","<b><i>$kw</i></b>",$ar['posts'][$key]['title']);
+
+        $ar['posts'][$key]['title'] = $_title;
+
+
+
+    }
+
+
+
+
+
+
+
+    $smartyObj->assign($params['assign'],$ar['posts']);
+
+    return '';
 
 }
 
@@ -335,13 +335,13 @@ function stripos_words($haystack,$needles='',$pos_as_key=true)
 
    $idx=0; // Used if pos_as_key is false
 
-  
+
 
    // Convert full text to lower case to make this case insensitive
 
    $haystack = strtolower($haystack);
 
-  
+
 
    // Split keywords and lowercase them
 
@@ -369,7 +369,7 @@ function stripos_words($haystack,$needles='',$pos_as_key=true)
 
                $index = $pos_as_key ? $pos_found+$pos_cur : $idx++;
 
-              
+
 
                // Populate main array with this keywords positional data
 
@@ -409,7 +409,7 @@ function stripos_words($haystack,$needles='',$pos_as_key=true)
 
    return false;
 
-} 
+}
 
 
 
@@ -513,7 +513,7 @@ if (!function_exists('str_ireplace'))
 
         }
 
-    
+
 
         // If replace isn't an array, make it one, and pad it to the length of search
 
@@ -619,7 +619,7 @@ if (!function_exists('str_ireplace'))
 
                 }
 
-                
+
 
                 // Put our original string back together
 

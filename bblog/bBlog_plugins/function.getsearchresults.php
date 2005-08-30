@@ -43,7 +43,7 @@ function identify_function_getsearchresults()
 
         'authors'		=> 'Chris Boulton',
 
-        'license'		=> 'GPL',
+        'licence'		=> 'GPL',
 
         'help'			=> $help
 

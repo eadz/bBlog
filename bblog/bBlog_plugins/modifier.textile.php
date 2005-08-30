@@ -5,14 +5,14 @@
  * @author Dean Allen <dean@textism.com> - Carlo Zottmann <carlo@g-blog.net>
  * @version 2.0 beta
  * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
- * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @package bblog
  */
 
 // bBlog modifier function :
 function smarty_modifier_textile ($text) {
-	$t = new Textile();
-	return $t->TextileThis($text);
+    $t = new Textile();
+    return $t->TextileThis($text);
 }
 
 // bBlog plugin identifier function
@@ -20,27 +20,27 @@ function identify_modifier_textile () {
 $helptext = '
 Block modifier syntax:
 
-    Header: h(1-6). 
+    Header: h(1-6).
     Paragraphs beginning with \'hn. \' (where n is 1-6) are wrapped in header tags.
     Example: h1. Header... -> <h1>Header...</h1>
-    
+
     Paragraph: p. (also applied by default)
     Example: p. Text -> <p>Text</p>
-        
+
     Blockquote: bq.
     Example: bq. Block quotation... -> <blockquote>Block quotation...</blockquote>
-    
+
     Blockquote with citation: bq.:http://citation.url
     Example: bq.:http://textism.com/ Text...
     ->    <blockquote cite="http://textism.com">Text...</blockquote>
-    
+
     Footnote: fn(1-100).
     Example: fn1. Footnote... -> <p id="fn1">Footnote...</p>
 
     Numeric list: #, ##
     Consecutive paragraphs beginning with # are wrapped in ordered list tags.
     Example: <ol><li>ordered list</li></ol>
-    
+
     Bulleted list: *, **
     Consecutive paragraphs beginning with * are wrapped in unordered list tags.
     Example: <ul><li>unordered list</li></ul>
@@ -82,32 +82,32 @@ Table syntax:
         |A|simple|table|row|
 
     Tables with attributes:
-    
+
         table{border:1px solid black}.
-        {background:#ddd;color:red}. |{}| | | | 
+        {background:#ddd;color:red}. |{}| | | |
 
 
 Applying Attributes:
 
-    Most anywhere Textile code is used, attributes such as arbitrary css style, 
+    Most anywhere Textile code is used, attributes such as arbitrary css style,
     css classes, and ids can be applied. The syntax is fairly consistent.
-    
+
     The following characters quickly alter the alignment of block elements:
-    
+
         <  ->  left align    ex. p<. left-aligned para
         >  ->  right align       h3>. right-aligned header 3
         =  ->  centred           h4=. centred header 4
         <> ->  justified         p<>. justified paragraph
-    
+
     These will change vertical alignment in table cells:
-    
+
         ^  ->  top          ex. |^. top-aligned table cell|
         -  ->  middle           |-. middle aligned|
         ~  ->  bottom           |~. bottom aligned cell|
 
     Plain (parentheses) inserted between block syntax and the closing dot-space
     indicate classes and ids:
-    
+
         p(hector). paragraph -> <p class="hector">paragraph</p>
 
         p(#fluid). paragraph -> <p id="fluid">paragraph</p>
@@ -116,20 +116,20 @@ Applying Attributes:
         p(hector#fluid). paragraph -> <p class="hector" id="fluid">paragraph</p>
 
     Curly {brackets} insert arbitrary css style
-    
+
         p{line-height:18px}. paragraph -> <p style="line-height:18px">paragraph</p>
-        
+
         h3{color:red}. header 3 -> <h3 style="color:red">header 3</h3>
 
     Square [brackets] insert language attributes
-    
+
         p[no]. paragraph -> <p lang="no">paragraph</p>
-        
+
         %[fr]phrase% -> <span lang="fr">phrase</span>
 
     Usually Textile block element syntax requires a dot and space before the block
     begins, but since lists don\'t, they can be styled just using braces
-        
+
         #{color:blue} one  ->  <ol style="color:blue">
         # big                   <li>one</li>
         # list                  <li>big</li>
@@ -137,7 +137,7 @@ Applying Attributes:
                                </ol>
 
     Using the span tag to style a phrase
-    
+
         It goes like this, %{color:red}the fourth the fifth%
         -> It goes like this, <span style="color:red">the fourth the fifth</span>
 ';
@@ -161,37 +161,37 @@ $help = "<pre>".nl2br(htmlspecialchars($helptext))."</pre>";
  *        $textile = new Textile;
  *        echo $textile->TextileThis($string);
  *
- 
+
 
 _________
 U S A G E
 
 Block modifier syntax:
 
-	Header: h(1-6).
-	Paragraphs beginning with 'hn. ' (where n is 1-6) are wrapped in header tags.
-	Example: h1. Header... -> <h1>Header...</h1>
+    Header: h(1-6).
+    Paragraphs beginning with 'hn. ' (where n is 1-6) are wrapped in header tags.
+    Example: h1. Header... -> <h1>Header...</h1>
 
-	Paragraph: p. (also applied by default)
-	Example: p. Text -> <p>Text</p>
+    Paragraph: p. (also applied by default)
+    Example: p. Text -> <p>Text</p>
 
-	Blockquote: bq.
-	Example: bq. Block quotation... -> <blockquote>Block quotation...</blockquote>
+    Blockquote: bq.
+    Example: bq. Block quotation... -> <blockquote>Block quotation...</blockquote>
 
-	Blockquote with citation: bq.:http://citation.url
-	Example: bq.:http://textism.com/ Text...
-	->	<blockquote cite="http://textism.com">Text...</blockquote>
+    Blockquote with citation: bq.:http://citation.url
+    Example: bq.:http://textism.com/ Text...
+    ->	<blockquote cite="http://textism.com">Text...</blockquote>
 
-	Footnote: fn(1-100).
-	Example: fn1. Footnote... -> <p id="fn1">Footnote...</p>
+    Footnote: fn(1-100).
+    Example: fn1. Footnote... -> <p id="fn1">Footnote...</p>
 
-	Numeric list: #, ##
-	Consecutive paragraphs beginning with # are wrapped in ordered list tags.
-	Example: <ol><li>ordered list</li></ol>
+    Numeric list: #, ##
+    Consecutive paragraphs beginning with # are wrapped in ordered list tags.
+    Example: <ol><li>ordered list</li></ol>
 
-	Bulleted list: *, **
-	Consecutive paragraphs beginning with * are wrapped in unordered list tags.
-	Example: <ul><li>unordered list</li></ul>
+    Bulleted list: *, **
+    Consecutive paragraphs beginning with * are wrapped in unordered list tags.
+    Example: <ul><li>unordered list</li></ul>
 
 Phrase modifier syntax:
 
@@ -221,7 +221,7 @@ ABC(Always Be Closing)  ->   <acronym title="Always Be Closing">ABC</acronym>
 
 Table syntax:
 
-	Simple tables:
+    Simple tables:
 
         |a|simple|table|row|
         |And|Another|table|row|
@@ -284,7 +284,7 @@ Applying Attributes:
                                 <li>list</li>
                                </ol>
 
-	Using the span tag to style a phrase
+    Using the span tag to style a phrase
 
         It goes like this, %{color:red}the fourth the fifth%
               -> It goes like this, <span style="color:red">the fourth the fifth</span>
@@ -330,48 +330,48 @@ class Textile
 
         $text = $this->incomingEntities($text);
         $text = $this->encodeEntities($text);
-        
-        if ($encode) {
-			$text = str_replace("x%x%", "&#38;", $text);
-        	return $text;
-        } else {
-        
-	    	if(!$strict) {
-				$text = $this->fixEntities($text);
-				$text = $this->cleanWhiteSpace($text);
-			}
-	
-			$text = $this->getRefs($text);
-	
-			$text = $this->noTextile($text);
-			$text = $this->links($text);
-			if (!$noimage) {
-				$text = $this->image($text);
-			}
-			$text = $this->code($text);
-			$text = $this->span($text);
-			$text = $this->superscript($text);
-			$text = $this->footnoteRef($text);
-			$text = $this->glyphs($text);
-			$text = $this->retrieve($text);
-	
-			if (!$lite) {
-				$text = $this->lists($text);
-				$text = $this->table($text);
-				$text = $this->block($text);
-			}
 
-				// clean up <notextile>
-			$text = preg_replace('/<\/?notextile>/', "", $text);
-	
-				// turn the temp char back to an ampersand entity
-			$text = str_replace("x%x%", "&#38;", $text);
-	
-				// just to be tidy
-			$text = str_replace("<br />", "<br />\n", $text);
-	
-			return $text;
-      	}
+        if ($encode) {
+            $text = str_replace("x%x%", "&#38;", $text);
+            return $text;
+        } else {
+
+            if(!$strict) {
+                $text = $this->fixEntities($text);
+                $text = $this->cleanWhiteSpace($text);
+            }
+
+            $text = $this->getRefs($text);
+
+            $text = $this->noTextile($text);
+            $text = $this->links($text);
+            if (!$noimage) {
+                $text = $this->image($text);
+            }
+            $text = $this->code($text);
+            $text = $this->span($text);
+            $text = $this->superscript($text);
+            $text = $this->footnoteRef($text);
+            $text = $this->glyphs($text);
+            $text = $this->retrieve($text);
+
+            if (!$lite) {
+                $text = $this->lists($text);
+                $text = $this->table($text);
+                $text = $this->block($text);
+            }
+
+                // clean up <notextile>
+            $text = preg_replace('/<\/?notextile>/', "", $text);
+
+                // turn the temp char back to an ampersand entity
+            $text = str_replace("x%x%", "&#38;", $text);
+
+                // just to be tidy
+            $text = str_replace("<br />", "<br />\n", $text);
+
+            return $text;
+        }
     }
 
 // -------------------------------------------------------------
@@ -445,7 +445,7 @@ class Textile
     function table($text)
     {
         $text = $text . "\n\n";
-        return preg_replace_callback("/^(?:table(_?{$this->s}{$this->a}{$this->c})\. ?\n)?^({$this->a}{$this->c}\.? ?\|.*\|)\n\n/smU", 
+        return preg_replace_callback("/^(?:table(_?{$this->s}{$this->a}{$this->c})\. ?\n)?^({$this->a}{$this->c}\.? ?\|.*\|)\n\n/smU",
            array(&$this, "fTable"), $text);
     }
 
@@ -502,10 +502,10 @@ class Textile
 
                 if ($nl === $tl) {
                     $line .= "</li>";
-				} elseif($nl=="*" or $nl=="#") {
-					$line .= "</li>\n\t</".$this->lT($tl)."l>\n\t</li>";
-					unset($lists[$tl]);
-				}
+                } elseif($nl=="*" or $nl=="#") {
+                    $line .= "</li>\n\t</".$this->lT($tl)."l>\n\t</li>";
+                    unset($lists[$tl]);
+                }
                 if (!$nl) {
                     foreach($lists as $k => $v) {
                         $line .= "</li>\n\t</" . $this->lT($k) . "l>";
@@ -611,7 +611,7 @@ class Textile
     function fSpan($m)
     {
         $qtags = array(
-        	'*'  => 'strong',
+            '*'  => 'strong',
             '**' => 'b',
             '??' => 'cite',
             '_'  => 'em',
@@ -632,7 +632,7 @@ class Textile
 //		$this->dump($out);
 
         return $out;
-    
+
     }
 
 // -------------------------------------------------------------
@@ -667,8 +667,8 @@ class Textile
 
         $out = $pre . '<a href="' . $url . $slash . '"' . $atts . '>' . $text . '</a>' . $post;
 
-		// $this->dump($out);
-		return $out;
+        // $this->dump($out);
+        return $out;
 
     }
 
@@ -738,10 +738,10 @@ function refs($m)
     {
         return preg_replace_callback("/
             (?:^|(?<=[\s\(])|([[{]))        # before
-            @                               
+            @
             (?:\|(\w+)\|)?                  # lang
             (.+)                            # code
-            @                               
+            @
             (?:$|([\]}])|
             (?=[[:punct:]]{1,2}|
             \s|$))                           # after
@@ -833,7 +833,7 @@ function refs($m)
     {
         // fix: hackish
         $text = preg_replace('/"\z/', "\" ", $text);
-		$pnc = '[[:punct:]]';
+        $pnc = '[[:punct:]]';
 
         $glyph_search = array(
             '/([^\s[{(>_*])?\'(?(1)|(?=\s|s\b|'.$pnc.'))/',      //  single closing
@@ -1033,13 +1033,13 @@ function refs($m)
             return '';
         }
     }
-    
+
 // -------------------------------------------------------------
     function dump()
     {
-		foreach (func_get_args() as $a)
-			echo "\n<pre>",(is_array($a)) ? print_r($a) : $a, "</pre>\n";
-	}
+        foreach (func_get_args() as $a)
+            echo "\n<pre>",(is_array($a)) ? print_r($a) : $a, "</pre>\n";
+    }
 
 
 } // end class

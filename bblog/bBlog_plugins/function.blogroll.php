@@ -4,7 +4,7 @@
  * based on php blogroll by phil ringnalda - http://philringnalda.com/phpblogroll/
  * <p>
  * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
- * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @package bblog
  */
 
@@ -144,7 +144,7 @@ if ($blogroll_fp = @fopen($blogroll_xml_file, 'r')) {
       xml_get_current_line_number($blogroll_xml_parser)));
       }
     }
-	}
+    }
 else {
 
   echo"<option value=''>Temporarily 404'd</option>";
@@ -170,7 +170,7 @@ function blogrollStartElement($parser, $name, $attrs=''){
             $blogroll_weblog_index++;
             $blogroll_temp[$blogroll_weblog_index]['name'] = htmlentities(addslashes((strlen($attrs['NAME']) > 19) ? substr($attrs['NAME'], 0, 17) . "..." : $attrs['NAME']));
             $blogroll_temp[$blogroll_weblog_index]['url'] = $attrs['URL'];
-        break;    
+        break;
         default:
         break;
     }
@@ -204,9 +204,9 @@ function blogrollWriteLinks(){
     for($i = 0; $i < sizeof($blogroll_temp); $i++){
         echo "<a href=\"" . $blogroll_temp[$i]['url']."\">" . $blogroll_temp[$i]['name'] . "</a><br>\n";
         }
-    echo "</noscript>\n";    
+    echo "</noscript>\n";
 }
 
 
 
-?> 
+?>

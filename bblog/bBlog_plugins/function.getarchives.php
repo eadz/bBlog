@@ -4,9 +4,9 @@
  * <p>
  * @author Reverend Jim <jim@revjim.net>
  * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
- * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @package bblog
- */  
+ */
 
 function identify_function_getarchives () {
 $help = '
@@ -35,32 +35,32 @@ reverse: reserver the order of the archives (newest first)<br />';
   );
 }
 function smarty_function_getarchives($params, &$smartyObj) {
-	$bBlog = & $smartyObj->get_template_vars("bBlog_object");
+    $bBlog = & $smartyObj->get_template_vars("bBlog_object");
 
-	$ar = array();
-	$opt = $params;
+    $ar = array();
+    $opt = $params;
 
-	unset($opt['assign']);
+    unset($opt['assign']);
 
-	// If "assign" is not set... we'll establish a default.
-	if($params['assign'] == '') {
-		$params['assign'] = 'archives';
-	}
+    // If "assign" is not set... we'll establish a default.
+    if($params['assign'] == '') {
+        $params['assign'] = 'archives';
+    }
 
-	$ar = $bBlog->get_archives($opt);
-	
-	// No posts.
-	if(!is_array($ar)) {
-		return '';
-	}
+    $ar = $bBlog->get_archives($opt);
 
-	if ( $params['reverse'] == 'true' ) {
-		$ar = array_reverse( $ar );
-	}
-	$bBlog->smartyObj->assign($params['assign'],$ar);
+    // No posts.
+    if(!is_array($ar)) {
+        return '';
+    }
 
-	return '';
-	
+    if ( $params['reverse'] == 'true' ) {
+        $ar = array_reverse( $ar );
+    }
+    $bBlog->smartyObj->assign($params['assign'],$ar);
+
+    return '';
+
 }
 
 ?>

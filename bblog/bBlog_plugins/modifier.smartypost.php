@@ -4,21 +4,21 @@
  * <p>
  * @author JMario Delgado <mario@seraphworks.com>
  * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
- * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @package bblog
  */
 
 function identify_modifier_smartypost () {
 
-    $help='<br>Use the smartypost modifier on the {$post.body} tag,<br> 
+    $help='<br>Use the smartypost modifier on the {$post.body} tag,<br>
            to process any Smarty tags you have embedded in a post.<br><br>
-           Example : 
-           <ul> 
-               <li>{$post.body|smartypost}</li> 
+           Example :
+           <ul>
+               <li>{$post.body|smartypost}</li>
            </ul> Smarty Post can be used with other modifiers.<br><br>
            Example :
-           <ul> 
-               <li>{$post.body|readmore:$post.postid|smartypost}</li> 
+           <ul>
+               <li>{$post.body|readmore:$post.postid|smartypost}</li>
            </ul>';
 
     return array (
@@ -48,7 +48,7 @@ function smarty_modifier_smartypost($text) {
 
 
     return $output;
-	  
+
 }
 
 ?>

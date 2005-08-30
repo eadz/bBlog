@@ -4,9 +4,9 @@
  * <p>
  * @author Reverend Jim <jim@revjim.net>
  * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
- * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @package bblog
- */ 
+ */
 
 function identify_function_getarchiveposts () {
 $help = '
@@ -42,10 +42,10 @@ function smarty_function_getarchiveposts($params, &$smartyObj) {
   $ar = array();
   $opt = array();
 
-	// If "assign" is not set... we'll establish a default.
-	if($params['assign'] == '') {
-		$params['assign'] = 'posts';
-	}
+    // If "assign" is not set... we'll establish a default.
+    if($params['assign'] == '') {
+        $params['assign'] = 'posts';
+    }
 
         // If "all" is set to 1, do not limit the number of elements.
         if(is_numeric($params['all']) && $params['all'] == 1) {
@@ -56,113 +56,113 @@ function smarty_function_getarchiveposts($params, &$smartyObj) {
                $opt['limit'] = " ";
         }
 
-	
-	// If "archive" is set, order them ASCENDING by posttime.
-	if($params['archive']) {
-		$opt['order']=" ORDER BY posttime ";
-	}
 
-	if(is_numeric($params['num'])) {
-		$opt['num'] = $params['num'];
-	}
+    // If "archive" is set, order them ASCENDING by posttime.
+    if($params['archive']) {
+        $opt['order']=" ORDER BY posttime ";
+    }
 
-	if(is_numeric($params['skip'])) {
-		$opt['skip'] = $params['skip'];
-	}
+    if(is_numeric($params['num'])) {
+        $opt['num'] = $params['num'];
+    }
+
+    if(is_numeric($params['skip'])) {
+        $opt['skip'] = $params['skip'];
+    }
 
 
 
-	if(is_numeric($params['year'])) {
-		if(strlen($params['year']) != 4) {
-			$smartyObj->trigger_error('getarchiveposts: year parameter requires a 4 digit year');
-			return '';
-		}
-		$opt['year'] = $params['year'];
-	}
+    if(is_numeric($params['year'])) {
+        if(strlen($params['year']) != 4) {
+            $smartyObj->trigger_error('getarchiveposts: year parameter requires a 4 digit year');
+            return '';
+        }
+        $opt['year'] = $params['year'];
+    }
 
-	if(is_numeric($params['month'])) {
-		if(strlen($params['month']) != 2) {
-			$smartyObj->trigger_error('getarchiveposts: month parameter requires a 2 digit month');
-			return '';
-		}
-		$opt['month'] = $params['month'];
-	}
+    if(is_numeric($params['month'])) {
+        if(strlen($params['month']) != 2) {
+            $smartyObj->trigger_error('getarchiveposts: month parameter requires a 2 digit month');
+            return '';
+        }
+        $opt['month'] = $params['month'];
+    }
 
-	if(is_numeric($params['day'])) {
-		if(strlen($params['day']) != 2) {
-			$smartyObj->trigger_error('getarchiveposts: day parameter requires a 2 digit day');
-			return '';
-		}
-		$opt['day'] = $params['day'];
-	}
+    if(is_numeric($params['day'])) {
+        if(strlen($params['day']) != 2) {
+            $smartyObj->trigger_error('getarchiveposts: day parameter requires a 2 digit day');
+            return '';
+        }
+        $opt['day'] = $params['day'];
+    }
 
-	if(is_numeric($params['hour'])) {
-		if(strlen($params['hour']) != 2) {
-			$smartyObj->trigger_error('getarchiveposts: hour parameter requires a 2 digit hour');
-			return '';
-		}
-		$opt['hour'] = $params['hour'];
-	}
+    if(is_numeric($params['hour'])) {
+        if(strlen($params['hour']) != 2) {
+            $smartyObj->trigger_error('getarchiveposts: hour parameter requires a 2 digit hour');
+            return '';
+        }
+        $opt['hour'] = $params['hour'];
+    }
 
-	if(is_numeric($params['minute'])) {
-		if(strlen($params['minute']) != 2) {
-			$smartyObj->trigger_error('getarchiveposts: minute parameter requires a 2 digit minute');
-			return '';
-		}
-		$opt['minute'] = $params['minute'];
-	}
+    if(is_numeric($params['minute'])) {
+        if(strlen($params['minute']) != 2) {
+            $smartyObj->trigger_error('getarchiveposts: minute parameter requires a 2 digit minute');
+            return '';
+        }
+        $opt['minute'] = $params['minute'];
+    }
 
-	if(is_numeric($params['second'])) {
-		if(strlen($params['second']) != 2) {
-			$smartyObj->trigger_error('getarchiveposts: second parameter requires a 2 digit second');
-			return '';
-		}
-		$opt['second'] = $params['second'];
-	}
+    if(is_numeric($params['second'])) {
+        if(strlen($params['second']) != 2) {
+            $smartyObj->trigger_error('getarchiveposts: second parameter requires a 2 digit second');
+            return '';
+        }
+        $opt['second'] = $params['second'];
+    }
 
-	if ($params['section'] != '') {
-		$opt['sectionid'] = $bBlog->sect_by_name[$params['section']];
-	}
-	if ($params['sectionid'] != '') {
-		$opt['sectionid'] = $params['sectionid'];
-	}
+    if ($params['section'] != '') {
+        $opt['sectionid'] = $bBlog->sect_by_name[$params['section']];
+    }
+    if ($params['sectionid'] != '') {
+        $opt['sectionid'] = $params['sectionid'];
+    }
 
   $q = $bBlog->make_post_query($opt);
 
   $ar['posts'] = $bBlog->get_posts($q);
-        
-	// No posts.
+
+    // No posts.
   if(!is_array($ar['posts'])) {
-		return '';
-	}
+        return '';
+    }
 
-	$lastmonth = '';
-	$lastdate = '';
+    $lastmonth = '';
+    $lastdate = '';
 
-	foreach($ar['posts'] as $key => $value) {
-		// It seems silly to do this. Especially since,
-		// this kind of check can be done in Smarty template.
-		// Additionally, since {newday} and {newmonth} require
-		// the data to be in a variable named "post" it may not
-		// function at all.
-		//
-		// We'll leave it here for now.
+    foreach($ar['posts'] as $key => $value) {
+        // It seems silly to do this. Especially since,
+        // this kind of check can be done in Smarty template.
+        // Additionally, since {newday} and {newmonth} require
+        // the data to be in a variable named "post" it may not
+        // function at all.
+        //
+        // We'll leave it here for now.
 
     if(date('Fy',$ar['posts'][$key]['posttime']) != $lastmonth) {
       $ar['posts'][$key]['newmonth'] = 'yes';
-		}
+        }
     $lastmonth = date('Fy',$ar['posts'][$key]['posttime']);
-		
+
     if(date('Ymd',$ar['posts'][$key]['posttime']) != $lastdate) {
       $ar['posts'][$key]['newday'] = 'yes';
     }
     $lastdate = date('Ymd',$ar['posts'][$key]['posttime']);
-	}
+    }
 
-	$smartyObj->assign($params['assign'],$ar['posts']);
+    $smartyObj->assign($params['assign'],$ar['posts']);
 
   return '';
-	
+
 }
 
 ?>

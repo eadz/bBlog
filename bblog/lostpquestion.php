@@ -8,7 +8,7 @@ session_start();
  * in order to retrieve the admin password.
  * <p>
  * @author Xushi <xushi.xushi@gmail.com>
- * @license GPL
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  */
 
 // the pot of gold..

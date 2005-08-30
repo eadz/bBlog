@@ -4,10 +4,10 @@
  * <p>
  * @author Tobias Schlottke
  * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
- * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @package bblog
  */
- 
+
 function identify_function_email () {
 $help = 'usage: <br/>
         {email email=\'somone@example.com\' name=\'john doe\'} <br/>

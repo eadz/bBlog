@@ -4,7 +4,7 @@
  * <p>
  * @author Ulf Harnhammar <metaur@users.sourceforge.net> - http://sourceforge.net/projects/kses
  * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
- * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @package bblog
  */
 
@@ -22,41 +22,41 @@ function identify_modifier_kses () {
 
 function smarty_modifier_kses ($in,$allowedtags = FALSE) {
 
-	if($allowedtags == 'nolinks') {
-	        /* need some way to specify a multi dimentional array via a smarty modifer paramater. e.g. {$var|kses:"a(href,title),b,i,blockquote(cite)"}. How to do that?
+    if($allowedtags == 'nolinks') {
+            /* need some way to specify a multi dimentional array via a smarty modifer paramater. e.g. {$var|kses:"a(href,title),b,i,blockquote(cite)"}. How to do that?
 
-		$tags = array(explode(',',$allowedtags));
-		$allowed_html = array();
-		foreach($tags as $tag) {
+        $tags = array(explode(',',$allowedtags));
+        $allowed_html = array();
+        foreach($tags as $tag) {
                         $allowed_html[] = array($tag=>array());
-		}
+        }
 
-		.. for the mean time we'll just have a 'safe' list of things for unapproved comments
-		*/
-		$allowed_html = array(
+        .. for the mean time we'll just have a 'safe' list of things for unapproved comments
+        */
+        $allowed_html = array(
                 'b' => array(),
-		'i' => array(),
-		'strong' => array(),
-		'code' => array(),
-		'acronym' => array('title'),
-		'abbr' => array('title'),
-		 'blockquote' => array('cite' => array())
-		);
-	} else {
+        'i' => array(),
+        'strong' => array(),
+        'code' => array(),
+        'acronym' => array('title'),
+        'abbr' => array('title'),
+         'blockquote' => array('cite' => array())
+        );
+    } else {
 
-		$allowed_html = array(
-		'b' => array(),
-		'i' => array(),
-		'strong' => array(),
-		'code' => array(),
-		'acronym' => array('title'),
-		'abbr' => array('title'),
+        $allowed_html = array(
+        'b' => array(),
+        'i' => array(),
+        'strong' => array(),
+        'code' => array(),
+        'acronym' => array('title'),
+        'abbr' => array('title'),
                 'a' => array('href'  => array('maxlen' => 300),'title','rel' => array('minlen' => 3, 'maxlen' => 250)),
-		 'blockquote' => array('cite' => array())
-		);
-	}
+         'blockquote' => array('cite' => array())
+        );
+    }
 
-	return kses($in,$allowed_html,array('http','https','ftp','mailto'));
+    return kses($in,$allowed_html,array('http','https','ftp','mailto'));
 
 }
 

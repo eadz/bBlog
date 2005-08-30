@@ -3,9 +3,9 @@
  * function.months_archive.php
  * <p>
  * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
- * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @package bblog
- */ 
+ */
 
 function identify_function_months_archive () {
 $help = '
@@ -31,52 +31,52 @@ sectionid: to request recent items in a section, by specifing the sectionid';
 }
 
 function smarty_function_months_archive($params, &$smartyObj) {
-	$bBlog = & $smartyObj->get_template_vars("bBlog_object");
-	
-	if($params['assign'] == '') {
-		$params['assign'] = 'months';
-	}
-	
-	$query = "
-	SELECT
-		SQL_CACHE
-		MONTH(FROM_UNIXTIME(`posttime`)) AS `month`,
-		YEAR(FROM_UNIXTIME(`posttime`)) AS `year`
-	FROM ".T_POSTS."
-	GROUP BY
-		`month`
-	ORDER BY
-		`posttime`
-		DESC
-	LIMIT 10
-	";
-	$col = $bBlog->db->get_results($query);
-	$results = array();
-	$i = 0;
-	foreach ($col as $tmp){
-		$results[$i]['month'] = $tmp->month;
-		$results[$i]['year'] = $tmp->year;
-		$results[$i]['name'] = months($tmp->month);
-		$results[$i]['cur'] = ($tmp->month == date('m')) ? true : false;
-		$i++;
-	}
-	$smartyObj->assign($params['assign'],$results);
+    $bBlog = & $smartyObj->get_template_vars("bBlog_object");
+
+    if($params['assign'] == '') {
+        $params['assign'] = 'months';
+    }
+
+    $query = "
+    SELECT
+        SQL_CACHE
+        MONTH(FROM_UNIXTIME(`posttime`)) AS `month`,
+        YEAR(FROM_UNIXTIME(`posttime`)) AS `year`
+    FROM ".T_POSTS."
+    GROUP BY
+        `month`
+    ORDER BY
+        `posttime`
+        DESC
+    LIMIT 10
+    ";
+    $col = $bBlog->db->get_results($query);
+    $results = array();
+    $i = 0;
+    foreach ($col as $tmp){
+        $results[$i]['month'] = $tmp->month;
+        $results[$i]['year'] = $tmp->year;
+        $results[$i]['name'] = months($tmp->month);
+        $results[$i]['cur'] = ($tmp->month == date('m')) ? true : false;
+        $i++;
+    }
+    $smartyObj->assign($params['assign'],$results);
 }
 
 function months($i){
-	$months = array(
-		'1' => 'Leden',
-		'2' => 'Únor',
-		'3' => 'Březen',
-		'4' => 'Duben',
-		'5' => 'Květen',
-		'6' => 'Červen',
-		'7' => 'Červenec',
-		'8' => 'Srpen',
-		'9' => 'Září',
-		'10' => 'Říjen',
-		'11' => 'Listopad',
-		'12' => 'Prosinec'
-	);
-	return $months[$i];
+    $months = array(
+        '1' => 'Leden',
+        '2' => 'Únor',
+        '3' => 'Březen',
+        '4' => 'Duben',
+        '5' => 'Květen',
+        '6' => 'Červen',
+        '7' => 'Červenec',
+        '8' => 'Srpen',
+        '9' => 'Září',
+        '10' => 'Říjen',
+        '11' => 'Listopad',
+        '12' => 'Prosinec'
+    );
+    return $months[$i];
 }

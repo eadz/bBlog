@@ -3,62 +3,62 @@
  * function.calendar.php - calendar plugin (duh..)
  * <p>
  * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
- * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @package bblog
  */
 
 function identify_function_calendar () {
 
     $help = '
-	<p>
-	This plugin displays the calendar module. It uses calendar.html as a template.<BR />
-	it has two parameter: week_start, which allows you two choose what day is the<BR />
-	first day a week (default is 1 (Monday). Sunday is 0, Monday is 1, ...) and <BR />
-	locale, which can be used to force the script to another locale (ie de_DE for<BR /> 
-	German, etc.). Default locale is whatever your server has been set to use as <BR />
-	default.
-	</P>';
+    <p>
+    This plugin displays the calendar module. It uses calendar.html as a template.<BR />
+    it has two parameter: week_start, which allows you two choose what day is the<BR />
+    first day a week (default is 1 (Monday). Sunday is 0, Monday is 1, ...) and <BR />
+    locale, which can be used to force the script to another locale (ie de_DE for<BR />
+    German, etc.). Default locale is whatever your server has been set to use as <BR />
+    default.
+    </P>';
 
      return array (
-	'name'		=> 'calendar',
-	'type'		=> 'function',
-	'nicename'	=> 'Calendar',
-	'description'	=> 'Makes a calendar of the current month',
-	'authors'	=> 'Tanel Raja',
-	'licence'	=> 'GPL',
-	'help'		=> $help
+    'name'		=> 'calendar',
+    'type'		=> 'function',
+    'nicename'	=> 'Calendar',
+    'description'	=> 'Makes a calendar of the current month',
+    'authors'	=> 'Tanel Raja',
+    'licence'	=> 'GPL',
+    'help'		=> $help
     );
-    
+
 }
 
 function smarty_function_calendar($params, &$smartyObj) {
-    $bBlog = & $smartyObj->get_template_vars("bBlog_object"); 
+    $bBlog = & $smartyObj->get_template_vars("bBlog_object");
     $date = getdate();
-    
+
     $today = $date["mday"];
     $month = $date["mon"];
     $year = $date["year"];
-    
+
     $new_month = $_GET["month"];
     $new_year = $_GET["year"];
 
-    if ($new_month && $new_year) {    
-	$date = getdate(mktime(0, 0, 0, $new_month, 1, $new_year));
-	$show_month = $date["mon"];
-	$show_year = $date["year"];
+    if ($new_month && $new_year) {
+    $date = getdate(mktime(0, 0, 0, $new_month, 1, $new_year));
+    $show_month = $date["mon"];
+    $show_year = $date["year"];
     } else {
-	$show_month = $month;
-	$show_year = $year;
+    $show_month = $month;
+    $show_year = $year;
     }
 
 
     $q = $bBlog->make_post_query(
-	array(
-	"where" => " AND month(FROM_UNIXTIME(posttime)) = $show_month and year(FROM_UNIXTIME(posttime)) = $show_year ",
-	"num"=>"999"
-	)
+    array(
+    "where" => " AND month(FROM_UNIXTIME(posttime)) = $show_month and year(FROM_UNIXTIME(posttime)) = $show_year ",
+    "num"=>"999"
+    )
     );
-	    
+
     $dayindex = array();
     global $dayindex;
     $posts = $bBlog->get_posts($q);
@@ -73,29 +73,29 @@ function smarty_function_calendar($params, &$smartyObj) {
                       "url"   => $bBlog->_get_entry_permalink($post['postid'])
                 );
             }
- 
+
         }
-        
-	
+
+
     }
 
 
     $left_year = $right_year = $show_year;
-    
+
     $left_month = $show_month - 1;
     if ($left_month < 1) {
-	$left_month = 12;
-	$left_year--;
+    $left_month = 12;
+    $left_year--;
     }
     $right_month = $show_month + 1;
     if ($right_month > 12) {
-	$right_month = 1;
-	$right_year++;
+    $right_month = 1;
+    $right_year++;
     }
-    
+
     $bBlog->smartyObj->assign("left", $_SERVER["PHP_SELF"] . "?month=$left_month&amp;year=$left_year");
     $bBlog->smartyObj->assign("right", $_SERVER["PHP_SELF"] . "?month=$right_month&amp;year=$right_year");
-    
+
     $bBlog->smartyObj->assign("header", strftime("%B %Y", mktime(0, 0, 0, $show_month, 1, $show_year)));
 
     $first_date = mktime(0, 0, 0, $show_month, 1, $show_year);
@@ -104,72 +104,72 @@ function smarty_function_calendar($params, &$smartyObj) {
     $last_date = mktime(0, 0, 0, $show_month + 1, 0, $show_year);
     $date = getdate($last_date);
     $last_day = $date["mday"];
-    
+
     $wday = "";
    // echo($params["locale"]);
     if ($params["locale"])
-	@setlocale(LC_TIME, $params["locale"]);
+    @setlocale(LC_TIME, $params["locale"]);
     $week_start = $params["week_start"];
     if ($week_start < 0 || $week_start > 6) {
         $week_start = 1;
     }
-    
+
     for ($counter = $week_start; $counter < $week_start + 7; $counter++) {
-	if ($counter > 6)
-	    $wday[] = strftime("%a", mktime(0, 0, 0, 3, $counter - 7, 2004));
-	else
-	    $wday[] = strftime("%a", mktime(0, 0, 0, 3, $counter, 2004));
+    if ($counter > 6)
+        $wday[] = strftime("%a", mktime(0, 0, 0, 3, $counter - 7, 2004));
+    else
+        $wday[] = strftime("%a", mktime(0, 0, 0, 3, $counter, 2004));
     }
-	
+
     $bBlog->smartyObj->assign("wday", $wday);
-    
+
     $week_array = "";
     $month_array = "";
 
     $pre_counter = $first_wday - $week_start;
     if ($pre_counter < 0)
-	$pre_counter += 7;
-    
+    $pre_counter += 7;
+
     $day = 1;
     while(true) {
-    
-	$week_array = "";
-	
-	for ($counter = 0; $counter < 7; $counter++) {
-	
-	    if ($day > $last_day) {
-		$week_array[] = array(
-			0 => false,
-			1 => "&nbsp;",
-			2 => false
-		    );
-	    } else if ($pre_counter > 0) {
-		$week_array[] = array(
-			0 => false,
-			1 => "&nbsp;",
-			2 => false
-		    );
-		$pre_counter--;
-	    } else {
-		getDateLink($day, $values);
-	
-		$week_array[] = array(
-			0 => (($dayindex["$day"])?true:false),
-			1 => $day,
-			2 => (($day == $today && $month == $show_month && $year == $show_year)?true:false)
-		    );
-		$day++;
-	    }
-	    
-	}
-	
-	$month_array[] = $week_array;
-	
-	if ($day > $last_day)
-	    break;
+
+    $week_array = "";
+
+    for ($counter = 0; $counter < 7; $counter++) {
+
+        if ($day > $last_day) {
+        $week_array[] = array(
+            0 => false,
+            1 => "&nbsp;",
+            2 => false
+            );
+        } else if ($pre_counter > 0) {
+        $week_array[] = array(
+            0 => false,
+            1 => "&nbsp;",
+            2 => false
+            );
+        $pre_counter--;
+        } else {
+        getDateLink($day, $values);
+
+        $week_array[] = array(
+            0 => (($dayindex["$day"])?true:false),
+            1 => $day,
+            2 => (($day == $today && $month == $show_month && $year == $show_year)?true:false)
+            );
+        $day++;
+        }
 
     }
-    
+
+    $month_array[] = $week_array;
+
+    if ($day > $last_day)
+        break;
+
+    }
+
     $bBlog->smartyObj->assign("month", $month_array);
     $bBlog->smartyObj->assign("values", $values);
 
@@ -184,12 +184,12 @@ function getDateLink($day, &$values) {
     if (!$dayindex[$day]) {
         return;
     } else {
-	foreach($dayindex[$day] as $item) {
-	    $script .= sprintf("&raquo; <a href='%s'>%s</a><br />", $item['url'],$item['title']);
-    	}
+    foreach($dayindex[$day] as $item) {
+        $script .= sprintf("&raquo; <a href='%s'>%s</a><br />", $item['url'],$item['title']);
+        }
 
-    	$script = str_replace('"', '\"', $script);
-    	$values .= "cc[$day]=\"$script\";\n";
+        $script = str_replace('"', '\"', $script);
+        $values .= "cc[$day]=\"$script\";\n";
 
     }
 }

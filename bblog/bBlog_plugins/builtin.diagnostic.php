@@ -3,10 +3,10 @@
  * builtin.diagnostic.php - a diagnostic tool
  * <p>
  * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
- * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @package bblog
  */
- 
+
 function identify_admin_diagnostic () {
   return array (
     'name'           =>'options',
@@ -20,8 +20,8 @@ function identify_admin_diagnostic () {
 }
 
 if (!empty($_POST)){
-	global $bBlog;
-	$bBlog->search->index_all();
+    global $bBlog;
+    $bBlog->search->index_all();
 }
 
 // test nice url support

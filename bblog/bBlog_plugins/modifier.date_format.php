@@ -4,7 +4,7 @@
  * <p>
  * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
  * @copyright 2005 Kenneth Power <kenneth.power@gmail.com>
- * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @package bblog
  */
 
@@ -66,78 +66,78 @@ function smarty_modifier_date_format($date, $format="%F %j, %Y, %g:%i %a") {
   // locale should be defined in a config file, not case by case
   define('C_LOCALE','en_GB');
   setlocale(LC_TIME,C_LOCALE);
-  
+
   switch ($format) {
     case "full": return strftime("%A, %d. %B %Y, %H:%M", $date);
- 		break;
-    
+        break;
+
     case "date": return strftime("%A, %d. %B %Y", $date);
-		break;
-    
+        break;
+
     case "europe": return strftime("%d.%m.%Y", $date);
-    	break;
-    
+        break;
+
     case "shortdate": return strftime("%x", $date);
-		break;
-    
+        break;
+
     case "month": return strftime("%B", $date);
-		break;
-    
+        break;
+
     case "year": return strftime("%Y", $date);
-		break;
-    
+        break;
+
     case "monthyear": return strftime("%B %Y", $date);
-		break;
-    
+        break;
+
     case "time": return strftime("%H:%M", $date);
-		break;
-	
+        break;
+
     case "12hour": return strftime("%I:%M %p", $date);
         break;
-        
+
     case "s1" : return strftime("%B %d, %Y %r", $date);
-		break;
-    
+        break;
+
     case "s2" : return strftime("%B %d, %Y", $date);
-		break;
-    
+        break;
+
     case "atom" : return strftime("%Y-%b-%d\%Z %T"); //date('Y-m-d\TH:i:s\Z',$date);
-		break;
-        
+        break;
+
     case "rss92":
     case "rss20" :
         return strftime("%a, %d %b %Y %H:%M:%S %Z", $date);
-		break;
-    
+        break;
+
     case "suffix" : return date("S", $date);
-		break;
-    
+        break;
+
     // a clever little hack to make date() return a ISO 8601 standard date string for use in RSS 1.0
     case "rss10":
     case "ISO8601":
         return substr(date("Y-m-d\Th:i:sO", $date),0,22).":".substr(date("O", $date),3);
- 		break;
-    
+        break;
+
     case "jim":
     case "since":
     case "elapsed" :
-        //return since($date)." on ".date("F j, Y",$date); 
+        //return since($date)." on ".date("F j, Y",$date);
         return time_diff($date, time());
-		break;
-  
-  	default:
- 		//default should behave like the original smarty date_format
-   		//see if there is at least one % in the date. then we go for new format
-  		if (substr_count("$format", '%') > 0) {
-  			return strftime($format, $date); 	
-  		}
-		//else we go the old date() way for backward compatibility
-  		else{
-  			return date($format, $date);
-  		}
-  		break;
+        break;
+
+    default:
+        //default should behave like the original smarty date_format
+        //see if there is at least one % in the date. then we go for new format
+        if (substr_count("$format", '%') > 0) {
+            return strftime($format, $date);
+        }
+        //else we go the old date() way for backward compatibility
+        else{
+            return date($format, $date);
+        }
+        break;
   }//switch
- 
+
 }//function
 
 function identify_modifier_date_format () {
@@ -153,7 +153,7 @@ function identify_modifier_date_format () {
 
 function bblog_modifier_date_format_help () {
 ?>
-<p>Date format takes a timestamp, and turns it into a nice looking date. 
+<p>Date format takes a timestamp, and turns it into a nice looking date.
 It is used as a modifier inside a template. For example, if you are in a
  <span class="tag">{post} {/post}</span> loop, you will have the varible <em>{$post.dateposted}</em>
  set which will contain a timestamp of when the post was made,
@@ -224,76 +224,76 @@ It is used as a modifier inside a template. For example, if you are in a
 function time_diff($from, $to) {
     if(empty($to))
         $top = time();
-	if ($from > $to) {
-		$t = $to;
-		$to = $from;
-		$from = $t;
-	}
-	$year1 = date("Y", $from);
-	$year2 = date("Y", $to);
-	$month1 = date("n", $from);
-	$month2 = date("n", $to);
-	$day1 = date("j", $from);
-	$day2 = date("j", $to);
+    if ($from > $to) {
+        $t = $to;
+        $to = $from;
+        $from = $t;
+    }
+    $year1 = date("Y", $from);
+    $year2 = date("Y", $to);
+    $month1 = date("n", $from);
+    $month2 = date("n", $to);
+    $day1 = date("j", $from);
+    $day2 = date("j", $to);
     $hour1 = date("H", $from);
     $hour2 = date("H", $to);
     $minute1 = date("i", $from);
     $minute2 = date("i", $to);
     $second1 = date("s", $from);
     $second2 = date("s", $to);
-	
-    
+
+
     /**
     * Make adjustments to days and months
     *
     * Distinguish among 30-day,31-day,28-day and 29-day months
     */
-	if ($day2 < $day1) {
-		if (($month2 - 1) == 4 || ($month2 - 1) == 6 || ($month2 - 1) == 9 || ($month2 - 1) == 11) {
-			$day2 += 30;
-			$month2 --;
-		} else if (($month2 - 1) == 2) {
-			if (date("L", $to)) {
-				$day2 += 29;
-				$month2 --;
-			} else {
-				$day2 += 28;
-				$month2 --;
-			}
-		} else {
-			$day2 += 31;
-			$month2 --;
-		}
-	}
+    if ($day2 < $day1) {
+        if (($month2 - 1) == 4 || ($month2 - 1) == 6 || ($month2 - 1) == 9 || ($month2 - 1) == 11) {
+            $day2 += 30;
+            $month2 --;
+        } else if (($month2 - 1) == 2) {
+            if (date("L", $to)) {
+                $day2 += 29;
+                $month2 --;
+            } else {
+                $day2 += 28;
+                $month2 --;
+            }
+        } else {
+            $day2 += 31;
+            $month2 --;
+        }
+    }
     //Finally, the difference between the two days
-	$days = $day2 - $day1;
+    $days = $day2 - $day1;
 
     //Find difference between the months
-	if ($month2 < $month1) {
-		$month2 += 12;
-		$year2--;
-	}
-	$months = $month2 - $month1;
-	$years = $year2 - $year1;
-    
+    if ($month2 < $month1) {
+        $month2 += 12;
+        $year2--;
+    }
+    $months = $month2 - $month1;
+    $years = $year2 - $year1;
+
     if($hour2 < $hour1){
         $hour2 += 24;
         $days--;
     }
     $hours = $hour2 - $hour1;
-    
+
     if($minute2 < $minute1){
         $minute2 += 60;
         $hours--;
     }
     $minutes = $minute2 - $minute1;
-    
+
     if($second2 < $second1){
         $second2 += 60;
         $minutes--;
     }
     $seconds = $second2 - $second1;
-    
+
     $result = '';
     if($years > 0)
         $result .= ($years> 1) ? $years.' years, ' : $years.' year, ';
@@ -307,12 +307,12 @@ function time_diff($from, $to) {
         $result .= ($minutes > 1) ? $minutes.' minutes, ' : $minutes.' minute, ';
     if($seconds > 0)
         $result .= ($seconds > 1) ? $seconds.' seconds' : $seconds.' second';
-        
+
     $result = trim($result);
     $pos = strpos($result, ',', strlen($result) -1);
     if($pos !== false)
         $result = substr($result, 0, $pos - 1);
-    
+
     return $result;
 }
 ?>

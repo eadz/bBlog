@@ -11,7 +11,7 @@
 
 /**
  * xushi: notes
- * 
+ *
  * note:
  * -----
  * im thinking of reducing the GUI installation steps
@@ -22,12 +22,12 @@
  * fill his details for the installation
  * 3) All the other installation info can be grouped to a
  * third single page.
- * 
+ *
  * note:
  * -----
  * i like how in 0.8, by default, a new install is determined by
  * weather you have a full config.php or not.
- * 
+ *
  * note:
  * ------
  * Remove the switch case. Either stick all code in 1 blob, or replace
@@ -78,7 +78,7 @@ session_start();
     if(!isset($config['email'])) $config['email'] = "";
     if(!isset($config['fullname'])) $config['fullname'] = "";
     if(!isset($config['secretQuestion'])) $config['secretQuestion'] = "";
-	if(!isset($config['secretAnswer'])) $config['secretAnswer'] = "";
+    if(!isset($config['secretAnswer'])) $config['secretAnswer'] = "";
     if(!isset($config['mysql_username'])) $config['mysql_username'] = "";
     if(!isset($config['mysql_password'])) $config['mysql_password'] = "";
     if(!isset($config['mysql_database'])) $config['mysql_database'] = "";
@@ -179,14 +179,14 @@ session_start();
         case 2:
             ?>
             <h3>Database and blog settings</h3>
-            
+
             <?php
-            	if (isset($message)) {
-                	echo $message;
-            	}
+                if (isset($message)) {
+                    echo $message;
+                }
             ?>
-            
-            
+
+
             <p>Please fill in the config settings below</p>
 
             <table border="0" class='list' cellpadding="4" cellspacing="0" summary="Config Table">
@@ -209,7 +209,7 @@ session_start();
                 <td width="200"><input type="text" name="bblogemail" value="<?php echo $config['bblogemail']; ?>"/></td>
                 <td width="33%" class='si'>What address to use when sending emails to your users, such as password resets or notifications of comments</td>
             </tr>
-			<tr>
+            <tr>
                 <td colspan="3"><h4>Admin Settings</h4></td>
             </tr>
             <tr bgcolor="#eeeedf">
@@ -238,15 +238,15 @@ session_start();
                 <td width="33%" class='si'>Your personal email address. Useful for password recovery.</td>
             </tr>
             <tr bgcolor="#eeeeee">
-				<td width="33%">Secret Question</td>
-				<td width="200"><input type="text" name="secretQuestion" value="<?php echo $config['secretQuestion']; ?>" /></td>
-				<td width="33%" class='si'>Enter a secret question</td>
-			</tr>
-			<tr bgcolor="#eeeeee">
-				<td width="33%">Secret Answer</td>
-				<td width="200"><input type="password" name="secretAnswer" value="<?php echo $config['secretAnswer']; ?>" /></td>
-				<td width="33%" class='si'>Secret Answer</td>
-			</tr>
+                <td width="33%">Secret Question</td>
+                <td width="200"><input type="text" name="secretQuestion" value="<?php echo $config['secretQuestion']; ?>" /></td>
+                <td width="33%" class='si'>Enter a secret question</td>
+            </tr>
+            <tr bgcolor="#eeeeee">
+                <td width="33%">Secret Answer</td>
+                <td width="200"><input type="password" name="secretAnswer" value="<?php echo $config['secretAnswer']; ?>" /></td>
+                <td width="33%" class='si'>Secret Answer</td>
+            </tr>
             <tr>
                 <td colspan="3"><h4>MySQL Settings</h4></td>
             </tr>
@@ -326,13 +326,13 @@ session_start();
              * edit: Stick with {pfx}..., T_xxx is only used when we have a working
              * config.php .. my bad :)
              */
-			
-			$q = array();
-			
-			/* ----------------------------------------
-							Creating Tables
-			----------------------------------------- */
-			
+
+            $q = array();
+
+            /* ----------------------------------------
+                            Creating Tables
+            ----------------------------------------- */
+
             $pfx = $config['table_prefix'];
             $q[]="DROP TABLE IF EXISTS `{$pfx}comments;";
             $q[]="CREATE TABLE `{$pfx}comments` (
@@ -512,14 +512,14 @@ session_start();
               PRIMARY KEY  (id)
             ) TYPE=MyISAM";
 
-            
-            
+
+
             /* ----------------------------------------
-            				inserting data
+                            inserting data
             ----------------------------------------- */
-            
+
             //TODO: add telcor's option panel patch to config table
-            
+
             $q[]= "INSERT INTO `{$pfx}rss` VALUES (9, '', '')";
             $q[]= "INSERT INTO `{$pfx}rss` VALUES (8, '', '')";
             $q[]= "INSERT INTO `{$pfx}rss` VALUES (7, '', '')";
@@ -536,10 +536,10 @@ session_start();
               ('', 'TEMPLATE', 'lines'),
               ('', 'DB_TEMPLATES', 'false'),
               ('', 'DEFAULT_MODIFIER', 'simple'),
-			  ('', 'CHARSET', 'UTF-8'),
-			  ('', 'VERSION', '0.8'),
-			  ('', 'DIRECTION', 'LTR'),
-          	  ('', 'DEFAULT_STATUS', 'live'),
+              ('', 'CHARSET', 'UTF-8'),
+              ('', 'VERSION', '0.8'),
+              ('', 'DIRECTION', 'LTR'),
+              ('', 'DEFAULT_STATUS', 'live'),
               ('', 'PING','bblog.com/ping.php'),
               ('', 'COMMENT_TIME_LIMIT','1'),
               ('', 'NOTIFY','false'),
@@ -572,8 +572,8 @@ session_start();
                 $q[]="INSERT INTO `{$pfx}authors` (`nickname`,`password`,`email`,`fullname`,`secret_question`,`secret_answer`) VALUES
                 ('".$config['username']."','".sha1($config['password'])."','".$config['email']."','".$config['fullname']."','".$config['secretQuestion']."','".$config['secretAnswer']."');";
             }
-            
-            
+
+
             $q[] = "INSERT INTO `{$pfx}posts` (`postid`, `title`, `body`, `posttime`, `modifytime`, `status`, `modifier`, `sections`, `commentcount`,`ownerid`) VALUES (1, 'First Post', '[b]This is the first post of bBlog.[/b]\r\n\r\nYou may delete this post in the admin section. Make sure you have deleted the install file and changed the admin password. \r\n\r\nBe sure to visit the [url=http://www.bblog.com/forum.php]bBlog forum[/url] if you have any questions, comments, bug reports etc. \r\n\r\nHappy bBlogging!', UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 'live', 'bbcode', '', 0, 1);";
 
             $q[] = "INSERT INTO `{$pfx}sections` (`sectionid`, `nicename`, `name`) VALUES (1, 'News', 'news'),
@@ -707,7 +707,7 @@ session_start();
  *  .||..|' .||...|'  .||. `|..|' `|..||
  *                                    ||
  *         v0.8.0                 `....|'
- * 
+ *
  * @package bBlog
  * @author bBlog weblog
  * @copyright The bBlog Project, http://www.bblog.com/
@@ -934,7 +934,7 @@ include BBLOGROOT.'inc/init.php';
             echo "<span style='color:red;'>../compiled_templates is NOT writable</span><br />";
             $ok = FALSE;
         }
-        
+
         if(is_writable("../config.php")) {
             echo "../config.php is writeable<br />";
         } else {

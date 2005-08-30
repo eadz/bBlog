@@ -4,9 +4,9 @@
  * <p>
  * @author Elie `LordWo` BLETON <lordwo_REM_OVE_THIS@laposte.net>
  * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
- * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @package bblog
- */ 
+ */
 
 function identify_function_getcontent () {
 $help = '
@@ -34,10 +34,10 @@ function smarty_function_getcontent($params, &$smartyObj) {
      $new[$object->sectionid] = $object;
   }
   $sections = $new;
-  
+
   $current_section = $smartyObj->get_template_vars("sectionid");
-    
-  // Return  
+
+  // Return
   $smartyObj->assign("content",$sections[$current_section]->content);
 }
 

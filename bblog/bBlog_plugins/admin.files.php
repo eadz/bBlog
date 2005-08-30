@@ -3,10 +3,10 @@
  * admin.files.php - file management to upload files
  * <p>
  * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
- * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @package bblog
  */
- 
+
 function identify_admin_files () {
   return array (
     'name'           =>'files',
@@ -16,27 +16,27 @@ function identify_admin_files () {
     'authors'         =>'Martin Konicek <markon@air4web.com>',
     'licence'         =>'GPL',
     'help'            =>'',
-		'template' 	=> 'files.html',
+        'template' 	=> 'files.html',
   );
 }
 
 function admin_plugin_files_run(){
-	global $bBlog,$smartyObj,$_FILES;
-	if(!empty($_FILES) && !(preg_match('/\.(php|php3|phtml|htaccess)/', $_FILES['userfile']['name']))) {
-		$filename =& $_FILES['userfile']['name'];
-		$uploadfile = UPLOADFILES . $filename;
-		if(move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)){
-			$bBlog->smartyObj->assign("uploaded",true);
-		} else {
-			$bBlog->smartyObj->assign("uploaded",false);
-		}
-	}
-	$dir = scandir(UPLOADFILES);
-	// Remove '.' and '..' from the list
-	unset($dir[0],$dir[1]);
-	// If we don't have files, we don't need to start the list and keep it empty
-	$bBlog->smartyObj->assign('have_files',count($dir)>0);
-	$bBlog->smartyObj->assign("files",$dir);
-	$bBlog->smartyObj->assign("path",UPLOADFILESURL);
+    global $bBlog,$smartyObj,$_FILES;
+    if(!empty($_FILES) && !(preg_match('/\.(php|php3|phtml|htaccess)/', $_FILES['userfile']['name']))) {
+        $filename =& $_FILES['userfile']['name'];
+        $uploadfile = UPLOADFILES . $filename;
+        if(move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)){
+            $bBlog->smartyObj->assign("uploaded",true);
+        } else {
+            $bBlog->smartyObj->assign("uploaded",false);
+        }
+    }
+    $dir = scandir(UPLOADFILES);
+    // Remove '.' and '..' from the list
+    unset($dir[0],$dir[1]);
+    // If we don't have files, we don't need to start the list and keep it empty
+    $bBlog->smartyObj->assign('have_files',count($dir)>0);
+    $bBlog->smartyObj->assign("files",$dir);
+    $bBlog->smartyObj->assign("path",UPLOADFILESURL);
 }
 ?>

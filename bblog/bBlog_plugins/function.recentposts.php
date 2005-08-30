@@ -3,13 +3,13 @@
  * function.recentposts.php - main post loop plugin
  * <p>
  * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
- * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @package bblog
  */
 
 // 11 June 2003
-//   * allow to create real unordered lists: all param mode=list 
-//   * customizeable title length 
+//   * allow to create real unordered lists: all param mode=list
+//   * customizeable title length
 //   -- Sebastian http://www.sebastian-werner.net/
 
 function identify_function_recentposts () {
@@ -36,70 +36,70 @@ sep=" | " to seperate by pipe instead of  &lt;br&gt;';
 }
 
 function smarty_function_recentposts($params, &$smartyObj) {
-	$bBlog = & $smartyObj->get_template_vars("bBlog_object");
-	$opt = array();
+    $bBlog = & $smartyObj->get_template_vars("bBlog_object");
+    $opt = array();
 
-        $num = 5; 
-        $mode = "br"; 
-        $sep = "<br />"; 
-        $titlelen=30; 
+        $num = 5;
+        $mode = "br";
+        $sep = "<br />";
+        $titlelen=30;
         $skip = 0;
-        $linkcode = ''; 
-        if(isset($params['sep'])) $sep = $params['sep']; 
+        $linkcode = '';
+        if(isset($params['sep'])) $sep = $params['sep'];
 
-        if(isset($params['num'])) $num = $params['num']; 
-	$opt['num'] = $num;
+        if(isset($params['num'])) $num = $params['num'];
+    $opt['num'] = $num;
 
-        if(isset($params['mode'])) $mode = $params['mode']; 
-        
-        if(isset($params['skip'])) $skip = $params['skip']; 
-	$opt['skip'] = $skip;
+        if(isset($params['mode'])) $mode = $params['mode'];
 
-	if ($params['section'] != '') {
-		  $opt['sectionid'] = $bBlog->sect_by_name[$params['section']];
-	}
-	if ($params['sectionid'] != '') {
-		  $opt['sectionid'] = $params['sectionid'];
-	}
+        if(isset($params['skip'])) $skip = $params['skip'];
+    $opt['skip'] = $skip;
 
-        if(isset($params['titlelen'])) $titlelen = $params['titlelen']; 
+    if ($params['section'] != '') {
+          $opt['sectionid'] = $bBlog->sect_by_name[$params['section']];
+    }
+    if ($params['sectionid'] != '') {
+          $opt['sectionid'] = $params['sectionid'];
+    }
 
-        $q = $bBlog->make_post_query( $opt ); 
+        if(isset($params['titlelen'])) $titlelen = $params['titlelen'];
 
-        $posts = $bBlog->get_posts($q); 
+        $q = $bBlog->make_post_query( $opt );
 
-        if($mode=="list") $linkcode .= "<ul>"; 
+        $posts = $bBlog->get_posts($q);
 
-        $i=0; 
-        if(is_array($posts)) { 
+        if($mode=="list") $linkcode .= "<ul>";
+
+        $i=0;
+        if(is_array($posts)) {
         /* <a([^<]*)?href=(\"|')?([a-zA-Z]*://[a-zA-Z0-9]*\.[a-zA-Z0-9]*\.[a-zA-Z]*([^>]*)?)(\"|')?([^>]*)?>([^<]*)</a> */
-	// This should match any protocol, any port, any URL, any title. URL's like www.yest.com are supported, and should be treated as HTTP by browsers.       
+    // This should match any protocol, any port, any URL, any title. URL's like www.yest.com are supported, and should be treated as HTTP by browsers.
         $regex = "#<a([^<]*)?href=(\"|')?(([a-zA-Z]*://)?[a-zA-Z0-9]*\.[a-zA-Z0-9]*\.[a-zA-Z]*(:[0-9]*)?([^>\"\']*)?)(\"|')?([^>]*)?>([^<]*)</a>#i";
-        
-                foreach ($posts as $post) { 
-                	$title = $post["title"];
-                	              	
-                	if (preg_match($regex, $title, $matches) == 1) 
-                	{ 
-                		$title = $matches[9];
-                	} 
-                	
-                        $i++; 
-                        if($mode=="list") $linkcode .= "<li>"; 
 
-                        // we using arrays in the template and objects in the core.. 
-                        $url = $post['permalink']; 
-                        $title = truncate($title,$titlelen,'...',FALSE); 
-                        $linkcode .= "<a href='$url'>$title</a>"; 
+                foreach ($posts as $post) {
+                    $title = $post["title"];
 
-                        if($mode=="br" && $num > $i) $linkcode .= $sep; 
-                        if($mode=="list") $linkcode .= "</li>"; 
-                } 
-        } 
+                    if (preg_match($regex, $title, $matches) == 1)
+                    {
+                        $title = $matches[9];
+                    }
 
-        if($mode=="list") $linkcode .= "</ul>"; 
+                        $i++;
+                        if($mode=="list") $linkcode .= "<li>";
 
-        return $linkcode; 
+                        // we using arrays in the template and objects in the core..
+                        $url = $post['permalink'];
+                        $title = truncate($title,$titlelen,'...',FALSE);
+                        $linkcode .= "<a href='$url'>$title</a>";
+
+                        if($mode=="br" && $num > $i) $linkcode .= $sep;
+                        if($mode=="list") $linkcode .= "</li>";
+                }
+        }
+
+        if($mode=="list") $linkcode .= "</ul>";
+
+        return $linkcode;
 }
 
 
@@ -112,7 +112,7 @@ function truncate($string, $length = 80, $etc = '...',
     if (strlen($string) > $length) {
         $length -= strlen($etc);
         if (!$break_words)
-	    $string = preg_replace('/\s+?(\S+)?$/', '', substr($string, 0, $length+1));
+        $string = preg_replace('/\s+?(\S+)?$/', '', substr($string, 0, $length+1));
 
         return substr($string, 0, $length).$etc;
     } else

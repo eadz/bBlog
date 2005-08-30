@@ -3,10 +3,10 @@
  * modifier.simple.php
  * <p>
  * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
- * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @package bblog
  */
- 
+
 function identify_modifier_simple () {
     return array (
     'name'           =>'simple',
@@ -22,7 +22,7 @@ function identify_modifier_simple () {
 // !a simple modifier combining nl2br and make clickable
 function smarty_modifier_simple ($body) {
     //Replaced all code with methods in StringHandler class
-    
+
     $parts = explode(" ", $body);
     foreach($parts as $ind=>$line){
         $parts[$ind] = StringHandling::transformLinks($line);

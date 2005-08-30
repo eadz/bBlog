@@ -3,10 +3,10 @@
  * function.photobblogimage.php
  * <p>
  * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
- * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @package bblog
  */
- 
+
 function identify_function_photobblogimage () {
 $help = 'Sets Smarty template variables for the image file location and caption name for a given post.  Sample usage: {photobblogimage postid=$postid}';
 
@@ -24,14 +24,14 @@ $help = 'Sets Smarty template variables for the image file location and caption 
 function smarty_function_photobblogimage($params, &$smartyObj)
 {
     $bBlog = & $smartyObj->get_template_vars("bBlog_object");
-	$postid=$params['postid'];    
+    $postid=$params['postid'];
     if ($postid!='') {
-    	$data=$bBlog->get_row("select imageLoc,caption from ".TBL_PREFIX."photobblog where postid=$postid");
+        $data=$bBlog->get_row("select imageLoc,caption from ".TBL_PREFIX."photobblog where postid=$postid");
         $smartyObj->assign('imageloc', $data->imageLoc);
         $smartyObj->assign('imagecaption', $data->caption);
     }
     else
-    {    
+    {
         $smartyObj->assign('imageloc', '');
         $smartyObj->assign('imagecaption', '');
     }

@@ -3,7 +3,7 @@
  * modifier.locale.php - smarty modifier to set locale
  * <p>
  * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
- * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @package bblog
  */
 function smarty_modifier_locale($stream, $locale) {

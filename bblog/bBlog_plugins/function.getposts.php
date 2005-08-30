@@ -4,10 +4,10 @@
  * <p>
  * @author Reverend Jim <jim@revjim.net> - Eaden McKee <email@eadz.co.nz>
  * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
- * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @package bblog
- */ 
- 
+ */
+
 function identify_function_getposts () {
 $help = '
 <p>the {getposts} function is used to retrieve a blog post or posts. <br />
@@ -51,115 +51,115 @@ function smarty_function_getposts($params,  &$smartyObj) {
   $opt = array();
 
   if(is_numeric($params['postid']) && $params['postid'] > 0) {
-	        $postid = $params['postid'];
-	} else {
-	        $postid = FALSE;
-	}
-	// If "assign" is not set... we'll establish a default.
-	if($params['assign'] == '') {
-	        if($postid) $params['assign'] = 'post';
-		else $params['assign'] = 'posts';
-	}
+            $postid = $params['postid'];
+    } else {
+            $postid = FALSE;
+    }
+    // If "assign" is not set... we'll establish a default.
+    if($params['assign'] == '') {
+            if($postid) $params['assign'] = 'post';
+        else $params['assign'] = 'posts';
+    }
 
         if($postid) {   //we've been given a post id so we'll just get it and get outta here.
-	        $q = $bBlog->make_post_query(array("postid"=>$params['postid']));
+            $q = $bBlog->make_post_query(array("postid"=>$params['postid']));
                 $ar['posts'] = $bBlog->get_posts($q);
                 // No post.
                 if(!is_array($ar['posts'])) {
-		        return false;
-	        }
-	        $ar['posts'][0]['newday'] = 'yes';
-	        $ar['posts'][0]['newmonth'] = 'yes';
-	        $smartyObj->assign($params['assign'],$ar['posts'][0]);
-	        return ''; // so if postid is given this is the last line processed
-	}
+                return false;
+            }
+            $ar['posts'][0]['newday'] = 'yes';
+            $ar['posts'][0]['newmonth'] = 'yes';
+            $smartyObj->assign($params['assign'],$ar['posts'][0]);
+            return ''; // so if postid is given this is the last line processed
+    }
 
-	// If "archive" is set, order them ASCENDING by posttime.
-	if($params['archive']) {
-		$opt['order']=" ORDER BY posttime ";
-	}
+    // If "archive" is set, order them ASCENDING by posttime.
+    if($params['archive']) {
+        $opt['order']=" ORDER BY posttime ";
+    }
 
 
-	// If num is set, we'll only get that many results in return
-	if(is_numeric($params['num'])) {
-		$opt['num'] = $params['num'];
-	}
+    // If num is set, we'll only get that many results in return
+    if(is_numeric($params['num'])) {
+        $opt['num'] = $params['num'];
+    }
 
-	// If skip is set, we'll skip that many results
-	if(is_numeric($params['skip'])) {
-		$opt['skip'] = $params['skip'];
-	}
-     
-	if ($params['section'] != '') {
-		  $opt['sectionid'] = $bBlog->sect_by_name[$params['section']];
-	}
-	
-	if ($params['skipsection'] != '') {
-		  $opt['skipsectionid'] = $bBlog->sect_by_name[$params['skipsection']];
-	} else $opt['skipsectionid'] = FALSE;
-	
-	if($bBlog->show_section) {
-		$opt['sectionid'] = $bBlog->show_section;
-	}
+    // If skip is set, we'll skip that many results
+    if(is_numeric($params['skip'])) {
+        $opt['skip'] = $params['skip'];
+    }
 
-	if(is_numeric($params['year'])) {
-		if(strlen($params['year']) != 4) {
-			$smartyObj->trigger_error('getposts: year parameter requires a 4 digit month');
-			return '';
-		}
-		$opt['year'] = $params['year'];
-	}
+    if ($params['section'] != '') {
+          $opt['sectionid'] = $bBlog->sect_by_name[$params['section']];
+    }
 
-	if(is_numeric($params['month'])) {
-		if(strlen($params['month']) != 2) {
-			$smartyObj->trigger_error('getposts: month parameter requires a 2 digit month');
-			return '';
-		}
-		$opt['month'] = $params['month'];
-	}
+    if ($params['skipsection'] != '') {
+          $opt['skipsectionid'] = $bBlog->sect_by_name[$params['skipsection']];
+    } else $opt['skipsectionid'] = FALSE;
 
-	if(is_numeric($params['day'])) {
-		if(strlen($params['day']) != 2) {
-			$smartyObj->trigger_error('getposts: day parameter requires a 2 digit day');
-			return '';
-		}
-		$opt['day'] = $params['day'];
-	}
+    if($bBlog->show_section) {
+        $opt['sectionid'] = $bBlog->show_section;
+    }
 
-	if(is_numeric($params['hour'])) {
-		if(strlen($params['hour']) != 2) {
-			$smartyObj->trigger_error('getposts: hour parameter requires a 2 digit hour');
-			return '';
-		}
-		$opt['hour'] = $params['hour'];
-	}
+    if(is_numeric($params['year'])) {
+        if(strlen($params['year']) != 4) {
+            $smartyObj->trigger_error('getposts: year parameter requires a 4 digit month');
+            return '';
+        }
+        $opt['year'] = $params['year'];
+    }
 
-	if(is_numeric($params['minute'])) {
-		if(strlen($params['minute']) != 2) {
-			$smartyObj->trigger_error('getposts: minute parameter requires a 2 digit minute');
-			return '';
-		}
-		$opt['minute'] = $params['minute'];
-	}
+    if(is_numeric($params['month'])) {
+        if(strlen($params['month']) != 2) {
+            $smartyObj->trigger_error('getposts: month parameter requires a 2 digit month');
+            return '';
+        }
+        $opt['month'] = $params['month'];
+    }
 
-	if(is_numeric($params['second'])) {
-		if(strlen($params['second']) != 2) {
-			$smartyObj->trigger_error('getposts: second parameter requires a 2 digit second');
-			return '';
-		}
-		$opt['second'] = $params['second'];
-	}
+    if(is_numeric($params['day'])) {
+        if(strlen($params['day']) != 2) {
+            $smartyObj->trigger_error('getposts: day parameter requires a 2 digit day');
+            return '';
+        }
+        $opt['day'] = $params['day'];
+    }
 
-	if(isset($params['daydesc'])) $opt['daydesc'] = TRUE;
-		else $opt['daydesc'] = FALSE;
+    if(is_numeric($params['hour'])) {
+        if(strlen($params['hour']) != 2) {
+            $smartyObj->trigger_error('getposts: hour parameter requires a 2 digit hour');
+            return '';
+        }
+        $opt['hour'] = $params['hour'];
+    }
+
+    if(is_numeric($params['minute'])) {
+        if(strlen($params['minute']) != 2) {
+            $smartyObj->trigger_error('getposts: minute parameter requires a 2 digit minute');
+            return '';
+        }
+        $opt['minute'] = $params['minute'];
+    }
+
+    if(is_numeric($params['second'])) {
+        if(strlen($params['second']) != 2) {
+            $smartyObj->trigger_error('getposts: second parameter requires a 2 digit second');
+            return '';
+        }
+        $opt['second'] = $params['second'];
+    }
+
+    if(isset($params['daydesc'])) $opt['daydesc'] = TRUE;
+        else $opt['daydesc'] = FALSE;
 
   $q = $bBlog->make_post_query($opt);
 
   $ar['posts'] = $bBlog->get_posts($q);
-        
-	// No posts.
+
+    // No posts.
   if(!is_array($ar['posts'])) {
-	return '';
+    return '';
   }
 
   $lastmonth = 0;
@@ -183,7 +183,7 @@ function smarty_function_getposts($params,  &$smartyObj) {
   $smartyObj->assign($params['assign'],$ar['posts']);
 
   return '';
-	
+
 }
 
 ?>

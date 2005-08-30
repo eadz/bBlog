@@ -9,7 +9,7 @@
  *
  * @author Xushi - <xushi.xushi@gmail.com>
  * @source phpmailer - <http://phpmailer.sourceforge.net/>
- * @license GPL <http://www.gnu.org/copyleft/gpl.html>
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  */
 
 require("class.phpmailer.php");

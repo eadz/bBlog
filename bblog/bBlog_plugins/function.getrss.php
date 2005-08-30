@@ -3,9 +3,9 @@
  * function.getposts.php
  * <p>
  * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
- * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @package bblog
- */ 
+ */
 
 // Modified inc/init.php
 //	Libraries
@@ -33,21 +33,21 @@ $help = '
   );
 }
 
-function smarty_function_getrss($params, &$smartyObj) { 
-	$bBlog = & $smartyObj->get_template_vars("bBlog_object");
+function smarty_function_getrss($params, &$smartyObj) {
+    $bBlog = & $smartyObj->get_template_vars("bBlog_object");
 
-	$outputcharset='UTF8';
-	if(isset($params['id'])) {
-		$rssrow = $bBlog->get_row("select * from ".T_RSS." where url<>'' and id='".$params['id']."'");
-	} else { // get random one
-		$rssrow = $bBlog->get_row("select * from ".T_RSS." where url<>'' order by rand(".time().") limit 0,1");
+    $outputcharset='UTF8';
+    if(isset($params['id'])) {
+        $rssrow = $bBlog->get_row("select * from ".T_RSS." where url<>'' and id='".$params['id']."'");
+    } else { // get random one
+        $rssrow = $bBlog->get_row("select * from ".T_RSS." where url<>'' order by rand(".time().") limit 0,1");
 
-	}
+    }
 
-	if (!isset ($params['limit']))
-		$params['limit'] = 20;
+    if (!isset ($params['limit']))
+        $params['limit'] = 20;
 
-	return get_rss($rssrow->url,$rssrow->input_charset,$outputcharset,$params['limit']);
+    return get_rss($rssrow->url,$rssrow->input_charset,$outputcharset,$params['limit']);
 
 }
 

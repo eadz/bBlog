@@ -5,7 +5,7 @@
  * PHP versions 4 and 5
  *
  * @author Eaden McKee - <email@eadz.co.nz>
- * @license GPL <http://www.gnu.org/copyleft/gpl.html>
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @package bblog
  */
 

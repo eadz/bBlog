@@ -3,10 +3,10 @@
  * admin.rss.php - administer rss
  * <p>
  * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
- * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @package bblog
  */
- 
+
 function identify_admin_rss () {
 $help = '
 <p>
@@ -31,35 +31,35 @@ return array (
 
 function admin_plugin_rss_run(&$bBlog) {
 
-	$pole = "";
-	for($i=1; $i<10; $i++) 
-	{
-		if ((isset($_POST['sending'])) && ($_POST['sending']=="true"))
-		{
-			$id = $_POST[id.$i];
-			$ch = $_POST[ch.$i];
-			$update_query = "UPDATE ".T_RSS." SET `url` = '".$id."',`input_charset` = '".$ch."' WHERE `id` = '".$i."' LIMIT 1 ;";
-			$bBlog->query($update_query);
-		}
+    $pole = "";
+    for($i=1; $i<10; $i++)
+    {
+        if ((isset($_POST['sending'])) && ($_POST['sending']=="true"))
+        {
+            $id = $_POST[id.$i];
+            $ch = $_POST[ch.$i];
+            $update_query = "UPDATE ".T_RSS." SET `url` = '".$id."',`input_charset` = '".$ch."' WHERE `id` = '".$i."' LIMIT 1 ;";
+            $bBlog->query($update_query);
+        }
 
-		$query = "select * from ".T_RSS." where id=".$i.";";
-		$row = $bBlog->get_row($query);
-		$rssurl = $row->url;
-		$w1250 = "";
-		if ($row->input_charset=="W1250") {$w1250=" selected";}
-		$utf8 = "";		
-		if ($row->input_charset=="UTF8") {$utf8=" selected";}
+        $query = "select * from ".T_RSS." where id=".$i.";";
+        $row = $bBlog->get_row($query);
+        $rssurl = $row->url;
+        $w1250 = "";
+        if ($row->input_charset=="W1250") {$w1250=" selected";}
+        $utf8 = "";
+        if ($row->input_charset=="UTF8") {$utf8=" selected";}
 
-		if ($i / 2 == floor($i /2)) $class = 'high';
-		else $class = 'low';
+        if ($i / 2 == floor($i /2)) $class = 'high';
+        else $class = 'low';
 
-		$pole.='<tr class="'.$class.'"><td>'.$i.'</td><td><input type="text" name="id'.$i.'" size="20" value="'.$rssurl.'" class="text" /></td><td><select name="ch'.$i.'">';
-		$pole.='<option>I88592</option>';
-		$pole.='<option'.$w1250.'>W1250</option>';
-		$pole.='<option'.$utf8.'>UTF8</option>';
-		$pole.='</select></td></tr>';
-	}
+        $pole.='<tr class="'.$class.'"><td>'.$i.'</td><td><input type="text" name="id'.$i.'" size="20" value="'.$rssurl.'" class="text" /></td><td><select name="ch'.$i.'">';
+        $pole.='<option>I88592</option>';
+        $pole.='<option'.$w1250.'>W1250</option>';
+        $pole.='<option'.$utf8.'>UTF8</option>';
+        $pole.='</select></td></tr>';
+    }
 
-	$bBlog->smartyObj->assign('pole',$pole);
+    $bBlog->smartyObj->assign('pole',$pole);
 }
 ?>

@@ -3,10 +3,10 @@
  * function.sectionlinks.php
  * <p>
  * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
- * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @package bblog
  */
- 
+
 function identify_function_sectionlinks () {
 $help = '
 <p>Sectionlinks is a Smarty function to be used in templates.
@@ -42,17 +42,17 @@ function smarty_function_sectionlinks($params, &$smartyObj) {
 
     if(!isset($params['mode'])) $mode = "break";
     else $mode = $params['mode'];
-    
+
     if(isset($params['noul'])) $noul=TRUE;
-    
+
     if($mode=='list') {
-    	$sep = "";
-    } else { 
-    	if(!isset($params['sep'])) { 
-    		$sep = "<br />";
-    	} else { 
-    		$sep = $params['sep'];
-    	}   
+        $sep = "";
+    } else {
+        if(!isset($params['sep'])) {
+            $sep = "<br />";
+        } else {
+            $sep = $params['sep'];
+        }
     }
 
     if(isset($params['sections'])) $sections = $params['sections'];
@@ -60,7 +60,7 @@ function smarty_function_sectionlinks($params, &$smartyObj) {
 
     $num = count($sections);
     $i=0;
-  
+
     if ($mode=='list' && !isset($noul)) $linkcode .= "<ul>";
 
     foreach ($sections as $section) {
@@ -78,10 +78,10 @@ function smarty_function_sectionlinks($params, &$smartyObj) {
 
             $linkcode .= '<a href="'.$url.'">'.$nicename.'</a>';
 
-            if($mode=='list') { 
-            	$linkcode .= "</li>";
+            if($mode=='list') {
+                $linkcode .= "</li>";
             } elseif($num > $i) {
-            	 $linkcode .= $sep;
+                 $linkcode .= $sep;
             }
 
     }

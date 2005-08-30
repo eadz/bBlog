@@ -4,15 +4,15 @@
  * <p>
  * @author John Gruber <http://daringfireball.net/projects/markdown/>
  * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
- * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @package bblog
  */
- 
+
 function smarty_modifier_readmore($text, $postid, $readmoretext="read more",$wordcount=true) {
 
     $PREG_TAG = '/<!--\s*(\/?read\s*more:?[^-]*)\s*-->/';
     $PREG_READMORE_START = '/^read\s*more/';
-    $PREG_READMORE_END = '/^\s*\/read\s*more\s*/';    
+    $PREG_READMORE_END = '/^\s*\/read\s*more\s*/';
 
     global $bBlog;
     $link = $bBlog->_get_entry_permalink($postid);
@@ -32,8 +32,8 @@ function smarty_modifier_readmore($text, $postid, $readmoretext="read more",$wor
         // check for nested cuts
         if($cuttingout)
           continue;
-				
-				$close = true;
+
+                $close = true;
         $text .= '<p><a href="'.$link.'">';
         // fix default string
         if( !strpos($textbit,':') ) {
@@ -42,7 +42,7 @@ function smarty_modifier_readmore($text, $postid, $readmoretext="read more",$wor
           $text .= substr($textbit,strpos($textbit,':')+1);
         }
         $text .= '</a>';
-    
+
         // print wordcount
         if($wordcount) {
           $text .= '&nbsp;<em>('.count(explode(' ',$textar[$i+1])).' slov)</em>';
@@ -60,8 +60,8 @@ function smarty_modifier_readmore($text, $postid, $readmoretext="read more",$wor
       }
 
     } // end foreach
-		
-	$text .= @$close ? '</p>' : '';
+
+    $text .= @$close ? '</p>' : '';
 
   return $text;
 }
@@ -77,7 +77,7 @@ function identify_modifier_readmore () {
     'help'	     =>'Usage:<br>
 <p>Use the readmore modifier on the {$post.body} tag, to cut off text at the HTML
 comment &lt;!-- readmore --&gt; .</p>
-<p>There are 4 parameters, <strong>post id</strong> (number), <strong>default text</strong> (string), 
+<p>There are 4 parameters, <strong>post id</strong> (number), <strong>default text</strong> (string),
 <strong>word count</strong> (true/false) and <strong>word count text</strong> (string).</p>
 <p><i>postid</i> is the id of the post (used to create the link) - required.</p>
 <p><i>default text</i> is the default text used for the readmore link (default is "Read more") - optional.</p>

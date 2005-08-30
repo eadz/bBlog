@@ -4,9 +4,9 @@
  * <p>
  * @author Reverend Jim <jim@revjim.net>
  * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
- * @license http://www.gnu.org/copyleft/gpl.html GPL
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @package bblog
- */ 
+ */
 
 function identify_function_header () {
 $help = '
@@ -26,9 +26,9 @@ header: the header to send<br />';
 }
 function smarty_function_header($params) {
 
-	if(!headers_sent()) header($params['header']);
+    if(!headers_sent()) header($params['header']);
 
-	return '';
+    return '';
 
 }
 

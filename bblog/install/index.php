@@ -362,9 +362,9 @@ session_start();
               `id` int(11) NOT NULL auto_increment,
               `name` varchar(50) NOT NULL default '',
               `value` varchar(255) NOT NULL default '',
-              'label' varchar(100) NOT NULL default '',
-              'type' varchar(25) NOT NULL default '',
-              'possible' varchar(100) NOT NULL default '',
+              `label` varchar(100) NOT NULL default '',
+              `type` varchar(25) NOT NULL default '',
+              `possible` varchar(100) NOT NULL default '',
               PRIMARY KEY  (`id`)
             ) TYPE=MyISAM;";
 
@@ -518,8 +518,6 @@ session_start();
                             inserting data
             ----------------------------------------- */
 
-            //TODO: add telcor's option panel patch to config table
-
             $q[]= "INSERT INTO `{$pfx}rss` VALUES (9, '', '')";
             $q[]= "INSERT INTO `{$pfx}rss` VALUES (8, '', '')";
             $q[]= "INSERT INTO `{$pfx}rss` VALUES (7, '', '')";
@@ -530,31 +528,32 @@ session_start();
             $q[]= "INSERT INTO `{$pfx}rss` VALUES (2, '', '')";
             $q[]= "INSERT INTO `{$pfx}rss` VALUES (1, 'http://www.bblog.com/rdf.php', 'I88592')";
 
-            $q[]="INSERT INTO `{$pfx}config` (`id`, `name`, `value`, `label`, `type`, `possible`) VALUES
-              ('', 'EMAIL', '".$config['bblogemail']."'),
-              ('', 'BLOGNAME', '".$config['blogname']."'),
-              ('', 'TEMPLATE', 'lines'),
-              ('', 'DB_TEMPLATES', 'false'),
-              ('', 'DEFAULT_MODIFIER', 'simple'),
-              ('', 'CHARSET', 'UTF-8'),
-              ('', 'VERSION', '0.8'),
-              ('', 'DIRECTION', 'LTR'),
-              ('', 'DEFAULT_STATUS', 'live'),
-              ('', 'PING','bblog.com/ping.php'),
-              ('', 'COMMENT_TIME_LIMIT','1'),
-              ('', 'NOTIFY','false'),
-              ('', 'BLOG_DESCRIPTION', '".$config['blogdescription']."'),
-              ('', 'COMMENT_MODERATION','none'),
-              ('', 'META_DESCRIPTION','Some words about this blog'),
-              ('', 'META_KEYWORDS','work,life,play,web design'),
-              ('', 'SMARTY_TAGS_IN_POST','false'),
-              ('', 'CUSTOMURLS','false'),
-              ('', 'CLEANURLS','false'),
-              ('', 'IMAGE_VERIFICATION','false'),
-              ('', 'WYSIWYG','false'),
-              ('', 'FANCYURL', 'false'),
-              ('', 'LOCALE', ''),
-              ('', 'LAST_MODIFIED', UNIX_TIMESTAMP());";
+			//TODO: add telcor's option panel patch to config table
+			$q[]="INSERT INTO `{$pfx}config` (`id`, `name`, `value`, `label`, `type`, `possible`) VALUES
+              ('', 'EMAIL', '".$config['bblogemail']."', '', '', ''),
+              ('', 'BLOGNAME', '".$config['blogname']."', '', '', ''),
+              ('', 'TEMPLATE', 'lines', '', '', ''),
+              ('', 'DB_TEMPLATES', 'false', '', '', ''),
+              ('', 'DEFAULT_MODIFIER', 'simple', '', '', ''),
+			  ('', 'CHARSET', 'UTF-8', '', '', ''),
+			  ('', 'VERSION', '0.8', '', '', ''),
+			  ('', 'DIRECTION', 'LTR', '', '', ''),
+          	  ('', 'DEFAULT_STATUS', 'live', '', '', ''),
+              ('', 'PING','bblog.com/ping.php', '', '', ''),
+              ('', 'COMMENT_TIME_LIMIT','1', '', '', ''),
+              ('', 'NOTIFY','false', '', '', ''),
+              ('', 'BLOG_DESCRIPTION', '".$config['blogdescription']."', '', '', ''),
+              ('', 'COMMENT_MODERATION','none', '', '', ''),
+              ('', 'META_DESCRIPTION','Some words about this blog', '', '', ''),
+              ('', 'META_KEYWORDS','work,life,play,web design', '', '', ''),
+              ('', 'SMARTY_TAGS_IN_POST','false', '', '', ''),
+              ('', 'CUSTOMURLS','false', '', '', ''),
+              ('', 'CLEANURLS','false', '', '', ''),
+              ('', 'IMAGE_VERIFICATION','false', '', '', ''),
+              ('', 'WYSIWYG','false', '', '', ''),
+              ('', 'FANCYURL', 'false', '', '', ''),
+              ('', 'LOCALE', '', '', '', ''),
+              ('', 'LAST_MODIFIED', UNIX_TIMESTAMP(), '', '', '');";
 
             // Categories
             $q[] = "INSERT INTO {$pfx}categories VALUES (1,'Navigation');";

@@ -665,8 +665,12 @@ class bBlog {
     // and it really should only be called once.
 
     function display($page, $addfooter = true, $caching = true) {
-        ob_end_clean();
+        /** @todo uncomment following line */
+        //ob_end_clean();
         ob_start();
+        
+        
+        
         // we use a relitive path because otherwise we need
         // as many compile directories as template
         // and to make things easy for users we don't want them

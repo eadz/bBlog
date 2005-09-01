@@ -52,7 +52,24 @@ if ((isset($_POST['dopreview'])) && ($_POST['dopreview'] == 'true')) {
     $bBlog->smartyObj->assign('commentstimedvalue',    $post->allowcomments == 'timed'    ? 'checked="checked"' : '');
     $bBlog->smartyObj->assign('commentsdisallowvalue', $post->allowcomments == 'disallow' ? 'checked="checked"' : '');
 
-} elseif ((isset($_POST['newpost'])) && ($_POST['newpost'] == 'true')) {    // we have a poster
+    // update the sections to include a checked flag
+    $sections = array();
+    foreach ($bBlog->smartyObj->_tpl_vars['sections'] as $section)
+    {
+        $test = false;
+        foreach ($post->sections as $selected)
+        {
+            $test = ($section->sectionid == $selected) ? true : $test;
+        }
+        $section->checked = $test;
+        $sections[] = $section;
+    }
+    $bBlog->smartyObj->clear_assign('sections');
+    $bBlog->smartyObj->assign('sections', $sections);
+}
+elseif ((isset($_POST['newpost'])) && ($_POST['newpost'] == 'true'))
+{
+    // we have a poster
       //clear the cache out as the content has changed
       $bBlog->smartyObj->clear_all_cache();
       // make the data sql save
@@ -142,7 +159,16 @@ function prep_new_post () {
     $post->sections = array();
     $post->providing_sections = TRUE; // this is so that bBlog knows to delete sections if there are none.
 
-    if (!is_null($_tmp_sections)) foreach ($_tmp_sections as $_tmp_section) if(is_numeric($_tmp_section)) $post->sections[] = $_tmp_section;
+    if (!is_null($_tmp_sections))
+    {
+        foreach ($_tmp_sections as $_tmp_section)
+        {
+            if(is_numeric($_tmp_section))
+            {
+                $post->sections[] = $_tmp_section;
+            }
+        }
+    }
 
     if ((isset($_POST['hidefromhome'])) && ($_POST['hidefromhome'] == 'hide')) { $hidefromhome='hide'; }
     else { $hidefromhome='donthide'; }

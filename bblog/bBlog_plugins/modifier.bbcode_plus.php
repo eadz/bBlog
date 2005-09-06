@@ -587,7 +587,7 @@ function smarty_modifier_bbcode_plus($message)
     $preg = array(
         // [code=language]???[/code]
         // <div>highlighted code:<div class=language>???</div></div>
-        '/(?<!\\\\)\[code(?::\w+)?=(?:&quot;|"|\')?(.*?)["\']?(?:&quot;|"|\')?\](.*?)\[\/code\]/sie' => "'<div>highlighted code:'.geshi_highlight(stripslashes('\\2'),'\\1','" . $language_dir . "',true).'</div>'",
+        '/(?<!\\\\)\[code(?::\w+)?=(?:&quot;|"|\')?(.*?)["\']?(?:&quot;|"|\')?\](.*?)\[\/code\]/sie' => "'<div>highlighted code:'.preg_replace('/<br *\/>[\r\n]+/si','\n',geshi_highlight(stripslashes('\\2'),'\\1','" . $language_dir . "',true)).'</div>'",
 
         // [code]???[/code]
         // <div>code:<code>???</code></div>

@@ -34,17 +34,18 @@ class Comments{
             $vars['posternotify'] = ($_POST["notify"] == 1) ? 1 : 0;
             $vars['posttime'] = time();
             $vars['ip'] = $_SERVER['REMOTE_ADDR'];
-            $vars['onhold'] = (Comments::needsModeration($vars['comment'])) ? 1 : 0;
+            $vars['onhold'] = (Comments::needsModeration($vars['commenttext'])) ? 1 : 0;
             $vars['postid'] = $post->postid;
             if ($_POST['set_cookie']) {
                 Comments::setCommentCookie($vars['postername'], $vars['posteremail'], $vars['posterwebsite']);
             }
             if ($replyto > 0)
                 $vars['parentid'] = $replyto;
+            $vars['type'] = 'comment';
             $id = Comments::saveComment(&$db, $vars);
             if($id > 0){
                 if(C_NOTIFY == true){
-                    Comments::notify($vars['postername'], $post->permalink,$vars['onhold'], $vars['comment']);
+                    Comments::notify($vars['postername'], $post->permalink,$vars['onhold'], $vars['commenttext']);
                 }
                 $newnumcomments = $db->get_var('SELECT count(*) as c FROM `'.T_COMMENTS.'` WHERE postid='.$post->postid.' and deleted="false" group by postid');
                 $db->query('UPDATE `'.T_POSTS.'` SET commentcount='.$newnumcomments.' WHERE postid='.$post->postid);
@@ -241,10 +242,14 @@ class Comments{
     */
     function notify($name, $link, $onhold, $comment){
         include_once (BBLOGROOT."inc/mail.php");
-        $message = htmlspecialchars($name)." has posted a comment in reply to your blog entry at ".$link."\n\nComment: ".$comment."\n\n";
+        $message = $name." has posted a comment in reply to your blog entry at ".$link."\n\nComment: ".$comment."\n\n";
         if ($onhold == 1)
             $message .= "You have selected comment moderation and this comment will not appear until you approve it, so please visit your blog and log in to approve or reject any comments\n";
         notify_owner("New comment on your blog", $message);
+    }
+    function updateCommentCount($db, $postid){
+        $newnumcomments = $db->get_var("SELECT count(*) as c FROM ".T_COMMENTS." WHERE postid='$postid' and deleted='false' group by postid");
+        $db->query("update ".T_POSTS." set commentcount='$newnumcomments' where postid='$postid'");
     }
 }
 ?>

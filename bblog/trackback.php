@@ -46,118 +46,27 @@ if(!defined('C_USER')) {
 	include_once("./config.php");
 }
 
-if(isset($_SERVER['PATH_INFO']) && $_SERVER['PATCH_INFO'] !== ""){
-    // We're using mod_rewrite
+if(isset($_SERVER['PATH_INFO']) && !empty($_SERVER['PATH_INFO'])){
     $tburi_ar = explode('/',$_SERVER['PATH_INFO']);
-    $tbpost = $tburi_ar[1];
-    $tbcid  = intval($tburi_ar[2]);
-} else {
-    // We're using the standard get
-    $tbpost = intval($_GET['tbpost']);
-    $tbcid  = intval($_GET['cid']);
-}
-
-if(isset($_POST['url']) && $tbpost !== 0) {
-	// incoming trackback ping.
-	// we checked that :
-	// a ) url is suplied by POST
-	// b ) that the tbpost, suplied by GET, is valid. 
-	// GET varibles from the trackback url:
-    if(allowTrackback($bBlog->db, $tbpost) === false)
-        trackback_response(99,"Error adding trackback : Trackbacks disabled for this post");
-    else{
-        $replyto = ($tbcid !== 0) ? $tbcid : 0;
-        
-        // POST variables - the trackback protocol no longer supports GET.
-        $tb_url = my_addslashes($_POST['url']);
-        $title = my_addslashes($_POST['title']);
-        $excerpt = my_addslashes($_POST['excerpt']);
-        $blog_name = my_addslashes($_POST['blog_name']);
+    $postid = intval($tburi_ar[1]);
+    $commentid = intval($tburi_ar[2]);
+/*} else {
+    // GET is invalid for trackbacks, according to the spec
+    $tbpost = intval($_POST['tbpost']);
+    $tbcid  = intval($_POST['cid']);
     
-        // according to MT, only url is _required_. So we'll set some useful defaults. 
-        
-        // if we got this far, we can assume that this file is not included 
-        // as part of bBlog but is being called seperatly. 
-        // so we include the config file and therefore have access to the 
-        // bBlog object. 
-        
-        
-        $now = time();
-        $remaddr = $_SERVER['REMOTE_ADDR'];
-        
-        /*
-        * Added check for moderation.
-        * Follow the same rules as for comments
-        */
-        $needsModerated = false;
-        if(C_COMMENT_MODERATION == 'all') {
-            $needsModerated = TRUE;
-        } elseif (C_COMMENT_MODERATION == 'urlonly') {
-            if(StringHandling::containsLinks($excerpt) === true){
-                if(StringHandling::containsExternalLinks($excerpt)){
-                    $needsModerated = true;
-                    $lines = explode(" ", $excerpt);
-                    $result ='';
-                    foreach($lines as $k=>$line)
-                        $lines[$k] = StringHandling::transformLinks($line);
-                    $excerpt = implode(" ", $lines);
-                }
-            }
-        }
-        $onhold = ($needsModerated === true) ? 1 : 0;
-    
-        $q = "insert into ".T_COMMENTS."
-                set 
-                postid='$tbpost',
-                parentid='$replyto',
-                posttime='$now',
-                postername='$blog_name',
-                posteremail='',
-                posterwebsite='$tb_url',
-                posternotify='0',
-                pubemail='0',
-                pubwebsite='1',
-                ip='$remaddr',
-                title='$title',
-                commenttext='$excerpt',
-                onhold=".$onhold.",
-                type='trackback'";
-        $bBlog->query($q);
-        $insid = $bBlog->insert_id;
-        
-        if($insid < 1) { 
-            trackback_response(1,"Error adding trackback : ".mysql_error());
-        } else {
-            // notify owner
-            include_once(BBLOGROOT.'inc/mail.php');
-            notify_owner("New trackback on your blog",$blog_name,' ( '.$tb_url.' ) has sent a trackback to your post at '.$bBlog->_get_entry_permalink($tbpost));
-            // update the commentcount. 
-            // now I thought about having a seperate count for trackbacks and comments ( like b2 )
-            // , but trackbacks are really comments, so I decided against this. 
-            
-                $newnumcomments = $bBlog->get_var("SELECT count(*) as c FROM ".T_COMMENTS." WHERE postid='$tbpost' and deleted='false' group by postid");
-            $bBlog->query("update ".T_POSTS." set commentcount='$newnumcomments' where postid='$tbpost'");
-            $bBlog->modifiednow();
-            trackback_response(0,"");
-        }
+}*/
+    include_once('inc/trackback.class.php');
+    $tb =& new trackback($bBlog->db, $post);
+    if(isset($_POST['url']) && $tbpost !== 0) {
+        $post = $bBlog->get_post($postid);
+        $tb->receiveTrackback($_SERVER['REMOTE_ADDR'], $_POST, $commentid);
     }
 }
 
-
-function allowTrackback($db, $postid){
-    // oldham - added to prevent trackback spam and only allow
-    // trackbacks to be posted as long as comments are alive
-    $result = true;
-    $q = 'SELECT allowcomments,autodisabledate from '.T_POSTS.' where postid='.$postid;
-    $posts = $db->get_results($q); // $posts returned as an object
-    foreach($posts as $post){
-        $allowcomments = $post->allowcomments;
-        $autodisabledate = $post->autodisabledate;
-        echo "$allowcomments $autodisabledate $tbpost\n";
-        if ($allowcomments == ('disallow') or ($allowcomments == 'timed' and $autodisabledate < time() ))
-            $result = false;
-    }
 }
+
+
 // Send a trackback-ping.
 function send_trackback($url, $title="", $excerpt="",$t){
     //parse the target-url
@@ -205,19 +114,6 @@ function send_trackback($url, $title="", $excerpt="",$t){
 }
 
 function trackback_response($error = 0, $error_message = '') {
-	header("Content-Type: application/xml");    
-	if ($error) {
-		echo '<?xml version="1.0" encoding="iso-8859-1"?'.">\n";
-		echo "<response>\n";
-		echo "<error>1</error>\n";
-		echo "<message>".$error_message."</message>\n";
-		echo "</response>";
-	} else {
-		echo '<?xml version="1.0" encoding="iso-8859-1"?'.">\n";
-		echo "<response>\n";
-		echo "<error>0</error>\n";
-		echo "</response>";
-	}
-	die();
+
 }
 ?>

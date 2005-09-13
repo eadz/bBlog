@@ -357,16 +357,16 @@ session_start();
             ) TYPE=MyISAM;";
 
 
-            $q[]="DROP TABLE IF EXISTS `{$pfx}config;";
-            $q[]="CREATE TABLE `{$pfx}config` (
-              `id` int(11) NOT NULL auto_increment,
-              `name` varchar(50) NOT NULL default '',
-              `value` varchar(255) NOT NULL default '',
-              `label` varchar(100) NOT NULL default '',
-              `type` varchar(25) NOT NULL default '',
-              `possible` varchar(100) NOT NULL default '',
-              PRIMARY KEY  (`id`)
-            ) TYPE=MyISAM;";
+				$q[]="DROP TABLE IF EXISTS `{$pfx}config;";
+				$q[]="CREATE TABLE `{$pfx}config` (
+				 `id` int(11) NOT NULL auto_increment,
+             `name` varchar(50) NOT NULL default '',
+             `value` varchar(255) NOT NULL default '',
+             `label` varchar(100) NOT NULL default '',
+             `type` varchar(25) NOT NULL default '',
+             `possible` varchar(100) NOT NULL default '',
+             PRIMARY KEY  (`id`)
+           ) TYPE=MyISAM;"; 
 
             $q[]="DROP TABLE IF EXISTS `{$pfx}plugins;";
             $q[]="CREATE TABLE `{$pfx}plugins` (
@@ -528,32 +528,32 @@ session_start();
             $q[]= "INSERT INTO `{$pfx}rss` VALUES (2, '', '')";
             $q[]= "INSERT INTO `{$pfx}rss` VALUES (1, 'http://www.bblog.com/rdf.php', 'I88592')";
 
-			//TODO: add telcor's option panel patch to config table
+			// added telcor's new option patch.
 			$q[]="INSERT INTO `{$pfx}config` (`id`, `name`, `value`, `label`, `type`, `possible`) VALUES
-              ('', 'EMAIL', '".$config['bblogemail']."', '', '', ''),
-              ('', 'BLOGNAME', '".$config['blogname']."', '', '', ''),
-              ('', 'TEMPLATE', 'lines', '', '', ''),
-              ('', 'DB_TEMPLATES', 'false', '', '', ''),
-              ('', 'DEFAULT_MODIFIER', 'simple', '', '', ''),
-			  ('', 'CHARSET', 'UTF-8', '', '', ''),
-			  ('', 'VERSION', '0.8', '', '', ''),
-			  ('', 'DIRECTION', 'LTR', '', '', ''),
-          	  ('', 'DEFAULT_STATUS', 'live', '', '', ''),
-              ('', 'PING','bblog.com/ping.php', '', '', ''),
-              ('', 'COMMENT_TIME_LIMIT','1', '', '', ''),
-              ('', 'NOTIFY','false', '', '', ''),
-              ('', 'BLOG_DESCRIPTION', '".$config['blogdescription']."', '', '', ''),
-              ('', 'COMMENT_MODERATION','none', '', '', ''),
-              ('', 'META_DESCRIPTION','Some words about this blog', '', '', ''),
-              ('', 'META_KEYWORDS','work,life,play,web design', '', '', ''),
-              ('', 'SMARTY_TAGS_IN_POST','false', '', '', ''),
-              ('', 'CUSTOMURLS','false', '', '', ''),
-              ('', 'CLEANURLS','false', '', '', ''),
-              ('', 'IMAGE_VERIFICATION','false', '', '', ''),
-              ('', 'WYSIWYG','false', '', '', ''),
-              ('', 'FANCYURL', 'false', '', '', ''),
-              ('', 'LOCALE', '', '', '', ''),
-              ('', 'LAST_MODIFIED', UNIX_TIMESTAMP(), '', '', '');";
+             ('', 'EMAIL', '".$config['bblogemail']."', 'Blog Main Email', 'text', ''),
+             ('', 'BLOGNAME', '".$config['blogname']."', 'Blog Name', 'text', ''),
+             ('', 'TEMPLATE', 'lines', 'bBlog Template', 'select', 'template'),
+             ('', 'DB_TEMPLATES', 'false', '', '', ''),
+             ('', 'DEFAULT_MODIFIER', 'simple', 'Default Modifier', 'select', 'modifier'),
+             ('', 'CHARSET', 'UTF-8', '', '', ''),
+             ('', 'VERSION', '0.8', '', '', ''),
+             ('', 'DIRECTION', 'LTR', '', '', ''),
+             ('', 'DEFAULT_STATUS', 'live', 'Default Post Status', 'select', 'Array(\"live\",\"draft\")'),
+             ('', 'PING','bblog.com/ping.php', '', '', ''),
+             ('', 'COMMENT_TIME_LIMIT','1', '', '', ''),
+             ('', 'NOTIFY','false', 'Send notifications via email for new comments', 'select', 'Array(\"true\"=>\"Yes\",\"false\"=>\"No\")'),
+             ('', 'BLOG_DESCRIPTION', '".$config['blogdescription']."', 'Blog Description', 'text', ''),
+				 ('', 'COMMENT_TIME_LIMIT','1', 'Comment Flood Protection ( minutes ) Set to 0 to disable.', 'text', ''), 
+             ('', 'META_DESCRIPTION','Some words about this blog', 'META Description for search engines', 'text', ''),
+             ('', 'META_KEYWORDS','work,life,play,web design', '', '', ''),
+             ('', 'SMARTY_TAGS_IN_POST','false', 'Allow Smarty Tags', 'select', 'Array(\"true\"=>\"Yes\",\"false\"=>\"No\")'),
+             ('', 'CUSTOMURLS','false', 'Use Custom urls e.g. /post/about-me.html - you enter about-me.html in the post screen', 'select', 'Array(\"true\"=>\"Yes\",\"false\"=>\"No\")'),
+             ('', 'CLEANURLS','false', 'Use clean urls e.g. /post/1/ instead of ?postid=1, you have to put the .htaccess file in place.', 'select', 'Array(\"true\"=>\"Yes\",\"false\"=>\"No\")'),
+             ('', 'IMAGE_VERIFICATION','false', 'Use Image verification to stop comment spam ( RECOMMENDED! ) - requires php with zlib support ( try it out most hosts support it )', 'select', 'Array(\"true\"=>\"Yes\",\"false\"=>\"No\")'),
+             ('', 'WYSIWYG','false', 'WYSIWYG editor', 'select', 'Array(\"true\"=>\"Yes\",\"false\"=>\"No\")'),
+             ('', 'FANCYURL', 'false', 'Fancy url', 'select', 'Array(\"true\"=>\"Yes\",\"false\"=>\"No\")'),
+             ('', 'LOCALE', '', '', '', ''),
+             ('', 'LAST_MODIFIED', UNIX_TIMESTAMP(), '', '', '');"; 
 
             // Categories
             $q[] = "INSERT INTO {$pfx}categories VALUES (1,'Navigation');";

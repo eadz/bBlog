@@ -71,6 +71,7 @@ if (!defined('SMARTY_DIR')) {
 include_once SMARTY_DIR.'Smarty.class.php';
 
 // include  needed files
+include_once(BBLOGROOT.'inc/bBlogConfig.class.php');
 include BBLOGROOT.'libs/ez_sql.php';
 include BBLOGROOT.'libs/authimage.class.php';
 include BBLOGROOT.'libs/czech.class.php';

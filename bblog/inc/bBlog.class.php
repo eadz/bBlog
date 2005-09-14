@@ -49,7 +49,8 @@ class bBlog {
     var $com_order_array = array ();
     var $com_finalar;
     var $gzip = false;
-    ////
+
+
     // !bBlog constructor function
     function bBlog(& $aSmartyObj) {
         if (is_object($aSmartyObj)) {
@@ -59,8 +60,8 @@ class bBlog {
         }
         //set cache directory
         $this->smartyObj->cache_dir = BBLOGROOT.'cache';
-                // set cache lifetime to 1 hour
-                $this->smartyObj->cache_lifetime = 3600;
+        // set cache lifetime to 1 hour
+        $this->smartyObj->cache_lifetime = 3600;
 
         // connect to database
         $this->db = new db(DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_HOST);
@@ -71,16 +72,9 @@ class bBlog {
         // auth image
         $this->authimage = new authimage();
 
-        // get config from the database
-        $config_rows = $this->get_results('select * from '.T_CONFIG);
-        // loop through and define the config
-        foreach ($config_rows as $config_row) {
-            $const_name = 'C_'.$config_row->name;
-            ;
-            if (!defined($const_name)) {
-                define($const_name, stripslashes($config_row->value));
-            }
-        }
+        //Load configuration variables
+        bBlogConfig::loadConfiguration($this->db);
+        
         $this->smartyObj->assign('blogname', C_BLOGNAME);
         $this->smartyObj->assign('blogdescription', C_BLOG_DESCRIPTION);
         $this->smartyObj->assign('blogurl', BLOGURL);
@@ -100,13 +94,14 @@ class bBlog {
         //specify non-cacheable functions currently
         $this->smartyObj->register_block('dynamic', 'smarty_block_dynamic', false);
 
-        //start the session that we need so much ;)
+        //start the session that we need so much  ;) 
         if (!session_id()) {
             session_start();
-        }
+		}
+	} // end of function bBlog
 
-    } // end of function bBlog
-
+ 
+    
     // database stuff
     function query($query) {
         return $this->db->query($query);

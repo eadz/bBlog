@@ -1,0 +1,8 @@
+
+######################################################################
+# 404 handler - adds nice url support for bBlog
+# note: this must be the valid path to the file "error.php"
+######################################################################
+
+ErrorDocument 404 /error.php
+

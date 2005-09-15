@@ -1,14 +1,16 @@
 <?php
 /**
- * A standard header for the install/upgrade scripts
+ * header.php - A standard header for the install/upgrade scripts
  *
  * @package bBlog
- * @author bBlog Weblog, http://www.bblog.com/ - last modified by $LastChangedBy: $
+ * @author Eaden McKee - <email@eadz.co.nz> - last modified by $LastChangedBy: $
  * @version $Id: $
  * @copyright The bBlog Project, http://www.bblog.com/
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  */
-// we don't know if compiled_templates is writable yet, so we are not going to use smarty for the install
+ 
+ 
+// @todo we don't know if compiled_templates is writable yet, so we are not going to use smarty for the install
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">

@@ -10,7 +10,7 @@
  */
 
 /**
- * xushi: notes
+ * @todo xushi: notes
  *
  * note:
  * -----
@@ -34,7 +34,7 @@
  * case with functions.. Atleast with functions you can return SUCCSES
  * or FAIL.
  * ------
- * TODO: Delete blogurl section from install page
+ * @todo : Delete blogurl section from install page
  */
 
 

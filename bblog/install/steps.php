@@ -1,6 +1,6 @@
 <?php
 /**
- * Checks needed for the installer, segmented into steps..
+ * steps.php - Checks needed for the installer, segmented into steps..
  *
  * @package bBlog
  * @author bBlog Weblog, http://www.bblog.com/ - last modified by $LastChangedBy: $

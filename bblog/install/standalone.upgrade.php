@@ -1,6 +1,6 @@
 <?php
 /**
- * The bBlog standalone upgrade script
+ * standalone.upgrade.php - The bBlog standalone upgrade script
  *
  * This will be the default standalone standard upgrader, which will
  * include all patches to previous versions. It mainly has to do with updates
@@ -38,7 +38,7 @@
  */
 
 
-    //TODO: close any sessions that might still be open (as a precaution)
+    // @todo close any sessions that might still be open (as a precaution)
     //@session_destroy();
 
     /**

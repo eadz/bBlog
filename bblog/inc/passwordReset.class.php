@@ -8,9 +8,11 @@
  * in one place only. I'm still confused with constructors
  * between java and php, so feel free to fix it.
  *
- * @author Xushi - <xushi.xushi@gmail.com>
+ * @package bBlog
+ * @author Xushi - <xushi.xushi@gmail.com> - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
- * @package bblog
  */
 
 class passwdManager {

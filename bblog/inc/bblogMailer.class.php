@@ -7,7 +7,10 @@
  * This saves us the trouble of hacking the original phpMaier,
  * to ease upgrading and make our life easier :)
  *
- * @author Xushi - <xushi.xushi@gmail.com>
+ * @package bBlog
+ * @author Xushi - <xushi.xushi@gmail.com> - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
  * @source phpmailer - <http://phpmailer.sourceforge.net/>
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  */

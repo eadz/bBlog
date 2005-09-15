@@ -1,16 +1,20 @@
 <?php
 
 /**
-* Class for handling string related functions
-*
-* A pseudo static class, it never needs instantiated. This class
-* serves to centralize various string handling functions, such as
-* transforming typed hyperlinks into clickable links.
-*
-* @author Kenneth Power <kenneth.power@gmail.com>
-* $LastModified$
-* $Revision$
-*/
+ * Class for handling string related functions
+ *
+ * A pseudo static class, it never needs instantiated. This class
+ * serves to centralize various string handling functions, such as
+ * transforming typed hyperlinks into clickable links.
+ *
+ * @package bBlog
+ * @author Kenneth Power - <kenneth.power@gmail.com> - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
+
+
 class StringHandling{
     /**
     * Converts typed links into clickable links

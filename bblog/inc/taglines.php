@@ -1,5 +1,16 @@
 <?php
-// taglines.php - random taglines 
+
+/**
+ * taglines.php - random taglines 
+ *
+ * @package bBlog
+ * @author Eaden McKee - <email@eadz.co.nz> - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
+ 
+ 
 $taglines = array();
 $taglines[] = "In need of a tagline since 2003";
 $taglines[] = ":)";

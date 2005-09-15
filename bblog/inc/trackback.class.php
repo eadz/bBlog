@@ -1,9 +1,16 @@
 <?php
 
 /**
- * Implements trackback handling according to the Trackback specification found
- * at http://www.sixapart.com/pronet/docs/trackback_spec
+ * trackback.class.php - Implements trackback handling according to the Trackback specification found at http://www.sixapart.com/pronet/docs/trackback_spec
+ *
+ * @package bBlog
+ * @author Eaden McKee - <email@eadz.co.nz> - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  */
+ 
+ 
 class trackback {
     var $_db;
     var $_tbdata;

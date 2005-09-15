@@ -1,8 +1,14 @@
 <?php
 
 /**
-* Beginnings of comment handling consolidation
-*/
+ * comments.class.php - Comment handling consolidation
+ *
+ * @package bBlog
+ * @author Eaden McKee - <email@eadz.co.nz> - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
 
 class Comments{
     

@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * bBlog.Config.class.php - manages the config table
+ *
+ * @package bblog
+ * @author Eaden McKee - <email@eadz.co.nz> - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
+
 class bBlogConfig{
     function bBlogConfig(){
     }

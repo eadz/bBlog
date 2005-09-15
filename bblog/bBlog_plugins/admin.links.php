@@ -2,11 +2,14 @@
 
 /**
  * admin.links.php - administer links
- * <p>
- * @copyright Copyright (C) 2003  Mario Delgado <mario@seraphworks.com>
+ *
+ * @package bBlog
+ * @author Mario Delgado - <mario@seraphworks.com> - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
- * @package bblog
  */
+ 
 
 function identify_admin_links () {
 

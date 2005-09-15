@@ -1,16 +1,18 @@
 <?php
 /**
  * function.getposts.php - retrieve a single post.
- * <p>
- * @author Reverend Jim <jim@revjim.net>
- * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ *
+ * @package bBlog
+ * @author Reverend Jim - <jim@revjim.net> - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
- * @package bblog
  */
+
 
 function identify_function_getpost () {
     $help = '
-    <p>The {getpost} function is used to retrieve a single post. It takes the following parameters:<br />
+    <p>The {getpost} function is used to retrieve a single post only. It takes the following parameters:<br />
     <br />
     assign: variable to assign data to<br />
     postid: to request a SINGLE post';

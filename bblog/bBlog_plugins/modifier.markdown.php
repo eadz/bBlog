@@ -1,12 +1,15 @@
 <?php
 /**
  * modifier.markdown.php - A text-to-HTML conversion tool for web writers
- * <p>
- * @author John Gruber <http://daringfireball.net/projects/markdown/>
- * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ *
+ * @package bBlog
+ * @author John Gruber - <http://daringfireball.net/projects/markdown/> - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
- * @package bblog
  */
+ 
+
 
 global	$MarkdownPHPVersion, $MarkdownSyntaxVersion,
         $md_empty_element_suffix, $md_tab_width,

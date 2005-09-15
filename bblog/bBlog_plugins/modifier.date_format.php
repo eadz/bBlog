@@ -1,12 +1,14 @@
 <?php
 /**
  * modifier.date_format.php - smarty modifier to format a timestamp
- * <p>
- * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
- * @copyright 2005 Kenneth Power <kenneth.power@gmail.com>
+ *
+ * @package bBlog
+ * @author Kenneth Power - <kenneth.power@gmail.com> - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
- * @package bblog
  */
+
 
 /**
 * Modified a timestamp according to one of several definitions

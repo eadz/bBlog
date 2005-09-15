@@ -1,13 +1,16 @@
 <?php
 /**
  * modifier.textile.php - a humaine Web Text Generator
- * <p>
- * @author Dean Allen <dean@textism.com> - Carlo Zottmann <carlo@g-blog.net>
- * @version 2.0 beta
- * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ *
+ * @package bBlog
+ * @author Dean Allen - <dean@textism.com> - Carlo Zottmann - <carlo@g-blog.net> - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
- * @package bblog
  */
+
+ // version 2.0 beta
+
 
 // bBlog modifier function :
 function smarty_modifier_textile ($text) {

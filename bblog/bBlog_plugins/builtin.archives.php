@@ -1,15 +1,20 @@
 <?php
 /**
  * admin.archives.php - handles showing a list of entries to edit/delete
- * <p>
- * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ *
+ * @package bBlog
+ * @author Eaden McKee - <email@eadz.co.nz> - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
- * @package bblog
  */
 
-// now it may be an idea to do a if(!defined('IN_BBLOG')) die "hacking attempt" type thing but
-// i'm not sure it's needed, as without this file being included it hasn't connected to the
-// database, and all the functions it calls are in the $bBlog object.
+
+/**
+ * @todo now it may be an idea to do a if(!defined('IN_BBLOG')) die "hacking attempt" type thing but
+ * i'm not sure it's needed, as without this file being included it hasn't connected to the
+ * database, and all the functions it calls are in the $bBlog object.
+ */
 function identify_admin_archives ()
 {
   return array (

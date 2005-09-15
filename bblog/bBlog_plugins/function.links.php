@@ -1,15 +1,16 @@
 <?php
 /**
  * function.links.php - a smarty function for displaying bBlog links
- * <p>
- * @author Mario Delgado <mario@seraphworks.com>
- * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ *
+ * @package bBlog
+ * @author Mario Delgado - <mario@seraphworks.com> - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
- * @package bblog
  */
 
-function identify_function_links ()
-{
+
+function identify_function_links() {
     $help = '
 <p>Links is a Smarty function to be used in templates.</p>
 <p>Example usage</p>

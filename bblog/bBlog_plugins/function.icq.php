@@ -1,11 +1,14 @@
 <?php
 /**
  * function.icq.php
- * <p>
- * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ *
+ * @package bBlog
+ * @author Eaden McKee - <email@eadz.co.nz> - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
- * @package bblog
  */
+
 
 function smarty_function_icq($params,  &$smartyObj) {
     return icq_online($params['number']) ? 'online' : 'offline';

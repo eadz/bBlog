@@ -1,12 +1,14 @@
 <?php
 /**
  * modifier.kses.php - kses 0.2.1 - HTML/XHTML filter that only allows some elements and attributes
- * <p>
- * @author Ulf Harnhammar <metaur@users.sourceforge.net> - http://sourceforge.net/projects/kses
- * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ *
+ * @package bBlog
+ * @author  Ulf Harnhammar <metaur@users.sourceforge.net> - http://sourceforge.net/projects/kses $LastChangedBy: $http://sourceforge.net/projects/kseshttp://sourceforge.net/projects/kses
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
- * @package bblog
  */
+
 
 function identify_modifier_kses () {
     return array (

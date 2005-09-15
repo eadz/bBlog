@@ -1,12 +1,14 @@
 <?php
 /**
  * function.blogroll.php - outputs a blogroll from your favorites at blo.gs
- * based on php blogroll by phil ringnalda - http://philringnalda.com/phpblogroll/
- * <p>
- * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ *
+ * @package bBlog
+ * @author Eaden McKee - <email@eadz.co.nz> - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
- * @package bblog
  */
+
 
 function identify_function_blogroll () {
 $help = '

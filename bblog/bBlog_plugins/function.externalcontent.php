@@ -1,11 +1,12 @@
 <?php
 /**
  * function.externalcontent.php - a Smarty function for displaying external content within bBlog
- * <p>
- * @author Paul Balogh <javaducky@gmail.com>
- * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ *
+ * @package bBlog
+ * @author Paul Balogh <javaducky@gmail.com> - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
- * @package bblog
  */
 
 function identify_function_externalcontent() {

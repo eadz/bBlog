@@ -1,12 +1,15 @@
 <?php
 /**
  * function.getposts.php - retrieve a blog post or posts
- * <p>
- * @author Reverend Jim <jim@revjim.net> - Eaden McKee <email@eadz.co.nz>
- * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ *
+ * @package bBlog
+ * @author Reverend Jim - <jim@revjim.net> - last modified by $LastChangedBy: $
+ * @author Eaden McKee - <email@eadz.co.nz>
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
- * @package bblog
  */
+
 
 function identify_function_getposts () {
 $help = '

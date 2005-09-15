@@ -1,11 +1,12 @@
 <?php
 /**
  * admin.externalcontent.php - administer external content
- * <p>
- * @author Paul Balogh <javaducky@gmail.com>
- * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ *
  * @package bblog
+ * @author Paul Balogh - <javaducky@gmail.com> - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  */
 
 function identify_admin_externalcontent () {

@@ -1,12 +1,19 @@
 <?php
 
-/*
-    function.nextprev.php - nextprev plugin
-*/
+/**
+ * function.nextprev.php - displays your indexes and archive pages in a list of pages
+ *
+ * @package bBlog
+ * @author Eaden McKee - <email@eadz.co.nz> - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
+
 function identify_function_nextprev () {
 
     $help = '
-    <p>This plugin displays your indexes and archive pages in a list of pages.</p>
+    <p>This plugin .</p>
     <p>To call the plugin, simply do a <code>{nextprev}</code>.  Just
     like most of bBlog, this defaults to pages of 20 entries.  If you
     want to tweak this, use the <var>num</var> parameter.  For example,

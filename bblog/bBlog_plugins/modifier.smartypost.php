@@ -1,14 +1,16 @@
 <?php
 /**
  * modifier.smartypost.php - processes smarty tags embedded in posts
- * <p>
- * @author JMario Delgado <mario@seraphworks.com>
- * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ *
+ * @package bBlog
+ * @author JMario Delgado <mario@seraphworks.com> - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
- * @package bblog
  */
 
-function identify_modifier_smartypost () {
+
+function identify_modifier_smartypost() {
 
     $help='<br>Use the smartypost modifier on the {$post.body} tag,<br>
            to process any Smarty tags you have embedded in a post.<br><br>

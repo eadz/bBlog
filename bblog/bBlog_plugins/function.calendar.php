@@ -1,18 +1,21 @@
 <?php
 /**
  * function.calendar.php - calendar plugin (duh..)
- * <p>
- * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ *
+ * @package bBlog
+ * @author Eaden McKee - <email@eadz.co.nz> - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
- * @package bblog
  */
+
 
 function identify_function_calendar () {
 
     $help = '
     <p>
     This plugin displays the calendar module. It uses calendar.html as a template.<BR />
-    it has two parameter: week_start, which allows you two choose what day is the<BR />
+    it has two parameters: week_start, which allows you two choose what day is the<BR />
     first day a week (default is 1 (Monday). Sunday is 0, Monday is 1, ...) and <BR />
     locale, which can be used to force the script to another locale (ie de_DE for<BR />
     German, etc.). Default locale is whatever your server has been set to use as <BR />
@@ -23,7 +26,7 @@ function identify_function_calendar () {
     'name'		=> 'calendar',
     'type'		=> 'function',
     'nicename'	=> 'Calendar',
-    'description'	=> 'Makes a calendar of the current month',
+    'description'	=> 'Makes a calendar for the current month',
     'authors'	=> 'Tanel Raja',
     'licence'	=> 'GPL',
     'help'		=> $help

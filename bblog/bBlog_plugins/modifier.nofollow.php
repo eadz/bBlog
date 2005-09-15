@@ -1,13 +1,15 @@
 <?php
 /**
  * modifier.nofollow.php - Smarty {nofollow} plugin, Prevent comments spammers
- * <p>
+ *
+ * @package bBlog
+ * @author Martin Konicek - <martin_konicek@centrum.cz> - last modified by $LastChangedBy: $
+ * @version $Id: $
  * @link http://smartbee.sourceforge.net/
- * @author   Martin Konicek <martin_konicek@centrum.cz>
- * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ * @copyright The bBlog Project, http://www.bblog.com/
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
- * @package bblog
  */
+ 
 
 /**
  * Type:     plugin<br>

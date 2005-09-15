@@ -4,18 +4,20 @@
  *
  * Adds / Edits / Deletes user accounts.
  *
- * @copyright Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
+ * @package bBlog
+ * @author Eaden McKee - <email@eadz.co.nz> - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
- * @package bblog
  */
 
  /**
-  * TODO: xushi: Should the secret answer be sha1() hashed for extra security?
+  * @todo xushi: Should the secret answer be sha1() hashed for extra security?
   * since it handles password resets & critical account information?
   */
 
  /**
-  * TODO: xushi - major security enhancement
+  * @todo xushi - major security enhancement
   *
   * Currently, anyone who logs in can see all other users details and can
   * edit them at will. We need this to happen only if the user is an admin.

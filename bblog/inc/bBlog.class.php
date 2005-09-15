@@ -447,9 +447,12 @@ class bBlog {
             $where .= " AND sections != ':$skipsectionid:' ";
         }
 
-        if ($home)
-            $where .= " AND hidefromhome='0' ";
-
+		// flyspray# 2: fix hide from main page.
+		if ($sectionid == false) {
+        	if ($home)
+            	$where .= " AND hidefromhome='0' ";
+		}
+		
         $q = "SELECT posts.$what, authors.nickname, authors.email, authors.fullname FROM ".T_POSTS." AS posts LEFT JOIN ".T_AUTHORS." AS authors ON posts.ownerid = authors.id $wherestart $where $order $limit ";
         return $q;
     }

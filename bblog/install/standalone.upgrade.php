@@ -160,8 +160,8 @@
 
     echo "*** Checking if you need 0.8 upgrades...<br />";
 
-    // TODO: err.. do we really need this one?
-    //$url = $config['url'];
+    // @todo xushi: err.. do we really need this one?
+    // $url = $config['url'];
 
     // Check first to see if varchar is 20, or 40.
     // So that we only have to update it once.
@@ -230,7 +230,7 @@
 
 
     // Add 'ip_domain' to the authors table.
-    // TODO: i think i need a check here too
+    // @todo xushi : i think i need a check here too
     $qq[] = "ALTER TABLE `".T_AUTHORS."` ADD `ip_domain` VARCHAR( 255 ) NOT NULL default ''";
 
 

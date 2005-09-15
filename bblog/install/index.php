@@ -12,28 +12,28 @@
 /**
  * @todo xushi: notes
  *
- * note:
- * -----
- * im thinking of reducing the GUI installation steps
- * from 6 pages/steps, down to 3.
- * 1) The 'file permissions' can be binded to the 'agree'
- * button on the first page (with the licence)
- * 2) The second page will be the one asking the user to
- * fill his details for the installation
- * 3) All the other installation info can be grouped to a
- * third single page.
- *
- * note:
- * -----
- * i like how in 0.8, by default, a new install is determined by
- * weather you have a full config.php or not.
- *
- * note:
- * ------
- * Remove the switch case. Either stick all code in 1 blob, or replace
- * case with functions.. Atleast with functions you can return SUCCSES
- * or FAIL.
- * ------
+ * @todo note:
+ * @todo -----
+ * @todo im thinking of reducing the GUI installation steps
+ * @todo from 6 pages/steps, down to 3.
+ * @todo 1) The 'file permissions' can be binded to the 'agree'
+ * @todo button on the first page (with the licence)
+ * @todo 2) The second page will be the one asking the user to
+ * @todo fill his details for the installation
+ * @todo 3) All the other installation info can be grouped to a
+ * @todo third single page.
+ * @todo 
+ * @todo note:
+ * @todo -----
+ * @todo i like how in 0.8, by default, a new install is determined by
+ * @todo weather you have a full config.php or not.
+ * @todo 
+ * @todo note:
+ * @todo ------
+ * @todo Remove the switch case. Either stick all code in 1 blob, or replace
+ * @todo case with functions.. Atleast with functions you can return SUCCSES
+ * @todo or FAIL.
+ * @todo ------
  * @todo : Delete blogurl section from install page
  */
 

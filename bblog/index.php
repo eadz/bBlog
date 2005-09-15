@@ -149,7 +149,7 @@ $menu[$i+4]['title'] = 'Link to the online documentation at bBlog.com';
 $bindex['docs'] = $i + 4;
 
 $menu[$i+5]['name'] = 'Bugs';
-$menu[$i+5]['url'] = 'http://www.bblog.com/http://www.bblog.com/forum.php" target="_blank'; // NASTY hack! (again)
+$menu[$i+5]['url'] = 'http://www.bblog.com/forum.php" target="_blank'; // NASTY hack! (again)
 $menu[$i+5]['title'] = 'Link to the online bug tracker at bBlog.com';
 $bindex['bugs'] = $i + 5;
 

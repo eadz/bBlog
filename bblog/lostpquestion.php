@@ -1,13 +1,16 @@
 <?php
 session_start();
 /**
- * lostp.php
- * <p>
+ * lostp.php - password retrieval from the DB 
+ *
  * Will retrieve the secret quesetion from the DB, and
  * secret answer from the user, and send it to getp.php
  * in order to retrieve the admin password.
- * <p>
- * @author Xushi <xushi.xushi@gmail.com>
+ *
+ * @package bBlog
+ * @author xushi - <xushi.xushi@gmail.com> - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  */
 
@@ -15,7 +18,7 @@ session_start();
 include 'config.php';
 
 // make sure the page is never cached -
-// TODO: we should probally set no-cache headers also.
+// @todo we should probally set no-cache headers also.
 $bBlog->setmodifytime(time());
 
 
@@ -27,7 +30,7 @@ $bBlog->setmodifytime(time());
     // see if user exists or not. If yes, get HIS sec question.
     if (isset($_SESSION['userdb'])) {
         $_SESSION['authuser'] = 1;
-        //TODO: change to the specific user's sec question found in his table in T_AUTHORS
+        // @todo change to the specific user's sec question found in his table in T_AUTHORS
         $secQuestion = $bBlog->get_var("SELECT secret_question FROM ".T_AUTHORS." WHERE nickname='".$_SESSION['username']."'");
     }
     else {

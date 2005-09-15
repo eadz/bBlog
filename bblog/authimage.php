@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Need a description for this file
+ * authimage.php - Need a description for this file
  *
  * @package bBlog
  * @author bBlog Weblog, http://www.bblog.com/ - last modified by $LastChangedBy: $

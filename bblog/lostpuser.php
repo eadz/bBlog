@@ -1,11 +1,14 @@
 <?php
 /**
- * lostpuser.php Password retrieval: Stage 1
- * <p>
+ * lostpuser.php - Password retrieval: Stage 1
+ *
  * Will ask for the username in which to get
  * the secret question for.
- * <p>
- * @author Xushi <xushi.xushi@gmail.com>
+ *
+ * @package bBlog
+ * @author xushi - <xushi.xushi@gmail.com> - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  */
 ?>

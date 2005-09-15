@@ -1,6 +1,16 @@
 <?php
-// xmlrpc.php - XML-RPC blogger/metaweblog api server
-// xmlrpc.php - author: Eaden McKee <email@eadz.co.nz>
+
+/**
+ * xmlrpc.php - XML-RPC blogger/metaweblog api server
+ *
+ * @package bBlog
+ * @author Eaden McKee - <email@eadz.co.nz> - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
+ 
+ // xmlrpc.php - author: Eaden McKee <email@eadz.co.nz>
 
 /*                                                                          
 ** bBlog Weblog http://www.bblog.com/

@@ -1,19 +1,28 @@
 <?php
 
-/*
-**	get_rss (RSS_URL, INPUT_CHARSET, OUTPUT_CHARSET)
-**
-**	example: 
-**		require_once('rss.php');
-**		echo get_rss('http://www.root.cz/rss/','I88592','UTF8'); 
-**
-**	charsets: I88592, W1250, UTF8
-**
-**	Martin Konicek <martin.konicek@atlas.cz> (c) 2003
-**	Licence: GNU/GPL
-*/
-
-
+/**
+ * rss.php - Generates RSS file.
+ *
+ * @package bBlog
+ * @author Martin Konicek - <martin.konicek@atlas.cz> last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
+ 
+/**
+ *	get_rss (RSS_URL, INPUT_CHARSET, OUTPUT_CHARSET)
+ *
+ *	example: 
+ *		require_once('rss.php');
+ *		echo get_rss('http://www.root.cz/rss/','I88592','UTF8'); 
+ *
+ *	charsets: I88592, W1250, UTF8
+ *
+ *	
+ *
+ */
+ 
 //	Libraries
 $library_dir = dirname(__FILE__).'/library/';
 require_once($library_dir.'rss_fetch.inc');

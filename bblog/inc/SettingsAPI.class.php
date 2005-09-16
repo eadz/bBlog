@@ -1,46 +1,37 @@
 <?php
-/*
-   '||     '||'''|,  '||`
-    ||      ||   ||   ||
-    ||''|,  ||;;;;    ||  .|''|, .|''|,
-    ||  ||  ||   ||   ||  ||  || ||  ||
-   .||..|' .||...|'  .||. `|..|' `|..||
-                                     ||
-                                  `..|'
+/**
+ * SettingsAPI.class.php
+ *
+ *  '||     '||'''|,  '||`
+ *   ||      ||   ||   ||
+ *   ||''|,  ||;;;;    ||  .|''|, .|''|,
+ *   ||  ||  ||   ||   ||  ||  || ||  ||
+ *  .||..|' .||...|'  .||. `|..|' `|..||
+ *                                    ||
+ *                                 `..|'
+ *
+ *
+ *
+ * @package bBlog
+ * @author Elie `woe` BLETON - <lordwo@sourceforge.net> - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright The bBlog Project, http://www.bblog.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ *
+ * Developpers who might want to use this API (wherever they want) should read the GPL
+ * license.
+ *
+ * BBLog plugin developers, consult documentation. I tried to comment some functions, so read the source !
+ * As always, __functions are not designed for external calls. They might prove useful, but are maily here to avoid
+ * code redundancy and to have a readable sourcecode.
+ *
+ * Little TODO:
+ * @todo Add addslashes()/stripslashes() everywhere it's required to support nifty setting name / setting values.
+ */
 
-** bBlog Weblog http://www.bblog.com/
-** Copyright (C) 2003  Eaden McKee <email@eadz.co.nz>
-**
-** This program is free software; you can redistribute it and/or modify
-** it under the terms of the GNU General Public License as published by
-** the Free Software Foundation; either version 2 of the License, or
-** (at your option) any later version. 
-**
-** This program is distributed in the hope that it will be useful, 
-** but WITHOUT ANY WARRANTY; without even the implied warranty of
-** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-** GNU General Public License for more details.
-**
-** You should have received a copy of the GNU General Public License
-** along with this program; if not, write to the Free Software
-** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-
-
-
-** Class Initially Designed by Elie `woe` BLETON (October 2003)
-** Contact via lordwo@sourceforge.net
-**
-** Developpers who might want to use this API (wherever they want) should read the GPL
-** license.
-**
-** BBLog plugin developers, consult documentation. I tried to comment some functions, so read the source !
-** As always, __functions are not designed for external calls. They might prove useful, but are maily here to avoid
-** code redundancy and to have a readable sourcecode.
-**
-** Little TODO:
-** - Add addslashes()/stripslashes() everywhere it's required to support nifty setting name / setting values.
-*/
-
+/**
+ * @todo add a docblock here
+ */
 class SettingsAPI 
 {
     

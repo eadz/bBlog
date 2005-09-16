@@ -3,7 +3,7 @@
 /**
  * bBlog.Config.class.php - manages the config table
  *
- * @package bblog
+ * @package bBlog
  * @author Eaden McKee - <email@eadz.co.nz> - last modified by $LastChangedBy: $
  * @version $Id: $
  * @copyright The bBlog Project, http://www.bblog.com/

@@ -2,7 +2,7 @@
 /**
  * admin.externalcontent.php - administer external content
  *
- * @package bblog
+ * @package bBlog
  * @author Paul Balogh - <javaducky@gmail.com> - last modified by $LastChangedBy: $
  * @version $Id: $
  * @copyright The bBlog Project, http://www.bblog.com/

@@ -62,7 +62,7 @@
 *   visualfoxpro
 *   xml
 *
-* @package bblog
+* @package bBlog
 */
 
 //	Libraries

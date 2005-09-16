@@ -14,9 +14,7 @@ function identify_function_externalcontent() {
              <p>Usage:
              <ul>
                <li>Return content from a "registered" provider<br>
-               {ExternalContent provider="some provider name"}</li>
-               <li>Return content in "adhoc" manner by supplying URL<br>
-               {ExternalContent url="http://provider.com/mycontent"}</li>
+               {externalcontent provider="some provider name"}</li>
              </ul>';
 
     return array (
@@ -39,10 +37,14 @@ function smarty_function_externalcontent($params, &$smartyObj) {
         $content = $results[0]->url;
         $display = $results[0]->enabled;
 
+/*
+  PAUL:  I'm commenting this out due to Smarty issues encountered when using the plugin
+         with a URL when the post uses the "Newlines & URLS", i.e. Simple, modifier.
+         Leave out until a solid resolution can be determined.
     } elseif (isset($params['url'])) {
         $content = $params['url'];
         $display = 'true';
-
+ */
     }
     // Check for enabled display
     if ($display == 'false') return '';

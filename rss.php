@@ -1,7 +1,9 @@
 <?php
 
 /**
- * Need a description for this file
+ * rss.php - The root RSS generator for bBlog.
+ *
+ * Generates RSS v0.92, v1, v2, and atom for bBlog.
  *
  * @package bBlog
  * @author bBlog Weblog, http://www.bblog.com/ - last modified by $LastChangedBy: $

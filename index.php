@@ -1,7 +1,11 @@
 <?php
 
 /**
- * Need a description for this file
+ * The root bBlog index file.
+ *
+ * This is where we all start. The index checks to see if you're on a
+ * new install or not, it loads all the neccessary files, and calls the
+ * desired template.
  *
  * @package bBlog
  * @author bBlog Weblog, http://www.bblog.com/ - last modified by $LastChangedBy: $

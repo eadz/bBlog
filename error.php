@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Need a description for this file
+ * Is this file even being used? :p
  *
  * @package bBlog
  * @author bBlog Weblog, http://www.bblog.com/ - last modified by $LastChangedBy: $

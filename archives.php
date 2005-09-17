@@ -10,11 +10,11 @@
  */
 
 /**
- * @todo xushi: flyspray #55: make sure install/ is deleted
+ * @todo xushi: flyspray #55: make sure install/ is deleted.
+ * @todo Uncomment the line to enable.
  */
 if (file_exists("bblog/install/"))
 {
-	// TODO: Make sure to uncomment before new release.
     //die("Error: Make sure the folder bblog/install is deleted.");
 }
 

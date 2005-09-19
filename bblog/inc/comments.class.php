@@ -1,14 +1,8 @@
 <?php
 
 /**
- * comments.class.php - Comment handling consolidation
- *
- * @package bBlog
- * @author Eaden McKee - <email@eadz.co.nz> - last modified by $LastChangedBy: $
- * @version $Id: $
- * @copyright The bBlog Project, http://www.bblog.com/
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
- */
+* Beginnings of comment handling consolidation
+*/
 
 class Comments{
     
@@ -20,34 +14,15 @@ class Comments{
     * @param object $post The post receiving the comment
     * @param int    $replyto The ID of the parent comment
     */
-    function newComment(&$db, &$authImage, $post, $replyto){
-        var_dump($replyto);
-        $result = Comments::canProceed(&$db, $post, &$authImage, $_POST['spam_code'], $_POST['comment']);
+    function newComment(&$db, &$authImage, $post, $replyto, $post_vars){
+        //var_dump($replyto);
+        $result = Comments::canProceed(&$db, $post, &$authImage, $post_vars['spam_code'], $post_vars['comment']);
         if($result['proceed'] === true){
-            $vars['postername'] = my_addslashes(htmlspecialchars($_POST["name"]));
-            if (empty($vars['postername']))
-                $vars['postername'] = "Anonymous";
-            $vars['posteremail'] = my_addslashes(htmlspecialchars($_POST["email"]));
-            $vars['title'] = my_addslashes(htmlspecialchars($_POST["title"]));
-            $vars['posterwebsite'] = my_addslashes(htmlspecialchars($_POST["website"]));
-            if ((substr(strtolower($vars['posterwebsite']), 0, 7) != 'http://') && $vars['posterwebsite'] != '') {
-                $vars['posterwebsite'] = 'http://'.$vars['posterwebsite'];
-            }
-            $vars['commenttext'] = Comments::processLinks(my_addslashes($_POST["comment"]));
-            
-            $vars['pubemail'] = ($_POST["public_email"] == 1) ? 1 : 0;
-            $vars['pubwebsite'] = ($_POST["public_website"] == 1) ? 1 : 0;
-            $vars['posternotify'] = ($_POST["notify"] == 1) ? 1 : 0;
-            $vars['posttime'] = time();
-            $vars['ip'] = $_SERVER['REMOTE_ADDR'];
-            $vars['onhold'] = (Comments::needsModeration($vars['commenttext'])) ? 1 : 0;
-            $vars['postid'] = $post->postid;
-            if ($_POST['set_cookie']) {
+            $vars = Comments::prepFields($post_vars, $replyto);
+            if ($post_vars['set_cookie']) {
                 Comments::setCommentCookie($vars['postername'], $vars['posteremail'], $vars['posterwebsite']);
             }
-            if ($replyto > 0)
-                $vars['parentid'] = $replyto;
-            $vars['type'] = 'comment';
+            
             $id = Comments::saveComment(&$db, $vars);
             if($id > 0){
                 if(C_NOTIFY == true){
@@ -66,6 +41,30 @@ class Comments{
         return $result;
     }
     
+    function prepFields($vars, $replyto, $id){
+        $rval['postername'] = my_addslashes(htmlspecialchars($vars["name"]));
+        if (empty($rval['postername']))
+            $rval['postername'] = "Anonymous";
+        $rval['posteremail'] = my_addslashes(htmlspecialchars($vars["email"]));
+        $rval['title'] = my_addslashes(htmlspecialchars($vars["title"]));
+        $rval['posterwebsite'] = my_addslashes(StringHandling::transformLinks(htmlspecialchars($vars["website"])));
+        /*if ((substr(strtolower($rval['posterwebsite']), 0, 7) != 'http://') && $rval['posterwebsite'] != '') {
+            $rval['posterwebsite'] = 'http://'.$rval['posterwebsite'];
+        }*/
+        $rval['commenttext'] = Comments::processCommentText(my_addslashes($vars["comment"]));
+        
+        $rval['pubemail'] = ($vars["public_email"] == 1) ? 1 : 0;
+        $rval['pubwebsite'] = ($vars["public_website"] == 1) ? 1 : 0;
+        $rval['posternotify'] = ($vars["notify"] == 1) ? 1 : 0;
+        $rval['posttime'] = time();
+        $rval['ip'] = $_SERVER['REMOTE_ADDR'];
+        $rval['onhold'] = (Comments::needsModeration($rval['commenttext'])) ? 1 : 0;
+        $rval['postid'] = $id;
+        if ($replyto > 0)
+            $rval['parentid'] = $replyto;
+        $rval['type'] = 'comment';
+        return $rval;
+    }
     /**
     * Save the comment/trackback
     *
@@ -86,7 +85,7 @@ class Comments{
             foreach($vars as $fld=>$val)
                 $q .= $fld.'="'.$val.'",';
             $sql = substr($q, 0, -1);
-            var_dump($sql);
+            //var_dump($sql);
             if($db->query($sql))
                 $rval = $db->insert_id;
             else
@@ -168,19 +167,19 @@ class Comments{
     }
     
     /**
-    * Transforms raw text into hyperlinks
+    * Performs various transformations on text. Hyperlinks have
+    * the redirector added and are wrapped in A tags (if not already wrapped).
+    * Special characters are transformed into HTML entities.
     *
     * @param string $comment Comment text
     * @return string
     */
-    function processLinks($comment){
-        if(StringHandling::containsExternalLinks($comment)){
-            $lines = explode(" ", $comment);
-            $result ='';
-            foreach($lines as $k=>$line)
-                $lines[$k] = StringHandling::transformLinks($line);
-            $comment = implode(" ", $lines);
+    function processCommentText($comment){
+        if(StringHandling::containsLinks($comment)){
+            $comment = StringHandling::transformLinks($comment);
         }
+        else
+            $comment = StringHandling::encodeHTML($comment);
         return $comment;
     }
     

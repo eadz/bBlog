@@ -685,7 +685,10 @@ function smarty_modifier_bbcode_plus($message)
         '/(?<!\\\\)\[img(?::\w+)?=(.*?)x(.*?)\](.*?)\[\/img(?::\w+)?\]/si' => "<img src=\"\\3\" width=\"\\1\" height=\"\\2\" alt=\"\\3\"/>",
 
         // beginning spaces
-        '/^( +)/sie' => "preg_replace('\\1','&nbsp;')"
+        '/^( +)/si' => "preg_replace('\\1','&nbsp;')",
+
+        // manual fixes (I hate that these become necessary)
+        '/blockquote>[\r\n]+/si' => 'blockquote>'
     );
     $message = preg_replace(array_keys($preg), array_values($preg), $message);
     $message = nl2br($message);

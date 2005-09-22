@@ -39,20 +39,12 @@ if(isset($_SERVER['PATH_INFO']) && !empty($_SERVER['PATH_INFO'])){
     $tburi_ar = explode('/',$_SERVER['PATH_INFO']);
     $postid = intval($tburi_ar[1]);
     $commentid = intval($tburi_ar[2]);
-/*} else {
-    // GET is invalid for trackbacks, according to the spec
-    $tbpost = intval($_POST['tbpost']);
-    $tbcid  = intval($_POST['cid']);
-    
-}*/
     include_once('inc/trackback.class.php');
     $tb =& new trackback($bBlog->db, $post);
     if(isset($_POST['url']) && $tbpost !== 0) {
         $post = $bBlog->get_post($postid);
         $tb->receiveTrackback($_SERVER['REMOTE_ADDR'], $_POST, $commentid);
     }
-}
-
 }
 
 

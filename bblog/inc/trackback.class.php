@@ -4,9 +4,9 @@
  * trackback.class.php - Implements trackback handling according to the Trackback specification found at http://www.sixapart.com/pronet/docs/trackback_spec
  *
  * @package bBlog
- * @author Eaden McKee - <email@eadz.co.nz> - last modified by $LastChangedBy: $
+ * @author Kenneth Power <kenneth.power@gmail.com> - last modified by $LastChangedBy: $
  * @version $Id: $
- * @copyright The bBlog Project, http://www.bblog.com/
+ * @copyright Kenneth Power <kenneth.power@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  */
  
@@ -17,7 +17,7 @@ class trackback {
     var $_post;
     var $_ip;
     /**
-     * Contrustor
+     * Contructor
      * 
      * @param object $db
      * @param object $post The post receiving the trackback
@@ -73,7 +73,7 @@ class trackback {
             * Added check for moderation.
             * Follow the same rules as for comments
             */
-            $vars['commenttext'] = Comments::processLinks(my_addslashes($vars['commenttext']));
+            $vars['commenttext'] = Comments::processCommentText(my_addslashes($vars['commenttext']));
             $vars['onhold'] = (Comments::needsModeration($vars['commenttext'])) ? 1 : 0;
             $vars['type'] = 'trackback';
             
@@ -122,15 +122,16 @@ class trackback {
      */
     function userResponse($err, $msg){
         if($err !== 0 && $err !== 1){
-            exit('Improper value given for trackback handling status');
+            return 'Improper value given for trackback handling status';
         }
         else{
             $result = '<?xml version="1.0" encoding="utf-8"?'.">\n<response>\n<error>".$err."</error>\n";
             if(!empty($msg))
                 $result .= "<message>".$msg."</message>\n";
-            $result .= "</response>"; 
-            header("Content-Type: application/xml");
-            exit($result);
+            $result .= "</response>";
+            if(!headers_sent())
+                header("Content-Type: application/xml");
+            return $result;
         }
     }
     /**
@@ -143,7 +144,7 @@ class trackback {
      * 		URL (a requirement of the spec)
      * @return mixed If a trackback is allowed, return true, else return an array of error messages
      */
-    function allowTrackback($db, $post, $ip){
+    function allowTrackback(){
         $rval = true;
         $rs = array();
         if(Comments::isDisabled($this->_post)){

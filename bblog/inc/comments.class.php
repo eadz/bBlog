@@ -1,8 +1,13 @@
 <?php
-
 /**
-* Beginnings of comment handling consolidation
-*/
+ * Beginnings of comment handling consolidation
+ *
+ * @package bBlog
+ * @author Kenneth Power <kenneth.power@gmail.com>, http://www.bblog.com/ - last modified by $LastChangedBy: $
+ * @version $Id: $
+ * @copyright Kenneth Power <kenneth.power@gmail.com>
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
 
 class Comments{
     
@@ -15,7 +20,6 @@ class Comments{
     * @param int    $replyto The ID of the parent comment
     */
     function newComment(&$db, &$authImage, $post, $replyto, $post_vars){
-        //var_dump($replyto);
         $result = Comments::canProceed(&$db, $post, &$authImage, $post_vars['spam_code'], $post_vars['comment']);
         if($result['proceed'] === true){
             $vars = Comments::prepFields($post_vars, $replyto);
@@ -48,9 +52,6 @@ class Comments{
         $rval['posteremail'] = my_addslashes(htmlspecialchars($vars["email"]));
         $rval['title'] = my_addslashes(htmlspecialchars($vars["title"]));
         $rval['posterwebsite'] = my_addslashes(StringHandling::transformLinks(htmlspecialchars($vars["website"])));
-        /*if ((substr(strtolower($rval['posterwebsite']), 0, 7) != 'http://') && $rval['posterwebsite'] != '') {
-            $rval['posterwebsite'] = 'http://'.$rval['posterwebsite'];
-        }*/
         $rval['commenttext'] = Comments::processCommentText(my_addslashes($vars["comment"]));
         
         $rval['pubemail'] = ($vars["public_email"] == 1) ? 1 : 0;
@@ -175,12 +176,15 @@ class Comments{
     * @return string
     */
     function processCommentText($comment){
+        //Policy: only a, b, i, strong, code, acrynom, blockquote, abbr are allowed
+        $comment = StringHandling::removeTags($comment, '<a><b><i><strong><code><acronym><blockquote><abbr>');
         if(StringHandling::containsLinks($comment)){
             $comment = StringHandling::transformLinks($comment);
         }
-        else
-            $comment = StringHandling::encodeHTML($comment);
-        return $comment;
+        //Policy: translate HTML special characters to their HTML entities
+        $comment = Comments::encodeHTML($comment);
+        //Policy: line breaks converted automatically
+        return nl2br($comment);
     }
     
     /**
@@ -255,6 +259,50 @@ class Comments{
     function updateCommentCount($db, $postid){
         $newnumcomments = $db->get_var("SELECT count(*) as c FROM ".T_COMMENTS." WHERE postid='$postid' and deleted='false' group by postid");
         $db->query("update ".T_POSTS." set commentcount='$newnumcomments' where postid='$postid'");
+    }
+    
+    /**
+     * Enforces HTML Encoding policy on comment text
+     * 
+     * Policy states HTML special characters (&, ", etc) be translated to
+     * their HTML entity equivalents for HTML display purposes. In doing this,
+     * we must maintain the HTML tags (a, b, i, strong, code, acrynom, blockquote,
+     * abbr) policy allows.
+     */
+    function encodeHTML($comment){
+        //Make certain we don't encode the allowed tags
+        //Policy: only a, b, i, strong, code, acrynom, blockquote, abbr are allowed
+        $_blocks = array(
+            'a' => array('pattern'=>'/<a[^>]+>.*?<\/a>/is'),
+            'abbr' => array('pattern'=>'/<abbr[^>]+>.*?<\/abbr>/is'),
+            'b' => array('pattern'=>'/<b>.*?<\/b>/is'),
+            'i' => array('pattern'=>'/<i>.*?<\/i>/is'),
+            'strong' => array('pattern'=>'/<strong>.*?<\/strong>/is'),
+            'code' => array('pattern' => '/<code[^>]+>.*?<\/code>/is'),
+            'acronym' => array('pattern' => '/<acronym[^>]+>.*?<\/acronym>/is'),
+            'blockquote' => array('pattern' => '/<blockquote[^>]+>.*?<\/blockquote>/is')
+            );
+        foreach($_blocks as $tag=>$arr){
+            $match = array();
+            preg_match_all($arr['pattern'], $comment, $match);
+            //if(count($match) > 0){
+                $_blocks[$tag]['match'] = $match[0];
+                $replace = '%%%COMMENT:TRANSFORM:'.strtoupper($tag).'%%%';
+                $comment = preg_replace($arr['pattern'], $replace, $comment);
+            //}
+        }
+        $comment = htmlspecialchars($comment);
+        foreach($_blocks as $tag=>$arr){
+            $search_str= '%%%COMMENT:TRANSFORM:'.strtoupper($tag).'%%%';
+            $_len = strlen($search_str);
+            $_pos = 0;
+            for ($_i=0, $_count=count($arr['match']); $_i<$_count; $_i++)
+                if (($_pos=strpos($comment, $search_str, $_pos))!==false)
+                    $comment = substr_replace($comment, $arr['match'][$_i], $_pos, $_len);
+                else
+                    break;
+        }
+        return $comment;
     }
 }
 ?>

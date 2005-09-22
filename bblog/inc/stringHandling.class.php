@@ -1,8 +1,11 @@
 <?php
-
 /**
 * Class for handling string related functions
-*
+* @package bBlog
+* @author Kenneth Power <kenneth.power@gmail.com> - last modified by $LastChangedBy: $
+* @version $Id: $
+* @copyright Kenneth Power <kenneth.power@gmail.com>
+* @license http://www.gnu.org/licenses/gpl.html GNU General Public License
 * A pseudo static class, it never needs instantiated. This class
 * serves to centralize various string handling functions, such as
 * transforming typed hyperlinks into clickable links.
@@ -15,76 +18,48 @@ class StringHandling{
     /**
     * Converts typed links into clickable links
     *
-    * The following tests are performed during the transformation
-    * process:
-    *   1. Is the text already transformed? If so, call redirectHref
-    *   2. Is the protocal present (http:// or ftp://)?
-    *      2a. Yes - call transformWithProtocol
-    *      2b. No - call transformWithoutProtocol
+    * The following URI patterns are searched, and replaced with
+    * URIs prepended with the Google Redirector. Additionally, if
+    * a URI is not already in an Anchor (&lt;a&gt;) tag, we wrap
+    * it with one. For URIs that already have anchor tags, all
+    * attributes (style="", title="", etc) are saved.
+    * Patterns:
+    *   &lt;a href="www.example.com"&gt;Example&lt;/a&gt;
+    *   &lt;a href="http://www.example.com"&gt;Example&lt;/a&gt;
+    *   &lt;a href="ftp://www.example.com"&gt;Example&lt;/a&gt;
+    *   &lt;a href="https://www.example.com"&gt;Example&lt;/a&gt;
+    *   http://www.example.com
+    *   https://www.example.com
+    *   ftp://ftp.example.com
+    *   ftp.example.com
+    *   www.really.long.example.com
+    *   All URIs with a query path:
+    *   www.example.com?example=yes
     *
     * @param string $str String to check and convert
     * @return string
     */
     function transformLinks($str){
-        /*if(StringHandling::containsTransformedLinks($str)){
-            if(!StringHandling::containsRedirector($str))
-                $str = StringHandling::redirectHref($str);
-        }
-        else{
-            if(StringHandling::isProtocolPresent($str)){
-                $str = StringHandling::wrapLink($str, true);
-            }
-            else{
-                $str = StringHandling::wrapLink($str, false);
-            }
-        }*/
-        $et_pattern = '/<a([\s]+[^>]*)href[\s]*=[\s]*["\']([^"]+[.\s]*)(["\'][^>]*[\s]*)>([^<]+[.\s]*)<\/a>/i';
+        // Prepend a blank to the string, otherwise the regexes will not find
+        // a match at the beginning of a string.
+        $str = ' '.$str;
+        $et_pattern = '/\s<a([\s]+[^>]*)href[\s]*=[\s]*["\']([^"]+[.\s]*)(["\'][^>]*[\s]*)>([^<]+[.\s]*)<\/a>/i';
         $prot_pattern = '/\s([fh]+[t]{0,1}tp[s]*:\/\/([a-zA-Z0-9_~#=&%\/\:;@,\.\?\+-]+))/i';
         $simple_pattern = '/\s(www|ftp)\.([a-zA-Z0-9_~#=&%\/\:;@,\.\?\+-]+)/i';
         $patterns = array($et_pattern, $prot_pattern, $simple_pattern);
         
-        $et_replace = '<a$1href="http://www.google.com/url?sa=D&q=$2"$3>$4</a>';
+        $et_replace = ' <a$1href="http://www.google.com/url?sa=D&q=$2$3>$4</a>';
         $prot_replace = ' <a href="http://www.google.com/url?sa=D&q=$1">$2</a>';
-        $simple_replace = ' <a href="http://www.google.com/url?sa=D&q=$0">$2</a>';
+        $simple_replace = ' <a href="http://www.google.com/url?sa=D&q=http://$0">$2</a>';
         $repl = array($et_replace, $prot_replace, $simple_replace);
         
+        //Since the regex replace above adds a space within the HREF attribute, we need to remove it
         $str = preg_replace($patterns, $repl, $str);
         
-        //$u = preg_replace($et_pattern, $et_replace, $txt);
-        //$u = preg_replace($prot_pattern, $prot_replace, $u);
-        //$u = preg_replace($simple_pattern, $simple_replace, $u);
-        return $str;
-    }
-    /**
-    * Wraps a hyperlink with the proper HTML tag
-    *
-    * @param string $str The hyperlink to wrap
-    * @param bool $present Does the link already contain the protocol
-    * @return string
-    */
-    function wrapLink($str, $present=false){
-        $match = array();
-        if($present){
-            $pattern = "/(.*)([fh]+[t]*tp[s]*:\/\/([a-zA-Z0-9_~#=&%\/\:;@,\.\?\+-]+))(.*)/";
-            if (preg_match($pattern, $str, $match)){
-                $str = StringHandling::encodeHTML($match[1]);
-                $str.= '<a href="'.StringHandling::redirectUrl($match[2]).'">'.$match[3].'</a>';
-                $str.= StringHandling::encodeHTML($match[4]);
-                $html_encoded = true;
-            }
-        }
-        else{
-            $pattern = "/^(www|ftp)\.([a-zA-Z0-9_~#=&%\/\:;@,\.\?\+-]+)(.*)/";
-            if(preg_match($pattern, $str, $match)){
-                $str = '';
-                $str.= '<a href="'.StringHandling::redirectUrl('http://'.$match[0]).'">'.$match[0].'</a>';
-                $str.= StringHandling::encodeHTML($match[3]);
-                $html_encoded = true;
-            }
-            /*else
-                $str = StringHandling::encodeHTML($str);*/
-        }
-        return $str;
+        $str = str_replace('sa=D&q=http:// ', 'sa=D&q=http://', $str);
+        
+        //Return the result, removing the prepended space
+        return substr($str, 1);
     }
     /**
     * Remove HTML tags from a string
@@ -95,8 +70,8 @@ class StringHandling{
     * @param array $tags Optional. List of tags to allow
     * @return string
     */
-    function removeTags($str, $tags = array()){
-        return (count($tags) > 0) ? strip_tags($str, $tags) : strip_tags($str);
+    function removeTags($str, $tags=''){
+        return (strlen($tags) > 0) ? strip_tags($str, $tags) : strip_tags($str);
     }
     /**
     * Reports whether a string contains hyperlinks

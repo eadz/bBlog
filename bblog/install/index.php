@@ -848,8 +848,12 @@ include BBLOGROOT.'inc/init.php';
         );
         foreach ($dirs as $dir){
             if(!file_exists($dir)){
-                if (!mkdir($dir, 0777)){
-                    echo "<p>Unable to create directory $dir with permissions 0777.</p>";
+                if (!@mkdir($dir, 0777)){
+                    if(strpos($_SERVER['SERVER_SOFTWARE'], 'IIS') !== false){
+                        print_iis_message($dir);
+                    }
+                    else
+                        echo "<p>Unable to create directory $dir with permissions 0777.</p>";
                     return FALSE;
                 }
                 else if (!is_writable($dir)) {
@@ -975,5 +979,14 @@ include BBLOGROOT.'inc/init.php';
         }
         closedir($dir);
         return @rmdir($path);
+    }
+    function print_iis_message($msg){
+        echo '<h5 style="color: red;">Unable to create '.htmlentities($msg).'.</h5><p>Your web server software is
+        Microsoft IIS. The <strong>Internet Guest Account (IUSR_<em>servername</em>)</strong> must have
+        the following permissions explicitly granted to the bblog folder:
+        <ul>
+            <li>read</li>
+            <li>write</li>
+        </ul></p>';
     }
 ?>

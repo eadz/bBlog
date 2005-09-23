@@ -4,9 +4,9 @@
  * bBlog.Config.class.php - manages the config table
  *
  * @package bBlog
- * @author Eaden McKee - <email@eadz.co.nz> - last modified by $LastChangedBy: $
+ * @author Kenneth Power <kenneth.power@gmail.com> - last modified by $LastChangedBy: $
  * @version $Id: $
- * @copyright The bBlog Project, http://www.bblog.com/
+ * @copyright 2005 Kenneth Power <kenneth.power@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  */
 

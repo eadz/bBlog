@@ -763,9 +763,9 @@ define('BBLOGURL',BLOGURL.'bblog/');
 
 // Clean or messy urls ? ( READ README-URLS.txt ! )
 
-define('C_CUSTOM_URL_POST','".$config['url']."item/%pagename%');
-define('C_URL_POST','".$config['url']."item/%postid%/');
-define('C_URL_SECTION','".$config['url']."section/%sectionname%/');
+define('C_CUSTOM_URL_POST',BLOGURL.'/item/%pagename%');
+define('C_URL_POST',BLOGURL.'/item/%postid%/');
+define('C_URL_SECTION',BLOGURL.'/section/%sectionname%/');
 
 // bBlog ID is unical ID for security reasons
 define('BBLOGID', '".md5(microtime().rand())."');
@@ -983,10 +983,15 @@ include BBLOGROOT.'inc/init.php';
     function print_iis_message($msg){
         echo '<h5 style="color: red;">Unable to create '.htmlentities($msg).'.</h5><p>Your web server software is
         Microsoft IIS. The <strong>Internet Guest Account (IUSR_<em>servername</em>)</strong> must have
-        the following permissions explicitly granted to the bblog folder:
+        the following permissions explicitly granted to the bblog folder:</p>
         <ul>
+            <li>modify</li>
+            <li>Read &amp; Execute</li>
+            <li>List Folder Contents</li>
             <li>read</li>
             <li>write</li>
-        </ul></p>';
+        </ul>
+        <p><strong>NOTE</strong> Assigning the modify permission automatically assigns the lesser permissions. Make
+        certain the child directories and files inherit the modify permissions (the default).</p>';
     }
 ?>

@@ -580,6 +580,7 @@ session_start();
               (3, 'Play', 'play');";
 
             $i=0;
+            //var_dump($q);
             echo "<h3>Creating tables</h3><p>";
             $db = new db($config['mysql_username'],$config['mysql_password'],$config['mysql_database'],$config['mysql_host']);
             foreach($q as $q2do) {

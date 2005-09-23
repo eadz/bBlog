@@ -63,7 +63,7 @@ switch($step) {
         $allfilled=TRUE;
         foreach($config_vals as $field=>$prompt){
             if(isset($_POST[$field]) && !empty($_POST[$field]))
-                $config[$field] = $_POST[$field];
+                $config[$field] = (get_magic_quotes_gpc()) ? $_POST[$field] : addslashes($_POST[$field]);
             else
                 $missing_fields .= $prompt.' ';
         }

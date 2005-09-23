@@ -107,7 +107,7 @@ class Comments{
             $rval = true;
         }
         elseif (C_COMMENT_MODERATION == 'urlonly') {
-            if(StringHandling::containsLinks($comment) === true){
+            if(strpos($comment, '<a') !== false){
                 $rval = true;
             }
         }

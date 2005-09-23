@@ -1,9 +1,9 @@
 <?php
 /**
- * bBlog main installation file
+ * index.php - bBlog main installation file
  *
  * @package bBlog
- * @author xushi <xushi.xushi@gmail.com>, http://www.bblog.com/ - last modified by $LastChangedBy: $
+ * @author xushi <xushi.xushi@gmail.com> - last modified by $LastChangedBy: $
  * @version $Id: $
  * @copyright The bBlog Project, http://www.bblog.com/
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
@@ -545,6 +545,7 @@ session_start();
 			 ('', 'COMMENT_TIME_LIMIT','1', 'Comment Flood Protection ( minutes ) Set to 0 to disable.', 'text', ''), 
              ('', 'META_DESCRIPTION','Some words about this blog', 'META Description for search engines', 'text', ''),
              ('', 'META_KEYWORDS','work,life,play,web design', '', '', ''),
+             ('', 'COMMENT_TIME', '1', '', '', ''),
              ('', 'SMARTY_TAGS_IN_POST','false', 'Allow Smarty Tags', 'select', 'Array(\"true\"=>\"Yes\",\"false\"=>\"No\")'),
              ('', 'CUSTOMURLS','false', 'Use Custom urls e.g. /post/about-me.html - you enter about-me.html in the post screen', 'select', 'Array(\"true\"=>\"Yes\",\"false\"=>\"No\")'),
              ('', 'CLEANURLS','false', 'Use clean urls e.g. /post/1/ instead of ?postid=1, you have to put the .htaccess file in place.', 'select', 'Array(\"true\"=>\"Yes\",\"false\"=>\"No\")'),
@@ -562,7 +563,7 @@ session_start();
             $q[]= "INSERT INTO {$pfx}links VALUES (1,'Home','{$url}',1,20);";
             $q[]= "INSERT INTO {$pfx}links VALUES (2,'Archives','{$url}archives.php',1,30);";
             $q[]= "INSERT INTO {$pfx}links VALUES (3,'RSS 2.0 Feed','{$url}rss.php?ver=2',1,40);";
-            $q[]="INSERT INTO {$pfx}links VALUES (4,'Webforce Blog','http://www.webforce.co.nz/blog/',2,50);";
+            $q[]= "INSERT INTO {$pfx}links VALUES (4,'Webforce Blog','http://www.webforce.co.nz/blog/',2,50);";
 
 
             // Only add new admin on a fresh install
@@ -598,6 +599,7 @@ session_start();
          */
         case 5:
             /* update plugins */
+            
             /**
              * xushi: This code is horrible.. i just dont like it at all.
              * This code needs to be independant.. in its own function
@@ -606,7 +608,9 @@ session_start();
              * So far, there are 3 copies of it to debug. Here, the upgrader,
              * and in bBlog_plugins.
              *
+             * edit: err, i dont even think this works, let alone does anything..
              */
+             
             /* Scan for plugins */
             echo "<h3>Loading Plugins</h3>";
             $newplugincount = 0;

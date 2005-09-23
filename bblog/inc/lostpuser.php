@@ -14,7 +14,7 @@
 ?>
 <html>
     <header>
-        <link rel="stylesheet" type="text/css" title="Main" href="style/admin.css" media="screen" />
+        <link rel="stylesheet" type="text/css" title="Main" href="../style/admin.css" media="screen" />
     </header>
 
     <body>

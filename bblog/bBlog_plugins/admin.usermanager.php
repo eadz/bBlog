@@ -13,18 +13,18 @@
 
  /**
   * @todo xushi: Should the secret answer be sha1() hashed for extra security?
-  * since it handles password resets & critical account information?
+  * @todo since it handles password resets & critical account information?
   */
 
  /**
   * @todo xushi - major security enhancement
-  *
-  * Currently, anyone who logs in can see all other users details and can
-  * edit them at will. We need this to happen only if the user is an admin.
-  *
-  * Add an extra 'isadmin (bool)' field in authors table.  So add
-  * this boolean, and if a user isnt an admin, then mask all other users but
-  * himself (select * from t_authors ... ... ... where nickname='user')
+  * @todo 
+  * @todo Currently, anyone who logs in can see all other users details and can
+  * @todo edit them at will. We need this to happen only if the user is an admin.
+  * @todo 
+  * @todo Add an extra 'isadmin (bool)' field in authors table.  So add
+  * @todo this boolean, and if a user isnt an admin, then mask all other users but
+  * @todo himself (select * from t_authors ... ... ... where nickname='user')
   */
 
 function identify_admin_usermanager () {
@@ -112,12 +112,12 @@ switch($userdo) {
             break;
     }
 
-    $bBlog->smartyObj->assign('message','Showing users. ');
-        $bBlog->smartyObj->assign('users',$bBlog->get_results("SELECT * FROM `".T_AUTHORS."` order by nickname"));
+	$bBlog->smartyObj->assign('message','Showing users. ');
+	$bBlog->smartyObj->assign('users',$bBlog->get_results("SELECT * FROM `".T_AUTHORS."` order by nickname"));
 
-    $posts_with_comments_q = "SELECT ".T_POSTS.".postid, ".T_POSTS.".title, count(*) c FROM ".T_COMMENTS.",  ".T_POSTS." 	WHERE ".T_POSTS.".postid = ".T_COMMENTS.".postid GROUP BY ".T_POSTS.".postid ORDER BY ".T_POSTS.".posttime DESC  LIMIT 0 , 30 ";
-    $posts_with_comments = $bBlog->get_results($posts_with_comments_q,ARRAY_A);
-    $bBlog->smartyObj->assign("postselect",$posts_with_comments);
+	$posts_with_comments_q = "SELECT ".T_POSTS.".postid, ".T_POSTS.".title, count(*) c FROM ".T_COMMENTS.",  ".T_POSTS." 	WHERE ".T_POSTS.".postid = ".T_COMMENTS.".postid GROUP BY ".T_POSTS.".postid ORDER BY ".T_POSTS.".posttime DESC  LIMIT 0 , 30 ";
+	$posts_with_comments = $bBlog->get_results($posts_with_comments_q,ARRAY_A);
+	$bBlog->smartyObj->assign("postselect",$posts_with_comments);
 }
 
 ?>

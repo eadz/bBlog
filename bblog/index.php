@@ -99,6 +99,8 @@ if (isset($_REQUEST['redirect']) && (strlen($_REQUEST['redirect']) > 0))
 // we're logged in, Hoorah!
 // set up the menu
 
+// @todo xushi: restrict certain parts if user isn't an admin. Probably with a 'if( isadmin = true)
+
 $menu[0]['name'] = 'Post';
 $menu[0]['url'] = 'index.php?b=post';
 $menu[0]['title'] = 'Post a blog entry';
@@ -109,7 +111,7 @@ $menu[1]['url'] = 'index.php?b=archives';
 $menu[1]['title'] = 'Edit past entries and change properties';
 $bindex['archives'] = 1;
 
-$plugins = $bBlog->get_results("select * from " . T_PLUGINS . " where type='admin' order by ordervalue");
+$plugins = $bBlog->get_results("SELECT * FROM " . T_PLUGINS . " WHERE type='admin' ORDER BY ordervalue");
 $i = 2;
 if ($plugins)
 {
@@ -164,7 +166,7 @@ if(isset($_REQUEST['p']))
 }
 else
 {
-    // Need's a fix here, in the case $_REQUEST['b'] doesn't exists.
+    // @todo Need's a fix here, in the case $_REQUEST['b'] doesn't exists.
     // @ is shut-up mode
     @$m = $bindex[$_REQUEST['b']];
 

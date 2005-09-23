@@ -12,11 +12,11 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  */
 
-require("inc/bblogMailer.class.php");
-require("inc/passwordReset.class.php");
+require("bBlogMailer.class.php");
+require("passwordReset.class.php");
 
 // we could use $bBlog instead btw..
-include 'config.php';
+include '../config.php';
 $mydb = new db(DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_HOST) or die("Error: config.php not found.");
 
 // Instantiate your new class
@@ -105,7 +105,7 @@ The bBlog Team.";
 ?>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" title="Main" href="style/admin.css" media="screen" />
+<link rel="stylesheet" type="text/css" title="Main" href="../style/admin.css" media="screen" />
 </head>
 <body>
 

@@ -12,23 +12,23 @@
  * and below patches because we all decided such versions are too old
  * and unsupported.. And besides.. that means another ~400 lines extra.
  *
- * EDIT:
- * -------------------------
- * I've just noticed a nice idea which will greatly reduce the complexity and size
- * of the code. The upgrader doesn't need any versions. It doesn't need to know
- * anything from you except 2 things.
- * - What the last version of the db looks like, and
- * - What your current db looks like.
- *
- * If anything is different/missing, then it patches and updates. That's really it.
- * I mean it'll look similar to the install php, but with each querry protected by
- * a check to see if what you have is old, missing, or the same. At the very end
- * of the patcher, you make a $db->query($q);, instead of several small ones like
- * now.
- *
- * This idea occured to me while merging 0.6, because half of the db was missing,
- * and 0.7.2 corrected it by doing the exact method just explained. The same could
- * be expanded to the whole upgrade proccess.
+ * @todo EDIT:
+ * @todo -------------------------
+ * @todo I've just noticed a nice idea which will greatly reduce the complexity and size
+ * @todo of the code. The upgrader doesn't need any versions. It doesn't need to know
+ * @todo anything from you except 2 things.
+ * @todo - What the last version of the db looks like, and
+ * @todo - What your current db looks like.
+ * @todo 
+ * @todo If anything is different/missing, then it patches and updates. That's really it.
+ * @todo I mean it'll look similar to the install php, but with each querry protected by
+ * @todo a check to see if what you have is old, missing, or the same. At the very end
+ * @todo of the patcher, you make a $db->query($q);, instead of several small ones like
+ * @todo now.
+ * @todo 
+ * @todo This idea occured to me while merging 0.6, because half of the db was missing,
+ * @todo and 0.7.2 corrected it by doing the exact method just explained. The same could
+ * @todo be expanded to the whole upgrade proccess.
  *
  * @package bBlog
  * @author xushi <xushi.xushi@gmail.com>, http://www.bblog.com/ - last modified by $LastChangedBy: $
@@ -70,7 +70,7 @@
 </head>
 <body><div id="header">
 <h1>bBlog</h1>
-<h2>Universal Upgrader v0.1</h2>
+<h2>Universal Upgrader v0.8-r1</h2>
 </div>
 
 <div style="width: 500px; margin-left: auto; margin-right: auto; margin-top: 80px;">
@@ -86,7 +86,7 @@
 
 
     // -----------------0.7.5 patches-----------------------
-    // Add a short summary here anyone...
+    // Introduces the UTF-8, and LTR/RTL template styles.
 
     //Lets see if CHARSET and DIRECTION are already there..
     echo "***Checking if you need 0.7.5 upgrades...<br />";
@@ -126,6 +126,8 @@
      * that we don't need it, then we can easly remove it.
      */
 
+	// @todo xushi: use the ver function on the bottom of the file.
+	
     echo "*** Checking if you need 0.7.6 upgrades...<br />";
     $ver = $db->get_var("select value from ".T_CONFIG." where name='VERSION'");
     $newVer = 0.76;
@@ -191,6 +193,8 @@
 
             // This bit will read in all the passwords in the author table
             // and re-insert them with the sha1 function
+            // @todo xushi: an if test is needed to make sure the passwords
+            // @todo arn't re-hashed if the user refreshes the page.
             echo "*** Encrypting password...<br />";
             $pass = $db->get_results("SELECT id,password FROM `".T_AUTHORS."` ");
             foreach($pass as $pw) {
@@ -230,9 +234,15 @@
 
 
     // Add 'ip_domain' to the authors table.
-    // @todo xushi : i think i need a check here too
-    $qq[] = "ALTER TABLE `".T_AUTHORS."` ADD `ip_domain` VARCHAR( 255 ) NOT NULL default ''";
-
+    $testIpDomain = $bBlog->get_results("SELECT ip_domain FROM ".T_AUTHORS."");
+    if (isset($testIpDomain)){
+    	//no updates necessary :)
+        echo "IP Domain found. No update needed.<br /><br />";
+    }
+    else {
+		$qq[] = "ALTER TABLE `".T_AUTHORS."` ADD `ip_domain` VARCHAR( 255 ) NOT NULL default ''";
+		$db->query($qq);
+	}
 
 
     // Create a new 'checkcode' table which will include
@@ -244,34 +254,102 @@
         PRIMARY KEY  (`id`)
     ) TYPE=InnoDB;";
 
-    // Insert these new values to the config table. They are related to the
-    // New image stuff introduced in 0.8
-    // to see if you have these updates installed or not, check if one of them
-    // exists or not.
-    $check = $db->get_var("select value from ".T_CONFIG." where name='WYSIWYG'");
-    if(!isset($check)) {
-        $qq[] = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`) VALUES ('', 'COMMENT_TIME', '1')";
-        $qq[] = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`) VALUES ('', 'SMARTY_TAGS_IN_POST', 'false')";
-        $qq[] = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`) VALUES ('', 'CUSTOMURLS', 'false')";
-        $qq[] = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`) VALUES ('', 'CLEANURLS', 'false')";
-        $qq[] = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`) VALUES ('', 'IMAGE_VERIFICATION', 'false')";
-        $qq[] = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`) VALUES ('', 'WYSIWYG', 'false')";
-        $qq[] = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`) VALUES ('', 'FANCYURL', 'false')";
-        $qq[] = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`) VALUES ('', 'LOCALE', '')";
-    }
+    /**
+    * Insert these new values to the config table. They are related to the
+    * New image stuff introduced in 0.8
+    * to see if you have these updates installed or not, check if one of them
+    * exists or not.
+    *
+    * edit: because the whole table arch has been changed, i think its easier to
+    * just copy the relevent data, drop the table, and recreate it again...
+    */
+    
+    // Step 1: copy everything from bb_config into an array.
+    // note: anything not vanilla will be deleted.. (oh well).
+	$config_vals = array();
+	$config_vals['email'] = $bBlog->get_results("SELECT value FROM ".T_CONFIG." WHERE name='EMAIL'");
+	$config_vals['blogname'] = $bBlog->get_results("SELECT value FROM ".T_CONFIG." WHERE name='BLOGNAME'");
+	$config_vals['template'] = $bBlog->get_results("SELECT value FROM ".T_CONFIG." WHERE name='TEMPLATE'");
+	$config_vals['db_templates'] = $bBlog->get_results("SELECT value FROM ".T_CONFIG." WHERE name='DB_TEMPLATES'");
+	$config_vals['default_modifier'] = $bBlog->get_results("SELECT value FROM ".T_CONFIG." WHERE name='DEFAULT_MODIFIER'");
+    $config_vals['charset'] = $bBlog->get_results("SELECT value FROM ".T_CONFIG." WHERE name='CHARSET'");
+    $config_vals['version'] = $bBlog->get_results("SELECT value FROM ".T_CONFIG." WHERE name='VERSION'");
+    $config_vals['direction'] = $bBlog->get_results("SELECT value FROM ".T_CONFIG." WHERE name='DIRECTION'");
+    $config_vals['default_status'] = $bBlog->get_results("SELECT value FROM ".T_CONFIG." WHERE name='DEFAULT_STATUS'");
+    $config_vals['ping'] = $bBlog->get_results("SELECT value FROM ".T_CONFIG." WHERE name='PING'");
+    $config_vals['comment_time_limit'] = $bBlog->get_results("SELECT value FROM ".T_CONFIG." WHERE name='COMMENT_TIME_LIMIT'");
+    $config_vals['notify'] = $bBlog->get_results("SELECT value FROM ".T_CONFIG." WHERE name='NOTIFY'");
+    $config_vals['blog_description'] = $bBlog->get_results("SELECT value FROM ".T_CONFIG." WHERE name='BLOG_DESCRIPTION'");
+    $config_vals['comment_time_limit'] = $bBlog->get_results("SELECT value FROM ".T_CONFIG." WHERE name='COMMENT_TIME_LIMIT'");
+    $config_vals['meta_description'] = $bBlog->get_results("SELECT value FROM ".T_CONFIG." WHERE name='META_DESCRIPTION'");
+    $config_vals['meta_keywords'] = $bBlog->get_results("SELECT value FROM ".T_CONFIG." WHERE name='META_KEYWORDS'");
+    
+    
+    // Stage 2: drop the table and create a new one
+	$conftable[]="DROP TABLE IF EXISTS `".T_CONFIG."`;";
+	$conftable[]="CREATE TABLE `".T_CONFIG."` (
+		`id` int(11) NOT NULL auto_increment,
+		`name` varchar(50) NOT NULL default '',
+		`value` varchar(255) NOT NULL default '',
+		`label` varchar(100) NOT NULL default '',
+		`type` varchar(25) NOT NULL default '',
+		`possible` varchar(100) NOT NULL default '',
+	PRIMARY KEY  (`id`)
+	) TYPE=MyISAM;";
+	
+	foreach($conftable as $conftable2do) {
+    	$db->query($q2do);
+	}
+    
+    
+    // Stage 3: Mass Alien Population
+    // also, regenerate LAST_MODIFIED, and add the extra 0.8 configs too...
+	$q[] = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`, `label`, `type`, `possible`) VALUES
+		('', 'EMAIL', '".$config_vals['email']."', 'Blog Main Email', 'text', ''),
+		('', 'BLOGNAME', '".$config_vals['blogname']."', 'Blog Name', 'text', ''),
+		('', 'TEMPLATE', '".$config_vals['template']."', 'bBlog Template', 'select', 'template'),
+		('', 'DB_TEMPLATES', '".$config_vals['db_templates']."', '', '', ''),
+		('', 'DEFAULT_MODIFIER', '".$config_vals['default_modifier']."', 'Default Modifier', 'select', 'modifier'),
+		('', 'CHARSET', '".$config_vals['charset']."', '', '', ''),
+		('', 'VERSION', '".$config_vals['version']."', '', '', ''),
+		('', 'DIRECTION', '".$config_vals['direction']."', '', '', ''),
+		('', 'DEFAULT_STATUS', '".$config_vals['default_status']."', 'Default Post Status', 'select', 'Array(\"live\",\"draft\")'),
+		('', 'PING','".$config_vals['ping']."', '', '', ''),
+		('', 'NOTIFY','".$config_vals['notify']."', 'Send notifications via email for new comments', 'select', 'Array(\"true\"=>\"Yes\",\"false\"=>\"No\")'),
+		('', 'BLOG_DESCRIPTION', '".$config_vals['blog_description']."', 'Blog Description', 'text', ''),
+		('', 'COMMENT_TIME_LIMIT','".$config_vals['comment_time_limit']."', 'Comment Flood Protection ( minutes ) Set to 0 to disable.', 'text', ''), 
+		('', 'META_DESCRIPTION','".$config_vals['meta_description']."', 'META Description for search engines', 'text', ''),
+		('', 'META_KEYWORDS','".$config_vals['meta_keywords']."', '', '', ''),	
 
-    // Create a new table 'external_content' for .. something.. (help me out guys)
-    // not creating this table for some reason...
-    //-------------------------------------------
-    $qq[] = "CREATE TABLE IF NOT EXISTS `".T_EXT_CONTENT."` (
-        `id` int(11) NOT NULL auto_increment,
-        `nicename` varchar(255) NOT NULL default '',
-        `url` varchar(255) NOT NULL default='',
-        `enabled` enum('true', 'false') NOT NULL default='false',
-        PRIMARY KEY(`id`)
-    ) TYPE=MyISAM;";
+        ('', 'COMMENT_TIME', '1', '', '', ''),
+        ('', 'SMARTY_TAGS_IN_POST','false', 'Allow Smarty Tags', 'select', 'Array(\"true\"=>\"Yes\",\"false\"=>\"No\")'),
+        ('', 'CUSTOMURLS','false', 'Use Custom urls e.g. /post/about-me.html - you enter about-me.html in the post screen', 'select', 'Array(\"true\"=>\"Yes\",\"false\"=>\"No\")'),
+        ('', 'CLEANURLS','false', 'Use clean urls e.g. /post/1/ instead of ?postid=1, you have to put the .htaccess file in place.', 'select', 'Array(\"true\"=>\"Yes\",\"false\"=>\"No\")'),
+        ('', 'IMAGE_VERIFICATION','false', 'Use Image verification to stop comment spam ( RECOMMENDED! ) - requires php with zlib support ( try it out most hosts support it )', 'select', 'Array(\"true\"=>\"Yes\",\"false\"=>\"No\")'),
+		('', 'WYSIWYG','false', 'WYSIWYG editor', 'select', 'Array(\"true\"=>\"Yes\",\"false\"=>\"No\")'),
+		('', 'FANCYURL', 'false', 'Fancy url', 'select', 'Array(\"true\"=>\"Yes\",\"false\"=>\"No\")'),
+		('', 'LOCALE', '', '', '', ''),
+		
+		('', 'LAST_MODIFIED', UNIX_TIMESTAMP(), '', '', '');"; 
+		// @todo xushi: is this of any use? and does it work in windows?
 
-    // undecided if we're sticking in photoblog or not...
+
+
+
+	// Create a new table 'external_content' for .. something.. (help me out guys)
+	// not creating this table for some reason...
+	//-------------------------------------------
+	$qq[] = "CREATE TABLE IF NOT EXISTS `".T_EXT_CONTENT."` (
+		`id` int(11) NOT NULL auto_increment,
+		`nicename` varchar(255) NOT NULL default '',
+		`url` varchar(255) NOT NULL default='',
+		`enabled` enum('true', 'false') NOT NULL default='false',
+	PRIMARY KEY(`id`)
+	) TYPE=MyISAM;";
+
+
+
+    // @todo: undecided if we're sticking in photoblog or not...
     //---------------------------------------------------
     // Create a new table for the new photoblog.
     $qq[] = "CREATE TABLE IF NOT EXISTS `".T_PHOTOBLOG."` (
@@ -290,11 +368,13 @@
     /*------------------------------*/
     echo "*** Repopulating the plugins...<br /><br />";
 
-    // I'm going to just copy the code here for now
-    // from bBlog_plugins/builtin.plugins.php
-    // coz for the life of me i can't get it to
-    // call the function from there instead..
-
+    /**
+    * @todo I'm going to just copy the code here for now
+    * @todo from bBlog_plugins/builtin.plugins.php
+    * @todo coz for the life of me i can't get it to
+    * @todo call the function from there instead..
+	*/
+    
     // WHY ISN'T IT WORKING ?!?!?!?! FFS
 
     echo "<h3>Loading Plugins</h3>";
@@ -337,14 +417,12 @@
         } // end foreach
         echo "</table>";
 
-
-
-
-
     echo "<br /><br />";
     /*------------------------------//
     //			END PLUGIN UPDATE	//
     //------------------------------*/
+
+
 
 
     // modify posts table to add 2 new fields

@@ -15,7 +15,7 @@ session_start();
  */
 
 // the pot of gold..
-include 'config.php';
+include '../config.php';
 
 // make sure the page is never cached -
 // @todo we should probally set no-cache headers also.
@@ -40,7 +40,7 @@ $bBlog->setmodifytime(time());
 ?>
 <html>
     <header>
-        <link rel="stylesheet" type="text/css" title="Main" href="style/admin.css" media="screen" />
+        <link rel="stylesheet" type="text/css" title="Main" href="../style/admin.css" media="screen" />
     </header>
 
     <body>

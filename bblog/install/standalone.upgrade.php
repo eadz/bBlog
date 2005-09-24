@@ -298,13 +298,13 @@
 	) TYPE=MyISAM;";
 	
 	foreach($conftable as $conftable2do) {
-    	$db->query($q2do);
+    	$db->query($conftable2do);
 	}
     
     
     // Stage 3: Mass Alien Population
     // also, regenerate LAST_MODIFIED, and add the extra 0.8 configs too...
-	$q[] = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`, `label`, `type`, `possible`) VALUES
+	$qq[] = "INSERT INTO `".T_CONFIG."` (`id`, `name`, `value`, `label`, `type`, `possible`) VALUES
 		('', 'EMAIL', '".$config_vals['email']."', 'Blog Main Email', 'text', ''),
 		('', 'BLOGNAME', '".$config_vals['blogname']."', 'Blog Name', 'text', ''),
 		('', 'TEMPLATE', '".$config_vals['template']."', 'bBlog Template', 'select', 'template'),

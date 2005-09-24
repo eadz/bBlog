@@ -1,15 +1,13 @@
 <?php
 /**
- * @license http://opensource.org/licenses/lgpl-license.php GNU Lesser General Public License
+ * @package SmartBee
+ * @author Martin Konicek - <martin_konicek@centrum.cz>
+ * @copyright Copyright (c)2004, Martin Konicek
+ * @link http://smartbee.sourceforge.net/
+ * @license <http://opensource.org/licenses/lgpl-license.php> GNU Lesser General Public License
  * @license You have to add link to this library to Credits on project homepage
  * @license Link for this library have to be ".T_SEARCH."able
- * @license [CZECH] Pokud nerozumite anglicke licenci nemate opravneni tuto knihovnu pouzivat
- * @license [CZECH] Pri zmenach pro komercni pouziti zadejte autora o poskytnuti komercni licence
- * @author Martin Konicek <martin_konicek@centrum.cz>
- * @copyright Copyright (c) 2004, Martin Konicek
  * @todo boolean ".T_SEARCH." +word -word
- * @link http://smartbee.sourceforge.net/
- * @package SmartBee
  */
  
 /** Examples

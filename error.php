@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Is this file even being used? :p
+ * error.php - used by htaccess to display nice urls
  *
  * @package bBlog
  * @author bBlog Weblog, http://www.bblog.com/ - last modified by $LastChangedBy: $

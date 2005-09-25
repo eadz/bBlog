@@ -22,7 +22,7 @@ class Comments{
     function newComment(&$db, &$authImage, $post, $replyto, $post_vars){
         $result = Comments::canProceed(&$db, $post, &$authImage, $post_vars['spam_code'], $post_vars['comment']);
         if($result['proceed'] === true){
-            $vars = Comments::prepFields($post_vars, $replyto);
+            $vars = Comments::prepFields($post_vars, $replyto, $post->postid);
             if ($post_vars['set_cookie']) {
                 Comments::setCommentCookie($vars['postername'], $vars['posteremail'], $vars['posterwebsite']);
             }

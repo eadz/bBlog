@@ -85,7 +85,7 @@ function sfg_newComment(&$db, &$auth, &$post){
         $error['message'] = array("Error adding comment", "Couldn't find post");
     }
     else{
-        $result = Comments::newComment(&$db, &$auth, $post, $rt);
+        $result = Comments::newComment(&$db, &$auth, $post, $rt, $_POST);
         //var_dump($result);
         if(is_int($result)){
             // This is used when an alternate location is desired as the result of a successful post.

@@ -78,9 +78,10 @@ if(!$loggedin)
     $menu[0]['active'] = TRUE;
     $smartyObj->assign_by_ref('menu', $menu);
     $title = 'Login';
-    if($_SERVER['REQUEST_URI'] != $_SERVER['SCRIPT_NAME'])
+	
+	if(!empty($_SERVER['QUERY_STRING']))  
     {
-        // tried to go somewhere but was kicked out as session timed out.
+        // tried to go somewhere but was presumably kicked out as session timed out.
         // so when they login we'll redirect them.
         $bBlog->smartyObj->assign('redirect', base64_encode($_SERVER['REQUEST_URI']));
     }

@@ -69,7 +69,7 @@ session_start();
     // provide some useful defaults, and prevents undefined indexes.
 
     if(!isset($config['path'])) $config['path'] = dirname(__FILE__).'/';
-    if(!isset($config['url'])) $config['url'] = 'http://'.$_SERVER['HTTP_HOST'].str_replace('bblog/install/index.php','',$_SERVER['REQUEST_URI']);
+    if(!isset($config['url'])) $config['url'] = 'http://'.$_SERVER['HTTP_HOST'].str_replace('bblog/install/index.php','',$_SERVER['SCRIPT_NAME']);
     if(!isset($config['mysql_host'])) $config['mysql_host'] = 'localhost';
     if(!isset($config['username'])) $config['username'] = 'admin';
     if(!isset($config['table_prefix'])) $config['table_prefix'] = 'bb_';

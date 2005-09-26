@@ -676,7 +676,11 @@ class bBlog {
         if (defined('CACHING') && empty($_POST)) {
             if ($caching && $this->smartyObj->compile_id!= 'admin') {
                                 $this->smartyObj->caching = $caching;
-                $cache_id = md5($this->db->tablemd5(TBL_PREFIX.'%').$_SERVER['REQUEST_URI'].$this->gzip);
+				// concatenate REQUEST_URI because of lack of support for IIS
+				$request_uri = $_SERVER["SCRIPT_NAME"];
+				if (!empty($_SERVER["QUERY_STRING"])) 
+						$request_uri .= "?" . $_SERVER["QUERY_STRING"];
+                $cache_id = md5($this->db->tablemd5(TBL_PREFIX.'%').$request_uri.$this->gzip);
                 $this->smartyObj->display($page,$cache_id);
                                 if($this->gzip){
                                     header("Content-Encoding: gzip");

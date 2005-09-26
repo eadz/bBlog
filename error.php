@@ -88,8 +88,13 @@ define('PARSER', DIR_LIBS.'parser.php');
 // Libraries
 require_once LIBRARY;
 
+// Set REQUEST_URI (IIS does not set 'REQUEST_URI' so concat)
+$request_uri = $_SERVER["SCRIPT_NAME"];
+if (!empty($_SERVER["QUERY_STRING"])) 
+	$request_uri .= "?" . $_SERVER["QUERY_STRING"];
+
 // IMAGE RESIZE
-if(preg_match(RESIZE, $_SERVER["REQUEST_URI"], $i))
+if(preg_match(RESIZE, $request_uri, $i))
 {
     // get image name
     $filename = DIR_IMG_MAIN . $i[2] .$i[6];
@@ -104,7 +109,7 @@ if(preg_match(RESIZE, $_SERVER["REQUEST_URI"], $i))
     unset($image);
 }
 // IMAGE WATERMARK
-elseif(preg_match(WATERMARK,$_SERVER["REQUEST_URI"], $i))
+elseif(preg_match(WATERMARK,$request_uri, $i))
 {
     // get image name
     $filename = DIR_CUR . 'images' . DIR_SEP . $i[2] .'.jpg';
@@ -114,13 +119,13 @@ elseif(preg_match(WATERMARK,$_SERVER["REQUEST_URI"], $i))
     $image->show();
     unset($image);
 }
-elseif(preg_match('/\/([^\/]+).html$/i', $_SERVER["REQUEST_URI"], $i))
+elseif(preg_match('/\/([^\/]+).html$/i', $request_uri, $i))
 {
     $parsed =& $i[1];
     header("HTTP/1.0 200 OK");
     require_once(DIR_CUR . 'index.php');
 }
-elseif(preg_match('/error.tester$/i', $_SERVER["REQUEST_URI"]))
+elseif(preg_match('/error.tester$/i', $request_uri))
 {
     header("HTTP/1.0 200 OK");
     echo 'ok';

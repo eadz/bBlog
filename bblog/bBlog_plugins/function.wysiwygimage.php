@@ -11,7 +11,8 @@
 
  
  
-if(preg_match('/function.wysiwygimage.php$/',$_SERVER['REQUEST_URI'])){
+// if(preg_match('/function.wysiwygimage.php$/',$_SERVER['REQUEST_URI'])){   replaced with line below to retain functionality
+   if(empty($_SERVER["QUERY_STRING"])) {
     require_once(dirname(__FILE__).'/../config.php');
     if($bBlog->admin_logged_in()){
         wysiwygimage();

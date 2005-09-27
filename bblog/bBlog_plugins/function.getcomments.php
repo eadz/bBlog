@@ -16,8 +16,8 @@ function identify_function_getcomments() {
     return array ('name' => 'getcomments', 'type' => 'function', 'nicename' => 'Get Comments', 'description' => 'Gets Comments and trackbacks for a post and threads them', 'authors' => 'Eaden McKee <eaden@eadz.co.nz>', 'licence' => 'GPL', 'help' => $help);
 }
 
-function smarty_function_getcomments($params, &$smartyObj){
-    $bBlog = & $smartyObj->get_template_vars("bBlog_object");
+function smarty_function_getcomments($params, &$smartyObj){    
+	$bBlog = & $smartyObj->get_template_vars("bBlog_object");
 
     $assign = "comments";
     $postid = $bBlog->show_post;
@@ -41,7 +41,8 @@ function smarty_function_getcomments($params, &$smartyObj){
     $smartyObj->assign("commentformaction", $bBlog->_get_entry_permalink($postid,false));
     // are we posting a comment ?
     if ($_POST['do'] == 'submitcomment' && is_numeric($_POST['comment_postid'])) { // we are indeed!
-        $result = sfg_newComment(&$bBlog->db, &$bBlog->authimage, $bBlog->get_post($_POST['comment_postid'], false, true));
+        $_POST['website'] = str_replace("/","\/",$_POST['website']);
+    	$result = sfg_newComment(&$bBlog->db, &$bBlog->authimage, $bBlog->get_post($_POST['comment_postid'], false, true));
         if(is_array($result)){
             $msg = '';
             foreach($result as $err){

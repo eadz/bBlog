@@ -219,7 +219,7 @@ class Comments{
         setcookie("postername", $name, $ctime);
         setcookie("posteremail", $email, $ctime);
         setcookie("posterwebsite", $website, $ctime);
-        $value = base64_encode(serialize(array ('web' => $website, 'mail' => $email, 'name' => $name)));
+        $value = base64_encode(serialize(array ('web' => str_replace("\/","/", $website), 'mail' => $email, 'name' => $name)));
         setcookie("bBcomment", $value, time() + (86400 * 360));
     }
     

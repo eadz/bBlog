@@ -94,7 +94,7 @@ function sfg_newComment(&$db, &$auth, &$post){
                 $ru = str_replace('%commentid%', $post->postid, $_POST['return_url']);
                 header("Location: ".$ru);
             } else {
-                header("Location: ".$post['permalink']."#comment".$post->postid);
+                header("Location: ".$post->permalink."#comment".$post->postid);
             }
             ob_end_clean(); // or here.. hmm.
             exit;

@@ -13,6 +13,11 @@
 class bBlogConfig{
     function bBlogConfig(){
     }
+    /**
+     * Fetch configuration from database and create cosntants
+     * 
+     * @param object $db Instance of ezSQL, passed by reference
+     */
     function loadConfiguration(&$db){
         // get config from the database
         $config_rows = $db->get_results('select name, value from '.T_CONFIG);
@@ -24,6 +29,11 @@ class bBlogConfig{
             }
         }
     }
+    /**
+     * Save configuration to database
+     * 
+     * @param object $db Instance of ezSQL, passed by reference
+     */
     function saveConfiguration($db){
         $rs = $db->get_results('SELECT name, value FROM `'.T_CONFIG.'` ORDER BY id ASC');
         if(!is_null($rs)){
@@ -39,6 +49,16 @@ class bBlogConfig{
             }
         }
     }
+    /**
+     * Retrieve configuration from database in form suitable for display in the admin form
+     * 
+     * Returned data format:
+     * index : pair
+     *         left  = Label displayed on form
+     *         right = HTML Input tag already prepared for display
+     * @param object $db Instance of ezSQL, passed by reference
+     * @return array Indexed array of pairs
+     */
     function showConfigForm(&$db){
         $rows = array();
         $rs = $db->get_results('SELECT name, value, label, type, possible FROM `'.T_CONFIG.'` ORDER BY id ASC');
@@ -59,8 +79,15 @@ class bBlogConfig{
         }
         return $rows;
     }
+    
+    /**
+     * Prepares a HTML input tag for display
+     * 
+     * @param string $name Used to form the name attribute of the input tag
+     * @param array $values Current list of possible values
+     * @param string $default The default value
+     */
     function inputSelect($name, $values, $default=null){
-        
         if(is_array($values)){
             $fld = '<select name="frm_'.htmlspecialchars($name).'" class="bf">';
             foreach($values as $ind=>$val){
@@ -82,6 +109,10 @@ class bBlogConfig{
             return $fld;
        }
     }
+    
+    /**
+     * Create a text input tag for form display
+     */
     function inputText($name, $value=null){
         return '<input type="text" name="frm_'.htmlspecialchars($name).'" class="bf" value="'.htmlspecialchars(trim($value)).' "/>';
     }

@@ -553,7 +553,8 @@ session_start();
              ('', 'WYSIWYG','false', 'WYSIWYG editor', 'select', 'Array(\"true\"=>\"Yes\",\"false\"=>\"No\")'),
              ('', 'FANCYURL', 'false', 'Fancy url', 'select', 'Array(\"true\"=>\"Yes\",\"false\"=>\"No\")'),
              ('', 'LOCALE', '', '', '', ''),
-             ('', 'LAST_MODIFIED', UNIX_TIMESTAMP(), '', '', '');"; 
+             ('', 'LAST_MODIFIED', UNIX_TIMESTAMP(), '', '', ''),
+             ('', 'TIMEZONE, '0', 'Your Timezone', 'select', 'Array(\"-12\"=>\"GMT - 12 Hours\",  \"-11\"=>\"GMT - 11 Hours\",  \"-10\"=>\"GMT - 10 Hours\",  \"-9\"=>\"GMT - 9 Hours\",  \"-8\"=>\"GMT - 8 Hours\",  \"-7\"=>\"GMT - 7 Hours\",  \"-6\"=>\"GMT - 6 Hours\",  \"-5\" selected=\"selected\"=>\"GMT - 5 Hours\",  \"-4\"=>\"GMT - 4 Hours\",  \"-3.5\"=>\"GMT - 3.5 Hours\",  \"-3\"=>\"GMT - 3 Hours\",  \"-2\"=>\"GMT - 2 Hours\",  \"-1\"=>\"GMT - 1 Hours\",  \"0\"=>\"GMT,  \"1\"=>\"GMT + 1 Hour,  \"2\"=>\"GMT + 2 Hours\",  \"3\"=>\"GMT + 3 Hours\",  \"3.5\"=>\"GMT + 3.5 Hours\",  \"4\"=>\"GMT + 4 Hours\",  \"4.5\"=>\"GMT + 4.5 Hours\",  \"5\"=>\"GMT + 5 Hours\",  \"5.5\"=>\"GMT + 5.5 Hours\",  \"6\"=>\"GMT + 6 Hours\",  \"6.5\"=>\"GMT + 6.5 Hours\",  \"7\"=>\"GMT + 7 Hours\",  \"8\"=>\"GMT + 8 Hours\",  \"9\"=>\"GMT + 9 Hours\",  \"9.5\"=>\"GMT + 9.5 Hours\",  \"10\"=>\"GMT + 10 Hours\",  \"11\"=>\"GMT + 11 Hours\",  \"12\"=>\"GMT + 12 Hours\",  \"13\"=>\"GMT + 13 Hours\")');"; 
 
             // Categories
             $q[] = "INSERT INTO {$pfx}categories VALUES (1,'Navigation');";

@@ -554,7 +554,7 @@ session_start();
              ('', 'FANCYURL', 'false', 'Fancy url', 'select', 'Array(\"true\"=>\"Yes\",\"false\"=>\"No\")'),
              ('', 'LOCALE', '', '', '', ''),
              ('', 'LAST_MODIFIED', UNIX_TIMESTAMP(), '', '', ''),
-             ('', 'TIMEZONE, '0', 'Your Timezone', 'select', 'Array(\"-12\"=>\"GMT - 12 Hours\",  \"-11\"=>\"GMT - 11 Hours\",  \"-10\"=>\"GMT - 10 Hours\",  \"-9\"=>\"GMT - 9 Hours\",  \"-8\"=>\"GMT - 8 Hours\",  \"-7\"=>\"GMT - 7 Hours\",  \"-6\"=>\"GMT - 6 Hours\",  \"-5\" selected=\"selected\"=>\"GMT - 5 Hours\",  \"-4\"=>\"GMT - 4 Hours\",  \"-3.5\"=>\"GMT - 3.5 Hours\",  \"-3\"=>\"GMT - 3 Hours\",  \"-2\"=>\"GMT - 2 Hours\",  \"-1\"=>\"GMT - 1 Hours\",  \"0\"=>\"GMT,  \"1\"=>\"GMT + 1 Hour,  \"2\"=>\"GMT + 2 Hours\",  \"3\"=>\"GMT + 3 Hours\",  \"3.5\"=>\"GMT + 3.5 Hours\",  \"4\"=>\"GMT + 4 Hours\",  \"4.5\"=>\"GMT + 4.5 Hours\",  \"5\"=>\"GMT + 5 Hours\",  \"5.5\"=>\"GMT + 5.5 Hours\",  \"6\"=>\"GMT + 6 Hours\",  \"6.5\"=>\"GMT + 6.5 Hours\",  \"7\"=>\"GMT + 7 Hours\",  \"8\"=>\"GMT + 8 Hours\",  \"9\"=>\"GMT + 9 Hours\",  \"9.5\"=>\"GMT + 9.5 Hours\",  \"10\"=>\"GMT + 10 Hours\",  \"11\"=>\"GMT + 11 Hours\",  \"12\"=>\"GMT + 12 Hours\",  \"13\"=>\"GMT + 13 Hours\")');"; 
+             ('', 'TIMEZONE', '0', 'Your Timezone', 'select', 'Array(\"-12\"=>\"GMT - 12 Hours\",  \"-11\"=>\"GMT - 11 Hours\",  \"-10\"=>\"GMT - 10 Hours\",  \"-9\"=>\"GMT - 9 Hours\",  \"-8\"=>\"GMT - 8 Hours\",  \"-7\"=>\"GMT - 7 Hours\",  \"-6\"=>\"GMT - 6 Hours\",  \"-5\" selected=\"selected\"=>\"GMT - 5 Hours\",  \"-4\"=>\"GMT - 4 Hours\",  \"-3.5\"=>\"GMT - 3.5 Hours\",  \"-3\"=>\"GMT - 3 Hours\",  \"-2\"=>\"GMT - 2 Hours\",  \"-1\"=>\"GMT - 1 Hours\",  \"0\"=>\"GMT,  \"1\"=>\"GMT + 1 Hour,  \"2\"=>\"GMT + 2 Hours\",  \"3\"=>\"GMT + 3 Hours\",  \"3.5\"=>\"GMT + 3.5 Hours\",  \"4\"=>\"GMT + 4 Hours\",  \"4.5\"=>\"GMT + 4.5 Hours\",  \"5\"=>\"GMT + 5 Hours\",  \"5.5\"=>\"GMT + 5.5 Hours\",  \"6\"=>\"GMT + 6 Hours\",  \"6.5\"=>\"GMT + 6.5 Hours\",  \"7\"=>\"GMT + 7 Hours\",  \"8\"=>\"GMT + 8 Hours\",  \"9\"=>\"GMT + 9 Hours\",  \"9.5\"=>\"GMT + 9.5 Hours\",  \"10\"=>\"GMT + 10 Hours\",  \"11\"=>\"GMT + 11 Hours\",  \"12\"=>\"GMT + 12 Hours\",  \"13\"=>\"GMT + 13 Hours\")');"; 
 
             // Categories
             $q[] = "INSERT INTO {$pfx}categories VALUES (1,'Navigation');";
@@ -565,7 +565,10 @@ session_start();
             $q[]= "INSERT INTO {$pfx}links VALUES (2,'Archives','{$url}archives.php',1,30);";
             $q[]= "INSERT INTO {$pfx}links VALUES (3,'RSS 2.0 Feed','{$url}rss.php?ver=2',1,40);";
             $q[]= "INSERT INTO {$pfx}links VALUES (4,'Webforce Blog','http://www.webforce.co.nz/blog/',2,50);";
-
+			$q[]= "INSERT INTO {$pfx}links VALUES (5,'Xushi Blog','http://www.xushi.co.uk/',2,60);";
+			$q[]= "INSERT INTO {$pfx}links VALUES (6,'Hijacker Blog','http://www.sjuengling.de/',2,70);";
+			$q[]= "INSERT INTO {$pfx}links VALUES (7,'Telcor Blog','http://blog.tel-cor.com/',2,80);";
+			
 
             // Only add new admin on a fresh install
             if(!isset($config['upgrade_from'])) {

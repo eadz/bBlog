@@ -26,7 +26,7 @@ $credits = array(
 "				---------- ----------",
 "				    The Dev Team",
 "				---------- ----------",
-"Wormeyman - <a href='http://www.wormeyman.com/' target=_blank>Eric Johnson</a> - Bug hunting, wiki/forum maintenance",
+"Wormeyman - <a href='http://www.wormeyman.com/' target=_blank>Eric Johnson</a> - Wiki Maintenance and spam removal, minor code fixing, bug reporting.",
 "Javaducky - <a href='http://www.javaducky.com' target=_blank>Paul Balogh</a> - Plugins and features.",
 "Kleppa - <a href='http://www.asdf.com' target=_blank>Anders Klepaker</a> - Bug fixing, plugin development",
 "Tobius - <a href='http://www.tobymiller.com/' target=_blank>Toby Miller</a> - Bug fixing, plugin development",

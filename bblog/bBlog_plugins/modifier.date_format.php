@@ -313,10 +313,11 @@ function time_diff($from, $to) {
         $result .= ($seconds > 1) ? $seconds.' seconds' : $seconds.' second';
 
     $result = trim($result);
-    $pos = strpos($result, ',', strlen($result) -1);
-    if($pos !== false)
-        $result = substr($result, 0, $pos - 1);
-
+    if(strstr($result, ',') !== false){
+        $pos = strpos($result, ',', strlen($result) -1);
+        if($pos !== false)
+            $result = substr($result, 0, $pos - 1);
+    }
     return $result;
 }
 ?>

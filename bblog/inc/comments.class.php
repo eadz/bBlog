@@ -20,7 +20,7 @@ class Comments{
     * @param int    $replyto The ID of the parent comment
     */
     function newComment(&$db, &$authImage, $post, $replyto, $post_vars){
-        $result = Comments::canProceed(&$db, $post, &$authImage, $post_vars['spam_code'], $post_vars['comment']);
+        $result = Comments::canProceed(&$db, $post, &$authImage, $post_vars['spamcode'], $post_vars['comment']);
         if($result['proceed'] === true){
             $vars = Comments::prepFields($post_vars, $replyto, $post->postid);
             if ($post_vars['set_cookie']) {
@@ -232,8 +232,10 @@ class Comments{
     */
     function failsCaptcha(&$authImage, $code){
         $rval = false;
-        if(C_IMAGE_VERIFICATION == 'true' && !empty($code)) { //Some templates may not have the iamge verification enabled
-            if(!$authImage->checkAICode($code)){
+        if(C_IMAGE_VERIFICATION == 'true'){
+            if(empty($code))
+                $rval = true;
+            else if ($authImage->checkAICode($code) === false){
                 $rval = true;
             }
         }

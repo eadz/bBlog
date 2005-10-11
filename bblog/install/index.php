@@ -565,9 +565,9 @@ session_start();
             $q[]= "INSERT INTO {$pfx}links VALUES (2,'Archives','{$url}archives.php',1,30);";
             $q[]= "INSERT INTO {$pfx}links VALUES (3,'RSS 2.0 Feed','{$url}rss.php?ver=2',1,40);";
             $q[]= "INSERT INTO {$pfx}links VALUES (4,'Webforce Blog','http://www.webforce.co.nz/blog/',2,50);";
-			$q[]= "INSERT INTO {$pfx}links VALUES (5,'Xushi Blog','http://www.xushi.co.uk/',2,60);";
-			$q[]= "INSERT INTO {$pfx}links VALUES (6,'Hijacker Blog','http://www.sjuengling.de/',2,70);";
-			$q[]= "INSERT INTO {$pfx}links VALUES (7,'Telcor Blog','http://blog.tel-cor.com/',2,80);";
+			$q[]= "INSERT INTO {$pfx}links VALUES (5,'Xushi\'s Blog','http://www.xushi.co.uk/',2,60);";
+			$q[]= "INSERT INTO {$pfx}links VALUES (6,'Hijacker\'s Blog','http://www.sjuengling.de/',2,70);";
+			$q[]= "INSERT INTO {$pfx}links VALUES (7,'Telcor\'s Blog','http://blog.tel-cor.com/',2,80);";
 			
 
             // Only add new admin on a fresh install

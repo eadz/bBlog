@@ -301,7 +301,7 @@
 		$conftable[]="CREATE TABLE `".T_CONFIG."` (
 			`id` int(11) NOT NULL auto_increment,
 			`name` varchar(50) NOT NULL default '',
-			`value` varchar(255) NOT NULL default '',
+			`value` TEXT NOT NULL default '',
 			`label` varchar(100) NOT NULL default '',
 			`type` varchar(25) NOT NULL default '',
 			`possible` varchar(100) NOT NULL default '',

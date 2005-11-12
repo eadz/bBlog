@@ -7,7 +7,7 @@
 <h3 class="title">{$post.title}</h3>
 
 {photobblog postid=$post.postid}
-{$post.body}
+{$post.body|readmore:$post.postid}
 <div class="posted">{sectionlinks sep=" &middot; " sections=$post.sections} &#8226; <a href="{$post.permalink}">{$post.commentcount} Comments/Trackbacks</a></div>
 </div>
 {/foreach}

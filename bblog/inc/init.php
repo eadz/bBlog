@@ -107,7 +107,7 @@ if (defined('IN_BBLOG_ADMIN')) {
 
 $smartyObj->use_sub_dirs = FALSE; // change to true if you have a lot of templates
 
-define('BBLOG_VERSION',"CVS $release_date");
+define('BBLOG_VERSION',"SVN $release_date");
 $bBlog->smartyObj->assign("bBlog_version",BBLOG_VERSION);
 
 // if you want debugging, this is the place

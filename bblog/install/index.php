@@ -34,7 +34,7 @@
  * @todo case with functions.. Atleast with functions you can return SUCCSES
  * @todo or FAIL.
  * @todo ------
- * @todo : Delete blogurl section from install page
+ * @todo : Delete blogurl section from install page (i think i already did that..)
  */
 
 
@@ -42,15 +42,6 @@
 // using sessions becasue it makes things easy.
 session_start();
 
-/**
- * EXPERIMENTAL: post install manager
- * <p>
- * Experimental setting to delete install folder and chmod config.php at the
- * end of the install procedure
- * Now enabled by default
-*/
-
-    $clean_install = 1;
 
     // start install all over, forget everything.
     if (isset($_GET['reset'])) {
@@ -307,22 +298,21 @@ session_start();
          * install of bblog.
          */
 
-        case 4: // fresh install of bBlog
-            // do sql.
+        case 4:
             /**
              * The database installer
-             * <p>
+             *
              * xushi: this will be rewritten.. Im thinking of a more
              * functional approach to create the databases, in order
              * to reduce code. Why?
-             * <p>
+             *
              * The code here is 90% identical to the stuff found in the
              * upgrader. The difference being that the upgrader has
              * checks for every query its doing.
              * So, Why write and debug 2 copies of code ?
              * Stick the code in 1 place (functions?), and put a function to check
              * if we are upgrading or installing... still thinking about it...
-             * <p>
+             *
              * edit: Stick with {pfx}..., T_xxx is only used when we have a working
              * config.php .. my bad :)
              */
@@ -689,7 +679,7 @@ session_start();
          * xushi: This case is pointless and should be deleted.
          */
         case 6:
-            // post-install upgrade stuff, such as getting config to write, or giving hints.
+            // post-install upgrade stuff, such as getting config to write, or giving hints. (unused)
             $func = 'upgrade_from_'.$config['upgrade_from'].'_post';
             $func();
         break;
@@ -737,9 +727,9 @@ define('DB_DATABASE','".$config['mysql_database']."');
 // MySQL hostname
 define('DB_HOST','".$config['mysql_host']."');
 
-// prefix for table names if you're installing
-// more than one copy of bblog on the same database
-// don't change this unless you know what you're doing.
+/* prefix for table names if you're installing			*
+ * more than one copy of bblog on the same database		*
+ * don't change this unless you know what you're doing. */
 define('TBL_PREFIX','".$config['table_prefix']."');
 
 
@@ -747,8 +737,7 @@ define('TBL_PREFIX','".$config['table_prefix']."');
 /* file and paths */
 /* ************** */
 
-// Full path of the directory where you've installed bBlog
-// ( i.e. the bblog folder )
+// Full path of the directory where you've installed bBlog ( i.e. the bblog folder )
 define('BBLOGROOT','".$config['rootpath']."');
 
 
@@ -756,14 +745,14 @@ define('BBLOGROOT','".$config['rootpath']."');
 /* URL config */
 /* ********** */
 
-// URL to your blog ( one folder below the 'bBlog' folder )
-// e.g, if your bBlog folder is at www.example.com/blog/bblog, your
-// blog will be at www.example.com/blog/
+/* URL to your blog ( one folder below the 'bBlog' folder )
+ * e.g, if your bBlog folder is at www.example.com/blog/bblog, your
+ * blog will be at www.example.com/blog/ */
 define('BLOGURL','".$config['url']."');
 
-// URL to the bblog folder via the web.
-// Becasue if you're using clean urls and news.php as your BLOGURL,
-// we can't automatically append bblog to it.
+/* URL to the bblog folder via the web.
+ * Becasue if you're using clean urls and news.php as your BLOGURL,
+ * we can't automatically append bblog to it. */
 define('BBLOGURL',BLOGURL.'bblog/');
 
 // Clean or messy urls ? ( READ README-URLS.txt ! )
@@ -784,9 +773,10 @@ include BBLOGROOT.'inc/init.php';
             $fp = fopen('../config.php', 'wb');
             fwrite($fp, $config_file);
             fclose($fp);
-            if (1 == $clean_install) {
-                @chmod('../config.php', 0644);
-            }
+
+			// @todo auto chmod of config.php doesnt seem to work
+            @chmod('../config.php', 0644);
+            
             echo '<p>Config file written.</p><p><input type="submit" name="continue" value="Next &gt;" /></p>';
             $step = 8;
         break;
@@ -796,122 +786,37 @@ include BBLOGROOT.'inc/init.php';
 
         case 8:
             echo "<h3>All Done!</h3>";
-            if (1 == $clean_install) {
-                // xushi: i don't like this clean line..
-                // DL8: Hope this works in Windows properly
-                //      Anyway, for this to work we need the
-                //      dir to be world writeable
-                $clean = delete_install(getcwd());
-                if (! $clean) {
-                    echo "<p>The installer was unable to remove some install files.  It is advised that
-                    you delete the install/ directory in your bBlog installation folder.  You may also want to check that your config.php file is not world readable!</p>";
-                }
-                else {
-                    echo "<p>Installation complete!</p>";
-                }
-                echo "You may now <a href='../index.php?b=options'>Login to bBLog. Be sure to visit the Options page to set your email address and other options.</a>";
-            }
-            else {
-                echo "<p>Install finished, almost....
+            echo "<p>Install finished, almost....
                 <h3>Security</h3>
                 <p>Now, you need to do 3 things to finish off
                 <ol>
-                <li>Delete the install folder</li>
-                <li>Make sure your compiled_template folder is writable (chmod -R 777)</li>
+                <li>Delete or rename the install folder</li>
                 <li>Chmod the config.php so that it is not writable by the webserver</li>
-                <li>When you have done that, you may <a href='index.php?b=options'>Login to bBLog. Be sure to visit the Options page to set your email address and other options.</a></li>
-                    </ol><br /><br />";
-            }
+                <li>When you have done that, you may <a href='../index.php?b=options'>Login to bBLog</a>. Be sure to visit the Options page to set your email address and other options.</li>
+                </ol><br /><br />";
+            
         break;
-
-    }
+        
+    }// end switch case
+    
+    
 
     if (file_exists('footer.php')) {
         include 'footer.php';
     }
 
-    /**
-     * Create directories
-     * <p>
-     * Creates the directories noted in the array.
-     * Not sure why we need it now, coz half the
-     * directories already exist, and the other
-     * half doesn't seem like they are needed.
-     * <p>
-     * edit: ermm.. i can only see a check here to check
-     * if the directories exist, or are writable or not.
-     * I can't see any actual code that creates them...
-     * should this function be renamed to check_dirs() ?
-     */
-    function make_dirs(){
-        $dirs = array(
-          "../cache",
-          "../compiled_templates",
-          "../pbimages",
-          "../pbimages/thumbs",
-          "../files"
-        );
-        foreach ($dirs as $dir){
-            if(!file_exists($dir)){
-                if (!@mkdir($dir, 0777)){
-                    if(strpos($_SERVER['SERVER_SOFTWARE'], 'IIS') !== false){
-                        print_iis_message($dir);
-                    }
-                    else
-                        echo "<p>Unable to create directory $dir with permissions 0777.</p>";
-                    return FALSE;
-                }
-                else if (!is_writable($dir)) {
-                    echo "<p>Unable to write to $dir</p>";
-                    return FALSE;
-                }
-            }
-        }
-        return TRUE;
-    }
-
-    /**
-     * Create files
-     * <p>
-     * Creates config.php and sets the propper
-     * permissions for it.
-     * <p>
-     * could be expanded by passing $files into
-     * the function.
-     */
-    function make_files(){
-        $files = array(
-          "../cache/favorites.xml",
-          "../config.php"
-        );
-
-        foreach ($files as $file){
-            if(!file_exists($file)){
-                if ($handle = fopen($file, "wb")) {
-                    fwrite($handle, '');
-                    chmod($file, 0777);
-                    fclose($handle);
-                }
-                else {
-                    echo "<p>Unable to create file $file</p>";
-                    return FALSE;
-                }
-            }
-        }
-        return TRUE;
-    }
 
     /**
      * Check Writable
-     * <p>
+     *
      * Checks if folders are writable or not.
      * Currently checks the bblog/ directory.
      */
 
      /**
       * Stack Trace: warnings found (for debugging)
-      * The lines are a bit off coz of the copy/paste of these dumps.
-      * <p>
+      * The line numbers are a bit off coz of the copy/paste of these dumps.
+      *
       * [client 127.0.0.1] PHP Stack trace:, referer: http://localhost/xushi/08/bblog/install/index.php
       * [client 127.0.0.1] PHP   1. {main}() bblog/install/index.php:0, referer: http://localhost/xushi/08/bblog/install/index.php
       * [client 127.0.0.1] PHP   2. delete_install() bblog/install/index.php:789, referer: http://localhost/xushi/08/bblog/install/index.php
@@ -932,12 +837,6 @@ include BBLOGROOT.'inc/init.php';
       */
     function check_writable() {
         $ok = TRUE;
-        if(is_writable("../../bblog")) {
-            echo "../../bblog is writeable<br />";
-        } else {
-            echo "<span style='color:red;'>../../bblog is NOT writable</span><br />";
-            $ok = FALSE;
-        }
 
         if(is_writable("../compiled_templates")) {
             echo "../compiled_templates is writeable<br />";
@@ -952,39 +851,25 @@ include BBLOGROOT.'inc/init.php';
             echo "<span style='color:red;'>../config.php is NOT writable</span><br />";
             $ok = FALSE;
         }
-
-        if (FALSE != $ok) {
-            $ok = make_dirs();
+        
+        if(is_writable("../cache")) {
+            echo "../cache/ is writeable<br />";
+        } else {
+            echo "<span style='color:red;'>../cache/ is NOT writable</span><br />";
+            $ok = FALSE;
         }
-
-        if (FALSE != $ok) {
-            $ok = make_files();
+        
+        if(is_writable("../files")) {
+            echo "../files/ is writeable<br />";
+        } else {
+            echo "<span style='color:red;'>../files/ is NOT writable</span><br />";
+            $ok = FALSE;
         }
+        
         return $ok;
     }
 
-    /**
-     * Delete the install directory?
-     * <p>
-     * Doesn't work... and i dont see how it
-     * will work since the script is inside the
-     * install folder anyway. And i do not recommend
-     * auto delete of anything.. its better if the user
-     * himself delets the install folder.
-     */
-    function delete_install($path) {
-        $dir = opendir($path);
-        while($file = readdir($dir)) {
-            if (is_file("$path/$file")) {
-                @unlink("$path/$file");
-            }
-            else if (is_dir("$path/$file") && $file !='.' && $file !='..') {
-                delete_install("$path/$file");
-            }
-        }
-        closedir($dir);
-        return @rmdir($path);
-    }
+  
     function print_iis_message($msg){
         echo '<h5 style="color: red;">Unable to create '.htmlentities($msg).'.</h5><p>Your web server software is
         Microsoft IIS. The <strong>Internet Guest Account (IUSR_<em>servername</em>)</strong> must have

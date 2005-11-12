@@ -1,6 +1,0 @@
-Install instructions
---------------------
-
-* ) The documentation for bBlog is at http://www.bblog.com/docs/
-
-* ) the install information is at http://www.bblog.com/wiki/index.php/Installation

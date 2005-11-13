@@ -146,7 +146,7 @@ function smarty_function_links($params, &$smartyObj)
             }
         }
     }
-
+    if($mode == 'list') $markedlinks .= "\n</ul>";
     return $markedlinks;
 }
 

@@ -176,8 +176,9 @@ function smarty_function_calendar($params, &$smartyObj) {
     $bBlog->smartyObj->assign("month", $month_array);
     $bBlog->smartyObj->assign("values", $values);
 
-    $bBlog->display("calendar.html",FALSE);
+    $content = $bBlog->smartyObj->fetch("calendar.html",FALSE);
 
+    return $content;
 }
 
 function getDateLink($day, &$values) {

@@ -46,6 +46,7 @@ if ((isset($_POST['dopreview'])) && ($_POST['dopreview'] == 'true')) {
 
     // Regurgitate user-supplied form values
     $bBlog->smartyObj->assign('title_text',            stripslashes($post->title));
+    $bBlog->smartyObj->assign('pagename',            stripslashes($post->pagename));
     $bBlog->smartyObj->assign('body_text',             stripslashes($post->body));
     $bBlog->smartyObj->assign('selected_modifier',     stripslashes($post->modifier));
     $bBlog->smartyObj->assign('statusdraft',           $post->status == 'draft' ? 'checked="checked"' : '');

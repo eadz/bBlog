@@ -11,6 +11,9 @@
  * @todo xushi: flyspray #55: make sure install/ is deleted
  */
 
+// check to see if the logo is requested, if so output it;
+if(isset($_GET['powered'])) powered_by(); // will exit the script when called
+
 if (file_exists("install/"))
 {
     //die("Error: Make sure the folder bblog/install is deleted.");
@@ -260,6 +263,56 @@ switch ($b)
           $title = 'Error';
           $bBlog->display('error.html');
           break;
+}
+
+
+/**
+ * Output powered by bBlog image directly to browser and exit
+ *
+ */
+function powered_by() {
+$img = 'iVBORw0KGgoAAAANSUhEUgAAAGQAAAAiCAMAAACePYwXAAAABGdBTUEAAK/INwWK6QAAABl0RVh'
+.'0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAADAUExURc3Nzdra2vrPAcTExOLi4vX19b'
+.'S0tPj4+NPT07KiW3p6etu2DVlZWfPz85OTk7m5uWVlZezs7GJYJ//96a6urtHMsoqKiv3zt7eZF'
+.'r29vT09PJmZmYODg/z8/KKiovHpxPv58PX06ujo6M23WkpKSot3GtjUvt7e3vz56LKrivn36/b1'
+.'8P//9PTy4ereoe/v76ioqObm5uvr6srKysfHx8rBm8DAwN/d0MfEtPr6+v39/f7+/vv7+zMzM//'
+.'//////4MUsuAAAABAdFJOU/////////////////////////////////////////////////////'
+.'///////////////////////////////wDCe7FEAAAGu0lEQVR42mKwpwawww1A0gABxEA101l55'
+.'BAcXkZjY3VLmC0AAcRAhGOIAlYm0gwwNgszI6+NpSCzEtQSgABioIoNQKAEt0LfjAXKMmGHWAIQ'
+.'QAyU2sHIyGptJygiwyXNCrWNGRGCDBCvAAQQA4V2WAnIMKgzq9gCgQrYdEYGJFlmiCUAAcQAscP'
+.'ailygpG8tZwsBUhzW1iwcyE4whlgCEEAQS6xsQICFwwYDYBNDAbKylgJQS2y5bHhNrK2tYVZYW5'
+.'tALAEIIAawR9hBgMuWD0yzcwiAAJcIkCkHE8MNLBmlYJao6DNbWSMDM4glAAEEtsSaFQQEbPnAN'
+.'CszzGHsrHwwMSwAZouxLRywKaHYwctgDbYEIIDAlljxggDQEjDNy2yrwsfHx2Vry8DLBxNDA8iW'
+.'QX0ipKqqqqnIjmwJhyHEEoAAAlsiqw8CArZcAlI8Mvr6ZrYCID6PLZ8+0BJ9fTagMBcLUIQBJC8'
+.'jYKyvz6sPskpQUJ8XHAS2tqoSTECgJy6vbWXJbgkONCsrSV4rsCUAAQSxRBAIlKDxJyAoCcRA/Q'
+.'K20kZASwSlIUmHRZADGviSgkALGc0kmRkYjIGkOr+tEDfICiZlcXE9UUYQYDFitbJS59CHWAIQQ'
+.'GBLbJRAgMfWVs4EGEj8/LY8/PyS0sAkqSRmK6YuZSsgIiZly6XEZasixwF0iqSRIIOkOjBdQYAR'
+.'gxjIDglVIU1mC3NdbStrK3ZWFkZ1fUl9QVmwJQABBLbE0pDFkIVFwFaMhYWFy1aGHxqNAoYsQEv'
+.'kbHmAsvxAr0jZMrAYMqrY8iuZcIATLwRYKYrrcUsICalKmKppKSgqwMpISWZBI4glAAEEsYRFHQ'
+.'h5bNmApAHQG7ZSPAI8QI8JgCwBeQYobmsLQkAWjy0/Bwc7kiWW8uLiojLAOOE21REW1oKWLnbAt'
+.'G2mBLEEIIDAlrCrMwIh0BJ1RkY2Wx4gYmRUV5eUsuUXs5UBWQKUtrUVsbWFKONns7RE8gi7np6o'
+.'pJoyNxO3mo6GsLACODMCc4WNDaMJxBKAAIJYAo4sHlsRICkNtQQIBGxlZECIC8QB2gBM02BlbGb'
+.'sltDcDgLqouZGGhqGnBJCzOz6+ooQS3hZZW0sLfltwJYABBDEEg4Q4LEVAJMyIrY8IL6xFNgSOV'
+.'sVYw4OMVsVYGwImHEA0xobPzvUFqA9wFDQUtASFtZhEFLV1BHWUNQGlYQgO2ws2TkglgAEEMQSB'
+.'g4gBEWCGLA8lTSwVZEBZgdQYgVawqBiK8UFlJNh4AOVHEAsAixwLKG2sHIoWdsoaghrKepzMnGL'
+.'6oCCy4qVFxRnluzsDJZgSwACCGwJKwMI8NiC84GYsQGsVOUzBlpibAAW5gGqEIPYYmZswg61hp1'
+.'DHxg6lhoa+hrCnExMqnL6irrADGoJBKASRwRiCUAAQSwxAQE+LhEuAS4+YxM2LjCQNjMxkeOSMw'
+.'HyBQT4TKSBLBM5EWD2YeBgU2eHWKPOAip0rRUUtYQVOFWByZjTgoPdElaq8ZtALAEIIIglzBDAz'
+.'ybHz2xmIGLGZsIvacYGZDGzsckxixiYMfPLicmBlMgAy01jYw4RBrAphozW4KLdSltY2FBIlRuY'
+.'KbmVTVh4gVK8LMwiJgyQ+hcggCCWmEGAHJcYF7+MDBcfF5sMn4GMmIyMtBgXn7SMjJgIUEYOqAI'
+.'Ub/zMJsYMZiKG7OysDLDy0EZYkY2bSVVKSoiJm82ETQQI+I0ZjKGVPEAAgS3hlYQAaT5JMT4uST'
+.'kuGWkuLmA5DLRCTFoSiLn4xCT5pIEqBHjEgKQZyBoRNnUWFqgdVpZGDMpMQuDCmJORA1imAYEJM'
+.'7MZxBKAAIL4hB8CpKX5gZbwGwC9IgaMEy5paWkxaX6gX6T5+Pj5pPlhAGQNszGDiRyo0GdnBRXI'
+.'7GpM3JCKi4EDbDyzmRnQORBLAAIIUmlJQi0Bmi7HxScjZgDyBD+XGJ+cDNBeGWk+OZCV/EgAaI0'
+.'xBxs7ovoykJAAW8LDwcAMNJ4fbKQZpD4BCCBIHc/CBgZ8MjJ8bHLAGGDjE5GTYzMQEzMAUiJiYn'
+.'JAKT4DNiQAtIbZmB9WO7KySjIwiIDrCh5jE0l+Nn6IKhZIuwsggKCtFSUzsCV8bMQDoC1sEE8A/'
+.'SLJz8DAYcIDtoQZagMbsxG0BQkQQCjtLl520hpd8GacMbhBaqcOzKk87JgNboAAoqgFyWgIpowk'
+.'eaECDFK2PJYYdtgDBBBlbWFjBiMlRmak9hwbmiWQxjxAAFHYqmdVVxdEEeBDsgTewQAIIAZq9Xy'
+.'gfFY5XmTjIQAgwADTJidT8bKAAgAAAABJRU5ErkJggg==';
+
+  header("Content-Type: image/png");
+  echo base64_decode($img);
+  die();
 }
 
 ?>

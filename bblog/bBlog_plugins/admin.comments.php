@@ -121,8 +121,8 @@ function editComment(&$bBlog, $commentid, $postid){
         if(!$comment)
             $rval = false;
         if($rval === true){
-            $bBlog->assign('showeditform',TRUE);
-            $bBlog->assign('comment',$comment[0]);
+            $bBlog->smartyObj->assign('showeditform',TRUE);
+            $bBlog->smartyObj->assign('comment',$comment[0]);
         }
     }
     return $rval;
@@ -147,7 +147,7 @@ function saveEdit(&$bBlog){
         if($rval === true){
             $q = "update ".T_COMMENTS." set title='$title', postername='$author', posterwebsite='$websiteurl', posteremail='$email', commenttext='$body' where commentid='{$_POST['commentid']}'";
             if($bBlog->query($q) === true)
-                $bBlog->assign('message', 'Comment <em>'.$title.'</em> saved');
+                $bBlog->smartyObj->assign('message', 'Comment <em>'.$title.'</em> saved');
         }
     }
     return $rval;

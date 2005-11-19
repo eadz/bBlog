@@ -4,6 +4,14 @@
  *
  * Adds / Edits / Deletes user accounts.
  *
+ * @todo Security enhancement <br />
+ * Currently, anyone who logs in can see all other users details and can
+ * edit them at will. We need this to happen only if the user is an admin.
+ *  
+ * Add an extra 'isadmin (bool)' field in authors table.  So add
+ * this boolean, and if a user isnt an admin, then mask all other users but
+ * himself (select * from t_authors ... ... ... where nickname='user')
+ *
  * @package bBlog
  * @author Eaden McKee - <email@eadz.co.nz> - last modified by $LastChangedBy: $
  * @version $Id: $
@@ -13,19 +21,10 @@
 
  /**
   * @todo xushi: Should the secret answer be sha1() hashed for extra security?
-  * @todo since it handles password resets & critical account information?
+  * since it handles password resets & critical account information?
   */
 
- /**
-  * @todo xushi - major security enhancement
-  * @todo 
-  * @todo Currently, anyone who logs in can see all other users details and can
-  * @todo edit them at will. We need this to happen only if the user is an admin.
-  * @todo 
-  * @todo Add an extra 'isadmin (bool)' field in authors table.  So add
-  * @todo this boolean, and if a user isnt an admin, then mask all other users but
-  * @todo himself (select * from t_authors ... ... ... where nickname='user')
-  */
+
 
 function identify_admin_usermanager () {
     return array (

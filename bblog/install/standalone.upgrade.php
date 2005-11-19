@@ -13,20 +13,20 @@
  * and unsupported.. And besides.. that means another ~400 lines extra.
  *
  * @todo I just noticed a nice idea which will greatly reduce the complexity and size
- * @todo of the code. The upgrader doesnt need any versions. It doesnt need to know
- * @todo anything from you except 2 things.
- * @todo 1) What the last version of the db looks like, and
- * @todo 2) What your current db looks like.
- * @todo 
- * @todo If anything is different/missing, then it patches and updates. Thats really it.
- * @todo I mean it will look similar to the install php, but with each querry protected by
- * @todo a check to see if what you have is old, missing, or the same. At the very end
- * @todo of the patcher, you make a $db->query($q);, instead of several small ones like
- * @todo now.
- * @todo 
- * @todo This idea occured to me while merging 0.6, because half of the db was missing,
- * @todo and 0.7.2 corrected it by doing the exact method just explained. The same could
- * @todo be expanded to the whole upgrade proccess.
+ * of the code. The upgrader doesnt need any versions. It doesnt need to know
+ * anything from you except 2 things. <br />
+ * 1) What the last version of the db looks like, and <br />
+ * 2) What your current db looks like.
+ * 
+ * If anything is different/missing, then it patches and updates. Thats really it.
+ * I mean it will look similar to the install php, but with each querry protected by
+ * a check to see if what you have is old, missing, or the same. At the very end
+ * of the patcher, you make a $db->query($q);, instead of several small ones like
+ * now.
+ * 
+ * This idea occured to me while merging 0.6, because half of the db was missing,
+ * and 0.7.2 corrected it by doing the exact method just explained. The same could
+ * be expanded to the whole upgrade proccess.
  *
  * @package bBlog
  * @author xushi <xushi.xushi@gmail.com>, http://www.bblog.com/ - last modified by $LastChangedBy: $

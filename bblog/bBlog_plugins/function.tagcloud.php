@@ -7,7 +7,6 @@
  * @version $Id: $
  * @copyright The bBlog Project, http://www.bblog.com/
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
- * @fixme eadz: check to see if it works in a post
  */
 
 
@@ -17,8 +16,6 @@ $help = '
 <p>Example usage
 <ul><li>To create a tag cloud :<br>
    {tagcloud}
-   <li>Used within a {posts} loop, to only link to tags that the post is in :<br>
-      {tagcould sections=$post.sections}
 </ul>';
 
 
@@ -38,8 +35,7 @@ $help = '
 function smarty_function_tagcloud($params, &$smartyObj) {
     $bBlog = & $smartyObj->get_template_vars("bBlog_object");
 
-    if(isset($params['sections'])) $sections = $params['sections'];
-    else $sections = $bBlog->sections;
+    $sections = $bBlog->sections;
     $num = count($sections);
     
     // rgb values
@@ -58,14 +54,8 @@ function smarty_function_tagcloud($params, &$smartyObj) {
     $i = 0;
     $linkcode = '';
     foreach ($sections as $section) {
-            // we using arrays in the template and objects in the core..
-            if(isset($params['sections'])) {
-                   $url = $section['url'];
-                   $nicename = $section['nicename'];
-            } else {
-                   $url = $section->url;
-                   $nicename = $section->nicename;
-            }
+            $url = $section->url;
+            $nicename = $section->nicename;
 
             $fontsize = $minsize + round( (($maxsize - $minsize)/$max) * $section->postcount );
             $fontcolor = $mincolor + round( (($maxcolor - $mincolor)/$max) * $section->postcount );

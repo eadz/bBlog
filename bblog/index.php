@@ -203,6 +203,9 @@ if($b == 'login')
     $b = 'post';
 }
 
+// @todo eadz: remove before release. This is only for svn users. 
+if($_REQUEST['sync']) $bBlog->sync_section_postcounts();
+
 switch ($b)
 {
     case 'post' :

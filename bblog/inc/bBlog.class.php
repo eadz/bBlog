@@ -130,6 +130,11 @@ class bBlog {
             // of this string to ensure that we can locate
             // the sections properly.
             $section_q = " sections =':$sections:', ";
+
+            foreach($post->sections as $sectid) {
+		$update_section_postcount = "UPDATE `".T_SECTIONS."` set postcount = postcount + 1 where sectionid='$sectid'";
+                $this->query($update_section_postcount);
+            }
         }
         if (!isset ($post->ownerid)) {
             $post->ownerid = $this->admin_logged_in();
@@ -145,7 +150,7 @@ class bBlog {
 
         if (is_numeric($post->autodisabledate))
             $autodisable_q = " autodisabledate='{$post->autodisabledate}', ";
-
+	
         $q_insert = "INSERT INTO ".T_POSTS." SET
                     title		='".$post->title."',
                     body		='".$post->body."',
@@ -526,6 +531,13 @@ class bBlog {
             // string to ensure that we can locate the sections
             // properly.
             $q .= ", sections=':$sections:' ";
+            $sects = explode(":",$sections);
+            foreach($sects as $sectid) {
+                $postcount = $this->get_var("select count(*) from `".T_POSTS."` where sections like '%:$sectid:%'");
+                $update_section_postcount = "UPDATE `".T_SECTIONS."` set postcount = '$postcount' where sectionid='$sectid'";
+                $this->query($update_section_postcount);
+            }
+
         }
         elseif ($edit_sections) {
             $q .= ", sections='' ";
@@ -1091,5 +1103,20 @@ class bBlog {
         return md5($this->db->tablemd5(TBL_PREFIX.'%').serialize($_GET));
     }
 
+    // to be used in upgrader
+    function sync_section_postcounts() {
+            $sects = $this->get_results("select sectionid from `".T_SECTIONS."`");
+            foreach($sects as $sect) {
+                $sectid = $sect->sectionid;
+                $postcount = $this->get_var("select count(*) from `".T_POSTS."` where sections like '%:$sectid:%'");
+                $update_section_postcount = "UPDATE `".T_SECTIONS."` set postcount = '$postcount' where sectionid='$sectid'";
+                $this->query($update_section_postcount);
+            }
+
+
+    }
+
 } // end of bBlog class
+
+
 ?>

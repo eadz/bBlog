@@ -397,6 +397,7 @@ session_start();
               `sectionid` int(11) NOT NULL auto_increment,
               `nicename` varchar(255) NOT NULL default '',
               `name` varchar(60) NOT NULL default '',
+	      `postcount` int(11) NOT NULL default '0',
               PRIMARY KEY  (`sectionid`)
             ) TYPE=MyISAM ;";
 

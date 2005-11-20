@@ -186,8 +186,9 @@
         else if($matches[1]==40) echo 'No need to update passwords.<br /><br />';
     }
 
-
-
+    // @todo: check to see if it needs changing. 
+    $qq[] = "ALTER TABLE `".T_SECTIONS."` ADD `postcount` INT( 11 ) NOT NULL";
+    
     //lets see if you have SECRET_QUESTION or not.
     echo "***Checking Q&A exists...<br />";
     $testvar = $bBlog->get_results("select secret_question from ".T_AUTHORS."");

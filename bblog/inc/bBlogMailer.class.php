@@ -27,13 +27,19 @@ class bblogMailer extends PHPMailer {
      * would come, or any faggot wants to hack this file
      * for spam reasons.
      */
+    
+    /* todo: all of these params should be set in bb_config and 
+     * be configurable in admin panel.
+     */ 
+     
     var $From     = "bblog@bblog.com";
     var $FromName = "The bBlog Team";
     var $Host     = "localhost;xushi.co.uk"; //currently mine.. change to bblog's or alternative later.
-    var $Mailer   = "smtp";                         // Alternative to IsSMTP()
+    //var $Mailer   = "smtp";                         // Alternative to IsSMTP()
+    var $Mailer   = "mail";                         //  PHP mail
     var $WordWrap = 75;
     var $Reciever = ".";
-
+    
 
     /**
      * Replace the default error_handler

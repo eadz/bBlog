@@ -11,11 +11,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  */
 
-/**
- * @todo xushi: we could use bblogMailer class here
- */
-
-// first lets set some defaults
+// first let's set some defaults
 
 define('MAIL_HEADER','
 Greetings,
@@ -30,21 +26,35 @@ Regards,
 '.C_BLOGURL.'
 ');
 
-define('MAIL_FROM','"'.htmlspecialchars(C_BLOGNAME).'"'.' <'.C_EMAIL.'>');
+// we don't need this anymore as it is set by bBlogMailer class
+//define('MAIL_FROM','"'.htmlspecialchars(C_BLOGNAME).'"'.' <'.C_EMAIL.'>');
 
 // function to notify the owner about a new comment or post.
 function notify_owner($subject,$message) {
     // do they want notifications?
     if(C_NOTIFY == 'true') {
-        mail(C_EMAIL,$subject,MAIL_HEADER.$message.MAIL_FOOTER,"From: ".MAIL_FROM."\r\nErrors-To: ".MAIL_FROM."\r\n");
-
+        $to = C_EMAIL; 
+        
+        // fprosper: this calls notify_poster to centralize code 
+        // maybe we should change the function name ?!
+        notify_poster($to,$subject,$message);
     }
-
 }
 
-// function to notify the poster that a reply has been posted to their comment.
-function notify_poster ($to,$subject,$message) {
- // not yet implimented.
+// function to notify someone of a reply to their message
+function notify_poster($to,$subject,$message) {
+    require_once(BBLOGROOT.'inc/bBlogMailer.class.php');
 
+    // instantiates bBlogMailer class
+    $mail = new bBlogMailer();
+
+    // specifies mail parameters
+    $mail->AddAddress($to, "Anonymous"); // todo: the name should not be static
+    $mail->Subject = $subject;
+    $mail->Body    = MAIL_HEADER.$message.MAIL_FOOTER;
+
+    // and finally sends the email ;)
+    $mail->Send();
 }
+
 ?>

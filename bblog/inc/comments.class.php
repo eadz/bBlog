@@ -29,8 +29,14 @@ class Comments{
             
             $id = Comments::saveComment(&$db, $vars);
             if($id > 0){
+                // todo: $post->permalink is empty by now 
                 if(C_NOTIFY == true){
                     Comments::notify($vars['postername'], $post->permalink,$vars['onhold'], $vars['commenttext']);
+                }
+                // the commentor whose comment is replied gets an email
+                $replyemail = Comments::getReplyEmail(&$db,$post->postid, $replyto);
+                if($replyemail){
+                    Comments::notify_reply($vars['postername'], $post->permalink,$vars['onhold'], $vars['commenttext'],$replyemail);
                 }
                 $newnumcomments = $db->get_var('SELECT count(*) as c FROM `'.T_COMMENTS.'` WHERE postid='.$post->postid.' and deleted="false" group by postid');
                 $db->query('UPDATE `'.T_POSTS.'` SET commentcount='.$newnumcomments.' WHERE postid='.$post->postid);
@@ -305,6 +311,44 @@ class Comments{
                     break;
         }
         return $comment;
+    }
+    /** 
+    * Notifies poster of new comment replying his
+    *
+    * @param string $name Commentor name
+    * @param string $link Link to comment entry
+    * @param int    $onhold Whether or not comment requires moderation
+    * @param string $comment Text of the comment
+    * @param string $to Replied commentor email
+    * @return void
+    */  
+    function notify_reply($name, $link, $onhold, $comment, $to){
+        include_once (BBLOGROOT."inc/mail.php");
+        $message = $name." has posted a comment in reply to your comment entry at ".$link."\n\nComment: ".$comment."\n\n";
+        
+        if ($onhold == 1) 
+            $message .= "The blog administrator has selected comment moderation and the new comment will not appear until approved \n";
+            
+        notify_poster($to,"New reply to your comment", $message);
+    }   
+    
+    /** 
+    * Gets the replied comment poster e-mail
+    *
+    * @param object $db EZ SQL instance
+    * @param int    $postid The ID of the commented post 
+    * @param int    $replyto The ID of the parent comment
+    * @return string 
+    */ 
+    function getReplyEmail (&$db,$postid,$replyto=FALSE) {
+        $rs = $db->get_results("select * FROM ".T_COMMENTS." where postid='".$postid."' AND commentid='".$replyto."'");
+        if(!is_null($rs)){
+        // this should always return 1 record only
+        foreach($rs as $r){
+            return $r->posteremail;
+            }
+        }
+        return FALSE;
     }
 }
 ?>

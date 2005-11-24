@@ -22,13 +22,13 @@ class bblogMailer extends PHPMailer {
     // Set default variables for all new objects
 
     /**
-     * TODO: i'd rather have $Host be read from bb_config,
+     * @todo xushi: i'd rather have $Host be read from bb_config,
      * instead of writing it here. Just incase any robot
      * would come, or any faggot wants to hack this file
      * for spam reasons.
      */
     
-    /* todo: all of these params should be set in bb_config and 
+    /* @todo fprosper: all of these params should be set in bb_config and 
      * be configurable in admin panel.
      */ 
      

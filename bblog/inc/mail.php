@@ -49,7 +49,7 @@ function notify_poster($to,$subject,$message) {
     $mail = new bBlogMailer();
 
     // specifies mail parameters
-    $mail->AddAddress($to, "Anonymous"); // todo: the name should not be static
+    $mail->AddAddress($to, "Anonymous"); // @todo the name should not be static
     $mail->Subject = $subject;
     $mail->Body    = MAIL_HEADER.$message.MAIL_FOOTER;
 

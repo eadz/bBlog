@@ -25,7 +25,7 @@ class bBlogConfig{
         foreach ($config_rows as $config_row) {
             $const_name = 'C_'.$config_row->name;
             if (!defined($const_name)) {
-                define($const_name, stripslashes($config_row->value));
+                define($const_name, $config_row->value);
             }
         }
     }
@@ -40,7 +40,7 @@ class bBlogConfig{
             foreach($rs as $c){
                 $name = 'frm_'.$c->name;
                 if(array_key_exists($name, $_POST)){
-                    $val = (get_magic_quotes_gpc()) ? trim($_POST[$name]) : addslashes(trim($_POST[$name]));
+                    $val = (get_magic_quotes_gpc()) ? trim($_POST[$name]) : my_addslashes(trim($_POST[$name]));
                     if($c->value != $val){
                         $sql = 'UPDATE `'.T_CONFIG.'` SET value="'.$val.'" WHERE name="'.$c->name.'"';
                         $db->query($sql);

@@ -20,28 +20,14 @@ require("class.phpmailer.php");
 class bblogMailer extends PHPMailer {
 
     // Set default variables for all new objects
-
-    /**
-     * @todo xushi: i'd rather have $Host be read from bb_config,
-     * instead of writing it here. Just incase any robot
-     * would come, or any faggot wants to hack this file
-     * for spam reasons.
-     */
-    
-    /* @todo fprosper: all of these params should be set in bb_config and 
-     * be configurable in admin panel.
-     */ 
-     
-    var $From     = "bblog@bblog.com";
-    var $FromName = "The bBlog Team";
-    var $Host     = "localhost;xushi.co.uk"; //currently mine.. change to bblog's or alternative later.
-    //var $Mailer   = "smtp";                         // Alternative to IsSMTP()
-    var $Mailer   = "mail";                         //  PHP mail
+    var $From = C_MAILFROM;
+    var $FromName = C_MAILNAME;
+    var $Host = C_HOST;
+    var $Mailer = C_MAILER;
     var $WordWrap = 75;
     var $Reciever = ".";
-    
 
-    /**
+     /**
      * Replace the default error_handler
      * @param string $msg
      * @return void

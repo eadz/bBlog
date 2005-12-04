@@ -378,7 +378,7 @@ class bBlog {
         if ($post->sections != '') {
 
             // we are assuming that there is at least one section
-            // becasue you shouldnt' have ":" or something in there !
+            // because you shouldnt' have ":" or something in there !
             $tmp_sec_ar = explode(":", $post->sections);
             foreach ($tmp_sec_ar as $tmp_sec) {
                 // Make sure it isn't the empty section at
@@ -481,8 +481,11 @@ class bBlog {
         $q = "SELECT posts.*, authors.* FROM ".T_POSTS." AS posts LEFT JOIN ".T_AUTHORS." AS authors ON posts.ownerid = authors.id WHERE posts.postid='$postid' $draft_q LIMIT 0,1";
         $post = $this->get_row($q);
         if ($this->num_rows > 0) {
-            if ($raw)
+            if ($raw) {
+                //  added $permalink when $raw is TRUE for notifications
+                $post->permalink = $this->_get_entry_permalink($post->postid);
                 return $post;
+            }
             else {
                 require_once $this->_get_plugin_filepath('modifier', $post->modifier);
                 return $this->prep_post($post);

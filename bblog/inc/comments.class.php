@@ -29,7 +29,6 @@ class Comments{
             
             $id = Comments::saveComment(&$db, $vars);
             if($id > 0){
-                // @todo $post->permalink is empty by now 
                 if(C_NOTIFY == true){
                     Comments::notify($vars['postername'], $post->permalink,$vars['onhold'], $vars['commenttext']);
                 }

@@ -95,11 +95,8 @@ function deleteComment(&$bBlog, $id){
     $id = intval($id);
     $postid = $bBlog->get_var('select postid from '.T_COMMENTS.' where commentid="'.$id.'"');
     $childcount = $bBlog->get_var('select count(*) as c from '.T_COMMENTS .' where parentid="'.$id.'" group by commentid');
-    if($childcount > 0) { // there are replies to the comment so we can't delete it.
-        $bBlog->query('update '.T_COMMENTS.' set deleted="true", postername="", posteremail="", posterwebsite="", pubemail=0, pubwebsite=0, commenttext="Deleted Comment" where commentid="'.$id.'"');
-    } else { // just delete the comment
-        $bBlog->query('delete from '.T_COMMENTS.' where commentid="'.$id.'"');
-    }
+    // keep deleted comments for blacklist purposes. 
+    $bBlog->query('update '.T_COMMENTS.' set deleted="true" where commentid="'.$id.'"');
     $newnumcomments = $bBlog->get_var('SELECT count(*) as c FROM '.T_COMMENTS.' WHERE postid="'.$postid.'" and deleted="false" group by postid');
     $bBlog->query('update '.T_POSTS.' set commentcount="'.$newnumcomments.'" where postid="'.$postid.'"');
     $bBlog->modifiednow();
